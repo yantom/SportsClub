@@ -2,8 +2,8 @@ package cz.muni.fi.pa165.sportsClub.pojo;
 
 import javax.validation.constraints.NotNull;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,18 +23,18 @@ public class Team {
     private Long id;
     
     @ManyToMany(mappedBy="team")
-    private Set<PlayerInfo> playerInfo = new HashSet<PlayerInfo>();
+    private List<PlayerInfo> players = new ArrayList<PlayerInfo>();
     
     @NotNull
     private Category category;
     
     
-    public Set<PlayerInfo> getPlayerInfo() {
-        return playerInfo;
+    public List<PlayerInfo> getPlayerInfo() {
+        return players;
     }
 
-    public void setPlayerInfo(Set<PlayerInfo> playerInfo) {
-        this.playerInfo = playerInfo;
+    public void setPlayerInfo(List<PlayerInfo> playerInfo) {
+        this.players = playerInfo;
     }
     
     /**

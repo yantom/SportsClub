@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
@@ -17,14 +17,14 @@ public class PlayerInfo {
     @NotNull
     private PlayerPojo player;
     @ManyToMany
-    private Set<Team> teams = new HashSet<Team>();
+    private List<Team> teams = new ArrayList<Team>();
 
     
-    public Set<Team> getTeams() {
+    public List<Team> getTeams() {
         return teams;
     }
 
-    public void setTeams(Set<Team> teams) {
+    public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
   
