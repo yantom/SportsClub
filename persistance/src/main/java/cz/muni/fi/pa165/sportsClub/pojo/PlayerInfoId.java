@@ -1,11 +1,15 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
+import java.io.Serializable;
+
 /**
  * @author Simon Sudora 461460
  */
-public class PlayerInfoId {
+public class PlayerInfoId implements Serializable {
 
-    private long playerId;
+	private static final long serialVersionUID = 1L;
+
+	private long playerId;
 
     private long teamId;
 
