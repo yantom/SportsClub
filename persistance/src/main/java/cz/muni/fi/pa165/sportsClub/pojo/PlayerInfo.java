@@ -76,6 +76,22 @@ public class PlayerInfo {
     public void setJerseyNumber(int jerseyNumber) {
         this.jerseyNumber = jerseyNumber;
     }
+
+    public long getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(long playerId) {
+        this.playerId = playerId;
+    }
+
+    public long getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(long teamId) {
+        this.teamId = teamId;
+    }
    
     @Override
     public String toString() {return "#" + jerseyNumber + ", " + player + ", " + team; }
@@ -87,15 +103,15 @@ public class PlayerInfo {
 
         PlayerInfo that = (PlayerInfo) o;
 
-        if (playerId != that.playerId) return false;
-        return teamId == that.teamId;
+        if (getPlayerId() != that.getPlayerId()) return false;
+        return getTeamId() == that.getTeamId();
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (playerId ^ (playerId >>> 32));
-        result = 31 * result + (int) (teamId ^ (teamId >>> 32));
+        int result = (int) (getPlayerId() ^ (getPlayerId() >>> 32));
+        result = 31 * result + (int) (getTeamId() ^ (getTeamId() >>> 32));
         return result;
     }
 }

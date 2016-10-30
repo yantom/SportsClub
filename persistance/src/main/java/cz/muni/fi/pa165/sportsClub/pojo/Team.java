@@ -15,7 +15,7 @@ import java.util.List;
 public class Team {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
     @OneToMany(mappedBy="team")
@@ -50,11 +50,12 @@ public class Team {
     public void setCategory(Category category) {
         this.category = category;
     }
-    
+
     /**
      * Gets id of team
      * 
      * @return id of team
+
      */
     public Long getId() {
         return this.id;
@@ -68,34 +69,20 @@ public class Team {
     public void setId(Long id) {
         this.id = id;
     }
-   
-     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 97 * hash + (this.category != null ? this.category.hashCode() : 0);
-        return hash;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Team)) return false;
+
+        Team team = (Team) o;
+
+        return getId().equals(team.getId());
+
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof Team)){ 
-            return false;
-        }
-        final Team other = (Team) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
-            return false;
-        }
-        if (this.category != other.category) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return getId().hashCode();
     }
-    
 }
