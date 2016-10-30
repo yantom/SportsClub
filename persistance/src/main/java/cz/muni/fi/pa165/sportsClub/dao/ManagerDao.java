@@ -17,7 +17,7 @@ public interface ManagerDao {
 	void createManager(Manager manager);
 
 	/**
-	 * Retrieves manager object by its unique email.
+	 * Retrieves manager object by its unique id.
 	 * 
 	 * @param id
 	 * @return manager object with specified id if exists, null otherwise

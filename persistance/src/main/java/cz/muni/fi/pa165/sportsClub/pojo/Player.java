@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 /**
- * Created by Simon on 27.10.2016.
+ * @author Simon Sudora 461460
  */
 
 @Entity
