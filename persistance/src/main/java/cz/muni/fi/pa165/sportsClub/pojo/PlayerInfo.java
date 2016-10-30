@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.sportsClub.pojo;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -10,22 +10,34 @@ import javax.validation.constraints.NotNull;
  * 
  * @author Andrej 410433
  */
+
+@Entity
+@IdClass(PlayerInfoId.class)
 public class PlayerInfo {
+
+    @Id
+    private long playerId;
+
+    @Id
+    private long teamId;
 
     @NotNull
     private int jerseyNumber;
-    @NotNull
-    private Player player;
-    @ManyToMany
-    private List<Team> teams = new ArrayList<Team>();
 
-    
-    public List<Team> getTeams() {
-        return teams;
+    @ManyToOne
+    @PrimaryKeyJoinColumn(name="PLAYERID", referencedColumnName="ID")
+    private Player player;
+
+    @ManyToOne
+    @PrimaryKeyJoinColumn(name="TEAMID", referencedColumnName="ID")
+    private Team team;
+
+    public Team getTeam() {
+        return team;
     }
 
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
+    public void setTeam(Team team) {
+        this.team = team;
     }
   
     /**
@@ -66,38 +78,24 @@ public class PlayerInfo {
     }
    
     @Override
-    public String toString() {
-        return "#" + jerseyNumber + ", " + player;
-    }
-    
+    public String toString() {return "#" + jerseyNumber + ", " + player + ", " + team; }
+
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + this.jerseyNumber;
-        hash = 83 * hash + (this.player != null ? this.player.hashCode() : 0);
-        return hash;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PlayerInfo)) return false;
+
+        PlayerInfo that = (PlayerInfo) o;
+
+        if (playerId != that.playerId) return false;
+        return teamId == that.teamId;
+
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof PlayerInfo)){ 
-            return false;
-        }
-        final PlayerInfo other = (PlayerInfo) obj;
-        if (this.jerseyNumber != other.jerseyNumber) {
-            return false;
-        }
-        if (this.player != other.player && (this.player == null || !this.player.equals(other.player))) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        int result = (int) (playerId ^ (playerId >>> 32));
+        result = 31 * result + (int) (teamId ^ (teamId >>> 32));
+        return result;
     }
-    
-    
 }

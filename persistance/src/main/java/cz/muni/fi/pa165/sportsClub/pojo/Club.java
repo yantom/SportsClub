@@ -1,15 +1,14 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author David Koncak (410155)
  */
+
+@Entity
 public class Club {
     
     @Id

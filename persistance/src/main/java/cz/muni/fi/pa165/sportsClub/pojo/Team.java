@@ -1,14 +1,10 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 /**
  * Respresents team with specific age category
@@ -21,20 +17,20 @@ public class Team {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    
-    @ManyToMany(mappedBy="team")
-    private List<PlayerInfo> players = new ArrayList<PlayerInfo>();
+
+    @OneToMany(mappedBy="team")
+    private List<PlayerInfo> playerInfos;
     
     @NotNull
     private Category category;
     
     
     public List<PlayerInfo> getPlayerInfo() {
-        return players;
+        return playerInfos;
     }
 
     public void setPlayerInfo(List<PlayerInfo> playerInfo) {
-        this.players = playerInfo;
+        this.playerInfos = playerInfo;
     }
     
     /**
