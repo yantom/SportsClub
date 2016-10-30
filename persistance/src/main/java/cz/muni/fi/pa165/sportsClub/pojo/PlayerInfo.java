@@ -15,7 +15,7 @@ public class PlayerInfo {
     @NotNull
     private int jerseyNumber;
     @NotNull
-    private PlayerPojo player;
+    private Player player;
     @ManyToMany
     private List<Team> teams = new ArrayList<Team>();
 
@@ -33,7 +33,7 @@ public class PlayerInfo {
      * 
      * @return player
      */
-    public PlayerPojo getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
@@ -42,7 +42,7 @@ public class PlayerInfo {
      * 
      * @param player
      */
-    public void setPlayer(PlayerPojo player) {
+    public void setPlayer(Player player) {
         this.player = player;
     }
 
