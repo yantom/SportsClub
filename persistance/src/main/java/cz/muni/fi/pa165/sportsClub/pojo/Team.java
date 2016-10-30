@@ -89,7 +89,7 @@ public class Team {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Team)){ 
             return false;
         }
         final Team other = (Team) obj;

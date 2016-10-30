@@ -86,7 +86,7 @@ public class PlayerInfo {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof PlayerInfo)){ 
             return false;
         }
         final PlayerInfo other = (PlayerInfo) obj;
