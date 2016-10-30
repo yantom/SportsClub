@@ -1,6 +1,11 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * This is base implementation of {@link PlayerDao}
@@ -8,26 +13,24 @@ import cz.muni.fi.pa165.sportsClub.pojo.Player;
  * @author Simon Sudora 461460
  */
 
-
+@Repository
+@Transactional
 public class PlayerDaoImpl implements PlayerDao {
 
-    @Override
-    public void createPlayer(Player player) {
-
-    }
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
-    public void updatePlayer(Player player) {
-
-    }
+    public void createPlayer(Player player) {em.persist(player); }
 
     @Override
-    public void deletePlayer(Player player) {
-
-    }
+    public void updatePlayer(Player player) { em.merge(player); }
 
     @Override
-    public Player getPlayerById(Long id) {
-        return null;
+    public void deletePlayer(Player player) {em.remove(em.merge(player)); }
+
+    @Override
+    public Player getPlayerById(Long id)  {
+        return em.find(Player.class, id);
     }
 }

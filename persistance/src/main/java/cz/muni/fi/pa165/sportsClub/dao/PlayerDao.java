@@ -38,4 +38,5 @@ public interface PlayerDao {
      * @return player object with specified id if exists, null otherwise
      */
     Player getPlayerById(Long id);
+
 }
