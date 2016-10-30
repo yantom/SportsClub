@@ -77,11 +77,6 @@ public class PlayerTest {
     }
     
     @Test
-    public void findById() {
-	Assert.assertNull(playerDao.getPlayerById(205648L));
-    }
-    
-    @Test
     public void updatePlayer(){
         playerDao.createPlayer(player1);
         player1.setHeight(230);
