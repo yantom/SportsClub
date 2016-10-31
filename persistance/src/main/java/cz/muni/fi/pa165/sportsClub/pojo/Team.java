@@ -23,6 +23,18 @@ public class Team {
     @NotNull
     private Category category;
     
+    @ManyToOne
+    @NotNull
+    private Manager manager;
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
+    }
+    
     
     public List<PlayerInfo> getPlayerInfo() {
         return playerInfos;
@@ -67,6 +79,11 @@ public class Team {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    @Override
+    public String toString() {
+        return getManager().getClub().getName() + " - " + getCategory().toString();
     }
 
     @Override

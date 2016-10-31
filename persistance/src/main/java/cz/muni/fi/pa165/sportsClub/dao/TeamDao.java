@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.sportsClub.dao;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
 /**
- * 
+ * CRUD operations on Team
  * 
  * @author Andrej 410433
  */

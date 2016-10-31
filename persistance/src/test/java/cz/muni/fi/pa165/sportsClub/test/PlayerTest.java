@@ -60,7 +60,7 @@ public class PlayerTest {
     public void savesName(){
 	playerDao.createPlayer(player1);
         playerDao.createPlayer(player2);
-	Assert.assertEquals(playerDao.getPlayerById(player1.getId()).getFirstName(), "Aristoteles");
+	Assert.assertEquals("Aristoteles", playerDao.getPlayerById(player1.getId()).getFirstName());
     }
     
     @Test
