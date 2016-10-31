@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.sportsClub.pojo;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
