@@ -3,17 +3,23 @@ package cz.muni.fi.pa165.sportsClub.test;
 import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
+
 import java.time.LocalDate;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.runner.RunWith;
+
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.testng.annotations.BeforeMethod;
 
 /**
  *
@@ -21,20 +27,20 @@ import org.testng.annotations.BeforeMethod;
  */
 
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
-@TestExecutionListeners(TransactionalTestExecutionListener.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class PlayerTest {
     
-    @Autowired
+    @Inject
     private PlayerDao playerDao;
-	
+    	
     @PersistenceContext 
     private EntityManager em;
     
-    private Player player1;
-    private Player player2;
+    private static Player player1;
+    private static Player player2;
     
-    @BeforeMethod
+    @Before
     public void createPlayers(){
         player1 = new Player();
         player2 = new Player();
@@ -48,23 +54,16 @@ public class PlayerTest {
         player1.setWeight(120);
         player1.setDateOfBirth(dt1);
         
-        player1.setEmail("nula@gmail.com");
-        player1.setFirstName("Ales");
-        player1.setLastName("Nula");
-        player1.setHeight(220);
-        player1.setWeight(60);
-        player1.setDateOfBirth(dt2);
-    }
-    
-    @Test()
-    public void savesName(){
-	playerDao.createPlayer(player1);
-        playerDao.createPlayer(player2);
-	Assert.assertEquals("Aristoteles", playerDao.getPlayerById(player1.getId()).getFirstName());
+        player2.setEmail("nula@gmail.com");
+        player2.setFirstName("Ales");
+        player2.setLastName("Nula");
+        player2.setHeight(220);
+        player2.setWeight(60);
+        player2.setDateOfBirth(dt2);
     }
     
     @Test
-    public void deletePlayer(){
+    public void deletePlayerTest(){
 	playerDao.createPlayer(player1);
 	Assert.assertNotNull(playerDao.getPlayerById(player1.getId()));
 	playerDao.deletePlayer(player1);
@@ -77,12 +76,24 @@ public class PlayerTest {
     }
     
     @Test
-    public void updatePlayer(){
+    public void updatePlayerTest(){
         playerDao.createPlayer(player1);
         player1.setHeight(230);
         playerDao.updatePlayer(player1);
-        Assert.assertEquals(playerDao.getPlayerById(player1.getId()).getHeight(), 230);
+        Assert.assertEquals(230, playerDao.getPlayerById(player1.getId()).getHeight(), 0.01);
     }
     
+    @Test
+    public void createPlayerTest(){
+        playerDao.createPlayer(player1);
+        Assert.assertEquals("Onassis", playerDao.getPlayerById(player1.getId()).getLastName());
+    }
+    
+    @Test
+    public void nullIdTest(){
+        Assert.assertNull(player1.getId());
+        playerDao.createPlayer(player1);
+        Assert.assertNotNull(player1.getId());
+    }
     
 }

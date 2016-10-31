@@ -64,10 +64,10 @@ public class Club {
             return false;
         }
         final Club other = (Club) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+        if (getId() != other.getId() && (getId() == null || !getId().equals(other.getId()))) {
             return false;
         }
-        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+        if ((getName() == null) ? (other.getName() != null) : !getName().equals(other.getName())) {
             return false;
         }
         return true;
