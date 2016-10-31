@@ -71,6 +71,13 @@ public class PlayerTest {
     }
     
     @Test
+    public void getPlayerByIdTest(){
+        playerDao.createPlayer(player1);
+        Player found = playerDao.getPlayerById(player1.getId());
+        Assert.assertEquals(found, player1);
+    }
+    
+    @Test
     public void findByNonExistentId() {
 	Assert.assertNull(playerDao.getPlayerById(205648L));
     }
