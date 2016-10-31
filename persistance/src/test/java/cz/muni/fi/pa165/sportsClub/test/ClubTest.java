@@ -72,13 +72,6 @@ public class ClubTest {
         assertEquals(club.getId(),savedClub.getId());
     }
 
-//    @Test(expected = TransactionSystemException.class)
-//    public void createClubWithoutManagerTest(){
-//        assertNull(club.getId());
-//        club.setManager(null);
-//        clubDao.createClub(club);
-//    }
-
     @Test
     public void updateClubTest(){
         Club originalClub = club;
@@ -91,14 +84,6 @@ public class ClubTest {
         assertEquals(originalClub.getId(),savedClub.getId());
         assertEquals(originalClub.getName(),savedClub.getName());
     }
-
-//    @Test
-//    public void updateNonexistClub(){
-//        Club updatedClub = club;
-//        clubDao.updateClub(updatedClub);
-//        Club savedClub = clubDao.getClubById(updatedClub.getId());
-//        assertNull(savedClub);
-//    }
 
     @Test
     public void deleteClubTest(){
