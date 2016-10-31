@@ -17,7 +17,8 @@ public interface ManagerDao {
 	void createManager(Manager manager);
 
 	/**
-	 * Retrieves manager object by its unique id.
+	 * Retrieves manager object by its unique id. Uses lazy loading so "team"
+	 * set is not populated.
 	 * 
 	 * @param id
 	 * @return manager object with specified id if exists, null otherwise
@@ -25,7 +26,8 @@ public interface ManagerDao {
 	Manager getManagerById(Long id);
 
 	/**
-	 * Retrieves manager object by its unique email.
+	 * Retrieves manager object by its unique email. Uses lazy loading so "team"
+	 * set is not populated.
 	 * 
 	 * @param email
 	 * @return manager object with specified email if exists, null otherwise

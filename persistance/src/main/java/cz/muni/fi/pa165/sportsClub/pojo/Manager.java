@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -98,7 +99,7 @@ public class Manager {
 	}
 
 	public Set<Team> getTeams() {
-		return teams;
+		return Collections.unmodifiableSet(teams);
 	}
 
 	public void addTeam(Team team) {
@@ -113,4 +114,36 @@ public class Manager {
 		teams.remove(team);
 		teams.add(team);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Manager))
+			return false;
+		Manager other = (Manager) obj;
+		if (getEmail() == null) {
+			if (other.getEmail() != null)
+				return false;
+		} else if (!getEmail().equals(other.getEmail()))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Manager [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", mobile=" + mobile + ", password=" + password + ", club=" + club + "]";
+	}
+
 }
