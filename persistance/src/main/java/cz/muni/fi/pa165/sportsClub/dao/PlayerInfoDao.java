@@ -1,12 +1,11 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
-import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
-import cz.muni.fi.pa165.sportsClub.pojo.Team;
-import java.util.List;
+import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfoId;
 
 /**
- *
+ * CRUD operations on PlayerInfo
+ * 
  * @author Andrej 410433
  */
 public interface PlayerInfoDao {
@@ -30,21 +29,13 @@ public interface PlayerInfoDao {
      * @param pi
      */
     void deletePlayerInfo(PlayerInfo pi);
-    
+        
     /**
-     * Finds player info by its team id
+     * Finds player info by its id
      * 
-     * @param teamId id of team in which is player info
+     * @param piId player info id
      * @return found player info
      */
-    PlayerInfo getPlayerInfoByTeamId(Long teamId);
-    
-    /**
-     * Finds player info by its player id
-     * 
-     * @param playerId id of player in which is player info
-     * @return found player info
-     */
-    PlayerInfo getPlayerInfoByPlayerId(Long playerId);
+    PlayerInfo getPlayerInfoById(PlayerInfoId piId);
 }
 
