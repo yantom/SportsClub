@@ -19,9 +19,7 @@ public class ClubDaoImpl implements ClubDao{
     private EntityManager em;
 
     @Override
-    public void deleteClub(Club club) {
-        em.remove(club);
-    }
+    public void deleteClub(Club club) { em.remove(em.merge(club)); }
 
     @Override
     public void createClub(Club club) {

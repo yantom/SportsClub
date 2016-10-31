@@ -23,9 +23,7 @@ public class TeamDaoImpl implements TeamDao {
     }
 
     @Override
-    public void deleteTeam(Team team) {
-        em.remove(team);
-    }
+    public void deleteTeam(Team team) { em.remove(em.merge(team)); }
 
     @Override
     public void updateTeam(Team team) {

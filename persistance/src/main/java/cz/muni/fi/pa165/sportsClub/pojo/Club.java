@@ -17,7 +17,7 @@ public class Club {
     
     private String name;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     @NotNull
     private Manager manager;
