@@ -4,13 +4,16 @@ import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.TransactionSystemException;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -69,6 +72,13 @@ public class ClubTest {
         assertEquals(club.getId(),savedClub.getId());
     }
 
+//    @Test(expected = TransactionSystemException.class)
+//    public void createClubWithoutManagerTest(){
+//        assertNull(club.getId());
+//        club.setManager(null);
+//        clubDao.createClub(club);
+//    }
+
     @Test
     public void updateClubTest(){
         Club originalClub = club;
@@ -82,19 +92,33 @@ public class ClubTest {
         assertEquals(originalClub.getName(),savedClub.getName());
     }
 
-    @Test
-    public void updateNonexistClub(){
-
-    }
+//    @Test
+//    public void updateNonexistClub(){
+//        Club updatedClub = club;
+//        clubDao.updateClub(updatedClub);
+//        Club savedClub = clubDao.getClubById(updatedClub.getId());
+//        assertNull(savedClub);
+//    }
 
     @Test
     public void deleteClubTest(){
+        Club originalClub = club;
+        clubDao.createClub(originalClub);
+        Long id = club.getId();
 
+        clubDao.deleteClub(club);
+        Club deletedClub = clubDao.getClubById(id);
+        assertNull(deletedClub);
     }
 
     @Test
     public void getManagerTest(){
+        assertNull(manager.getId());
 
+        clubDao.createClub(club);
+
+        Manager savedManager = club.getManager();
+        assertNotNull(savedManager.getId());
     }
 
 
