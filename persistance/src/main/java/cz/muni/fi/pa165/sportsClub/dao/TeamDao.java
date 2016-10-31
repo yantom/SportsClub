@@ -9,21 +9,21 @@ import cz.muni.fi.pa165.sportsClub.pojo.Team;
 public interface TeamDao {
     
     /**
-     * Creates a new team
+     * Creates a new team and stores into database
      * 
      * @param team
      */
     void createTeam(Team team);
     
     /**
-     * Updates team
+     * Updates exist team in database
      * 
-     * @param team 
+     * @param team  
      */
     void updateTeam(Team team);
     
     /**
-     * Deletes team
+     * Deletes team in database
      * 
      * @param team 
      */
