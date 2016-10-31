@@ -35,7 +35,7 @@ public class Player {
 
     private String mobile;
 
-    @OneToMany(mappedBy="player")
+    @OneToMany(mappedBy="player", cascade = CascadeType.ALL)
     private List<PlayerInfo> playerInfos;
 
     public Long getId() { return id; }
