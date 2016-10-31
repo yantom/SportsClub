@@ -1,9 +1,10 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
  * Represents player with specific jersey number in given team
@@ -21,7 +22,6 @@ public class PlayerInfo {
     @Id
     private long teamId;
 
-    @NotNull
     private int jerseyNumber;
 
     @ManyToOne

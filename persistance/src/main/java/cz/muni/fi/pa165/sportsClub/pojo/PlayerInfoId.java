@@ -15,11 +15,15 @@ public class PlayerInfoId implements Serializable {
 
     public long getPlayerId() { return playerId; }
 
-    public void setPlayerId(long playerId) { this.playerId = playerId; }
-
     public long getTeamId() { return teamId; }
 
-    public void setTeamId(long teamId) { this.teamId = teamId; }
+	public PlayerInfoId() {
+	}
+
+	public PlayerInfoId(long playerId, long teamId) {
+		this.playerId = playerId;
+		this.teamId = teamId;
+	}
 
     @Override
     public boolean equals(Object o) {
