@@ -27,7 +27,7 @@ public class PlayerInfoDaoImpl implements PlayerInfoDao {
 
     @Override
     public void deletePlayerInfo(PlayerInfo pi) {
-        em.remove(pi);
+		em.remove(em.merge(pi));
     }
 
     @Override

@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.validation.constraints.NotNull;
 
 /**
  * Represents player with specific jersey number in given team
@@ -22,6 +23,7 @@ public class PlayerInfo {
     @Id
     private long teamId;
 
+	@NotNull
     private int jerseyNumber;
 
     @ManyToOne

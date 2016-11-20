@@ -1,9 +1,18 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import cz.muni.fi.pa165.sportsClub.enums.Category;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+
+import cz.muni.fi.pa165.sportsClub.enums.Category;
 
 /**
  * Respresents team with specific age category
@@ -23,8 +32,8 @@ public class Team {
     @NotNull
     private Category category;
     
-    @ManyToOne
-    @NotNull
+	@ManyToOne
+	@NotNull
     private Manager manager;
 
     public Manager getManager() {
@@ -33,14 +42,13 @@ public class Team {
 
     public void setManager(Manager manager) {
         this.manager = manager;
-    }
+	}
     
-    
-    public List<PlayerInfo> getPlayerInfo() {
-        return playerInfos;
+    public List<PlayerInfo> getPlayerInfos() {
+		return playerInfos = new ArrayList<>();
     }
 
-    public void setPlayerInfo(List<PlayerInfo> playerInfo) {
+    public void setPlayerInfos(List<PlayerInfo> playerInfo) {
         this.playerInfos = playerInfo;
     }
     
@@ -92,13 +100,16 @@ public class Team {
         if (!(o instanceof Team)) return false;
 
         Team team = (Team) o;
-
-        return getId().equals(team.getId());
+		if (!getCategory().equals(team.getCategory()))
+			return false;
+		if (getManager() == null || team.getManager() == null)
+			return true;
+		return getManager().getEmail().equals(team.getManager().getEmail());
 
     }
 
     @Override
     public int hashCode() {
-        return getId().hashCode();
+		return 31 * getCategory().hashCode() + ((getManager() == null) ? 0 : getManager().getEmail().hashCode());
     }
 }

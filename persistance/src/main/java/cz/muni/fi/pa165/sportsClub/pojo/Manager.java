@@ -4,8 +4,18 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
 
 /**
  * @author Jan Tomasek
@@ -17,13 +27,19 @@ public class Manager {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
+	@Column(nullable = false)
+	@Length(max = 32, min = 2)
 	private String firstName;
 
+	@Column(nullable = false)
+	@Length(max = 32, min = 2)
 	private String lastName;
 
-	@Column(nullable=false,unique=true)
+	@Column(nullable = false, unique = true)
+	@Pattern(regexp = "[^@]+@[^@]+\\.[^@]+")
 	private String email;
 
+	@Pattern(regexp = "(\\+|00)?\\d+")
 	private String mobile;
 
 	@Column(nullable = false)
@@ -33,8 +49,11 @@ public class Manager {
 	@NotNull
 	private Club club;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private Set<Team> teams;
+	@OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
+	private Set<Team> teams = new HashSet<>();
+
+	@OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
+	private Set<Player> players = new HashSet<>();
 
 	public Long getId() {
 		return this.id;
@@ -107,6 +126,23 @@ public class Manager {
 	public void updateTeam(Team team) {
 		teams.remove(team);
 		teams.add(team);
+	}
+
+	public Set<Player> getPlayers() {
+		return Collections.unmodifiableSet(players);
+	}
+
+	public void addPlayer(Player player) {
+		players.add(player);
+	}
+
+	public void removePlayer(Player player) {
+		players.remove(player);
+	}
+
+	public void updatePlayer(Player player) {
+		players.remove(player);
+		players.add(player);
 	}
 
 	@Override

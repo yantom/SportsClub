@@ -1,8 +1,18 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
-import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Simon Sudora 461460
@@ -30,13 +40,17 @@ public class Player {
     @Column(nullable=false)
     private LocalDate dateOfBirth;
 
-    @Column(nullable=false)
+	@Column(nullable = false, unique = true)
     private String email;
 
     private String mobile;
 
+	@ManyToOne
+	@NotNull
+	private Manager manager;
+
     @OneToMany(mappedBy="player", cascade = CascadeType.ALL)
-    private List<PlayerInfo> playerInfos;
+	private List<PlayerInfo> playerInfos = new ArrayList<>();
 
     public Long getId() { return id; }
 
@@ -74,22 +88,36 @@ public class Player {
 
     public void setPlayerInfos(List<PlayerInfo> playerInfos) { this.playerInfos = playerInfos; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Player)) return false;
+	public Manager getManager() {
+		return manager;
+	}
 
-        Player player = (Player) o;
+	public void setManager(Manager manager) {
+		this.manager = manager;
+	}
 
-        if (!getId().equals(player.getId())) return false;
-        return getEmail().equals(player.getEmail());
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
+		return result;
+	}
 
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getEmail().hashCode();
-        return result;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Manager))
+			return false;
+		Manager other = (Manager) obj;
+		if (getEmail() == null) {
+			if (other.getEmail() != null)
+				return false;
+		} else if (!getEmail().equals(other.getEmail()))
+			return false;
+		return true;
+	}
 }
