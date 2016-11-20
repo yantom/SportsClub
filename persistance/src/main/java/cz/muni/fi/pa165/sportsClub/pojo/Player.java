@@ -13,7 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+
+import cz.muni.fi.pa165.sportsClub.pojo.validation.Past;
 
 /**
  * @author Simon Sudora 461460
@@ -39,7 +40,7 @@ public class Player {
     private double weight;
 
     @Column(nullable=false)
-    @Past
+	@Past
     private LocalDate dateOfBirth;
 
 	@Column(nullable = false, unique = true)
