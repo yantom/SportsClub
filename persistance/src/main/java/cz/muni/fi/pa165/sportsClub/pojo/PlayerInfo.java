@@ -5,6 +5,8 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -24,6 +26,8 @@ public class PlayerInfo {
     private long teamId;
 
 	@NotNull
+    @Max(99)
+    @Min(0)
     private int jerseyNumber;
 
     @ManyToOne
