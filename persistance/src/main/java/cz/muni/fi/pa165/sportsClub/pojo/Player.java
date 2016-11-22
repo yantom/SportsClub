@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.sportsClub.pojo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import cz.muni.fi.pa165.sportsClub.pojo.validation.Past;
 
@@ -44,8 +46,11 @@ public class Player {
     private LocalDate dateOfBirth;
 
 	@Column(nullable = false, unique = true)
+	@Pattern(regexp = "[^@]+@[^@]+\\.[^@]+")
     private String email;
 
+	@Column(unique = true)
+	@Pattern(regexp = "(\\+|00)?\\d+")
     private String mobile;
 
 	@ManyToOne
@@ -87,9 +92,22 @@ public class Player {
 
     public void setMobile(String mobile) { this.mobile = mobile; }
 
-    public List<PlayerInfo> getPlayerInfos() { return playerInfos; }
+	public List<PlayerInfo> getPlayerInfos() {
+		return Collections.unmodifiableList(playerInfos);
+	}
 
-    public void setPlayerInfos(List<PlayerInfo> playerInfos) { this.playerInfos = playerInfos; }
+	public void addPlayerInfo(PlayerInfo team) {
+		playerInfos.add(team);
+	}
+
+	public void removePlayerInfo(PlayerInfo team) {
+		playerInfos.remove(team);
+	}
+
+	public void updatePlayerInfo(PlayerInfo team) {
+		playerInfos.remove(team);
+		playerInfos.add(team);
+	}
 
 	public Manager getManager() {
 		return manager;

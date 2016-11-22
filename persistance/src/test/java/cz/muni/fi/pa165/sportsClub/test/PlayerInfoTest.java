@@ -80,8 +80,8 @@ public class PlayerInfoTest {
 		testPlayer1.setManager(testManager1);
 		testManager1.addTeam(testTeam1);
 		testManager1.addPlayer(testPlayer1);
-		testTeam1.getPlayerInfos().add(testPlayerInfo1);
-		testPlayer1.getPlayerInfos().add(testPlayerInfo1);
+		testTeam1.addPlayerInfo(testPlayerInfo1);
+		testPlayer1.addPlayerInfo(testPlayerInfo1);
 		em.persist(testClub1);
 
 		testPlayerInfo1 = new PlayerInfo();

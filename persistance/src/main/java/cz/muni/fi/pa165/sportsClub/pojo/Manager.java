@@ -1,8 +1,8 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,6 +40,7 @@ public class Manager {
 	private String email;
 
 	@Pattern(regexp = "(\\+|00)?\\d+")
+	@Column(unique = true)
 	private String mobile;
 
 	@Column(nullable = false)
@@ -50,10 +51,10 @@ public class Manager {
 	private Club club;
 
 	@OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
-	private Set<Team> teams = new HashSet<>();
+	private List<Team> teams = new ArrayList<>();
 
 	@OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
-	private Set<Player> players = new HashSet<>();
+	private List<Player> players = new ArrayList<>();
 
 	public Long getId() {
 		return this.id;
@@ -111,8 +112,8 @@ public class Manager {
 		this.club = club;
 	}
 
-	public Set<Team> getTeams() {
-		return Collections.unmodifiableSet(teams);
+	public List<Team> getTeams() {
+		return Collections.unmodifiableList(teams);
 	}
 
 	public void addTeam(Team team) {
@@ -128,8 +129,8 @@ public class Manager {
 		teams.add(team);
 	}
 
-	public Set<Player> getPlayers() {
-		return Collections.unmodifiableSet(players);
+	public List<Player> getPlayers() {
+		return Collections.unmodifiableList(players);
 	}
 
 	public void addPlayer(Player player) {
