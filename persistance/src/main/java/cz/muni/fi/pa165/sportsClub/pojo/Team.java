@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -26,9 +27,9 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
-    private List<PlayerInfo> playerInfos;
-
+    @OneToMany(mappedBy="team", cascade = CascadeType.ALL)
+	private List<PlayerInfo> playerInfos = new ArrayList<>();
+    
     @NotNull
     private Category category;
 
@@ -55,15 +56,6 @@ public class Team {
     }
     
     /**
-     * Gets list of player infos
-     * 
-     * @return all player infos of team
-     */
-    public List<PlayerInfo> getPlayerInfos() {
-        return playerInfos = new ArrayList<>();
-    }
-    
-    /**
      * Sets list of player infos
      * 
      * @param playerInfo player infos of team
@@ -72,7 +64,29 @@ public class Team {
         this.playerInfos = playerInfo;
     }
 
-    /**
+        /**
+     * Gets list of player infos
+     * 
+     * @return all player infos of team
+     */
+    public List<PlayerInfo> getPlayerInfos() {
+		return Collections.unmodifiableList(playerInfos);
+	}
+
+	public void addPlayerInfo(PlayerInfo team) {
+		playerInfos.add(team);
+	}
+
+	public void removePlayerInfo(PlayerInfo team) {
+		playerInfos.remove(team);
+	}
+
+	public void updatePlayerInfo(PlayerInfo team) {
+		playerInfos.remove(team);
+		playerInfos.add(team);
+	}
+   
+        /**
      * Gets age category of team
      *
      * @return age category of team
