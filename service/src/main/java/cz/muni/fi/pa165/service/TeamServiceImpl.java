@@ -1,5 +1,8 @@
 package cz.muni.fi.pa165.service;
 
+import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
+import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
+import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,6 +11,7 @@ import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
 import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
@@ -19,52 +23,65 @@ public class TeamServiceImpl implements TeamService {
 	PlayerInfoDao playerInfoDao;
 
 	public void createTeam(Team t) {
-		// TODO Auto-generated method stub
+		teamDao.createTeam(t);
 
 	}
 
 	public void updateTeam(Team t) {
-		// TODO Auto-generated method stub
+		teamDao.updateTeam(t);
 
 	}
 
 	public void deleteTeam(Team t) {
-		// TODO Auto-generated method stub
+		teamDao.deleteTeam(t);
 
 	}
 
 	public Team getTeamById(Long teamId) {
-		// TODO Auto-generated method stub
-		return null;
+		return teamDao.getTeamById(teamId);
 	}
 
 	public Team getTeamOfClubByCategory(Category category) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Team getAllTeamsOfClub(Club c) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Team> getAllTeamsOfClub(Club c) {
+                return null;
 	}
 
 	public List<PlayerInfo> getPlayerInfos(Team t) {
-		// TODO Auto-generated method stub
-		return null;
+                return t.getPlayerInfos();
 	}
 
-	public void assignPlayerToTeam(Player p, Team t) {
-		// TODO Auto-generated method stub
+	public void assignPlayerToTeam(Player p, Team t, int jerseyNumber) {
+            PlayerInfo playerInfo = new PlayerInfo();
+            playerInfo.setPlayer(p);
+            playerInfo.setPlayerId(p.getId());
+            playerInfo.setTeam(t);
+            playerInfo.setTeamId(t.getId());
+            playerInfoDao.createPlayerInfo(playerInfo);
+            t.addPlayerInfo(playerInfo);
+            p.addPlayerInfo(playerInfo);
 
 	}
 
-	public void changeJerseyNumber(Player p, Team t) {
-		// TODO Auto-generated method stub
+	public void changeJerseyNumber(Player p, Team t, int jerseyNumber) {
+		List<PlayerInfo> playerInfos = t.getPlayerInfos();
+                for(PlayerInfo info: playerInfos){
+                    if(info.getPlayerId() == p.getId()){
+                        info.setJerseyNumber(jerseyNumber);
+                    }
+                }
 
 	}
 
 	public void removePlayerFromTeam(Player p, Team t) {
-		// TODO Auto-generated method stub
-
+		List<PlayerInfo> playerInfos = p.getPlayerInfos();
+                for(PlayerInfo info: playerInfos){
+                    if(info.getTeamId() == t.getId()){
+                        t.removePlayerInfo(info);
+                    }
+                }
+                
 	}
 }

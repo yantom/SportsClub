@@ -19,13 +19,13 @@ public interface TeamService {
 
 	Team getTeamOfClubByCategory(Category category);
 
-	Team getAllTeamsOfClub(Club c);
+	List<Team> getAllTeamsOfClub(Club c);
 
 	List<PlayerInfo> getPlayerInfos(Team t);
 
-	void assignPlayerToTeam(Player p, Team t);
+	void assignPlayerToTeam(Player p, Team t, int jerseyNumber);
 
-	void changeJerseyNumber(Player p, Team t);
+	void changeJerseyNumber(Player p, Team t, int jerseyNumber);
 
 	void removePlayerFromTeam(Player p, Team t);
 }
