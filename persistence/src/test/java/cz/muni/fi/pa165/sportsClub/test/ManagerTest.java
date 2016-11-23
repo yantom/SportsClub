@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import javax.inject.Inject;
+import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -22,60 +23,83 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
-@Transactional
 public class ManagerTest {
 
     @Inject
     private ManagerDao managerDao;
 
     private static Manager managerTest;
-
+    private static Club clubTest;
+    
     @Before
     public void beforeTest() {
+        
         managerTest = new Manager();
         managerTest.setEmail("gretzky99@gmail.com");
         managerTest.setPassword("TheBest99");
         managerTest.setFirstName("Wayne");
         managerTest.setLastName("Gretzky");
-        Club club = new Club();
-        club.setManager(managerTest);
-        managerTest.setClub(club);
+        
+        clubTest = new Club();
+        clubTest.setName("HK Nitra");
+        clubTest.setManager(managerTest);
+        
+        managerTest.setClub(clubTest);
+    }
+    
+    @After
+    public void AfterTest() {
+        managerDao.deleteManager(managerTest);
     }
 
     @Test
     public void testCreateManager() {
+        assertNull(managerTest.getId());
+        
         managerDao.createManager(managerTest);
-        assertEquals(managerTest, managerDao.getManagerById(managerTest.getId()));
+        assertNotNull(managerTest.getId());
+        
+        Manager createdManager = managerDao.getManagerById(managerTest.getId());
+        assertEquals(managerTest, createdManager);
     }
 
     @Test
     public void testUpdateManager() {
         managerDao.createManager(managerTest);
-        managerTest.setMobile("555-123-456");
+        
+        managerTest.setMobile("555123456");
         managerDao.updateManager(managerTest);
-        assertEquals(managerTest, managerDao.getManagerById(managerTest.getId()));
+        Manager updatedManager = managerDao.getManagerById(managerTest.getId());
+       
+        assertEquals(managerTest, updatedManager);
     }
 
     @Test
     public void testDeleteManager() {
+        
         managerDao.createManager(managerTest);
         assertNotNull(managerDao.getManagerById(managerTest.getId()));
+        
         managerDao.deleteManager(managerTest);
-        assertNull(managerDao.getManagerById(managerTest.getId()));
+        Manager deletedManager = managerDao.getManagerById(managerTest.getId());
+        
+        assertNull(deletedManager);
     }
 
     @Test
     public void testGetManagerById() {
         managerDao.createManager(managerTest);
-        Manager retrieved = managerDao.getManagerById(managerTest.getId());
-        assertEquals(managerTest, retrieved);
+        
+        Manager foundManager = managerDao.getManagerById(managerTest.getId());
+        assertEquals(managerTest, foundManager);
     }
 
     @Test
     public void testGetManagerByEmail() {
         managerDao.createManager(managerTest);
-        Manager retrieved = managerDao.getManagerByEmail(managerTest.getEmail());
-        assertEquals(managerTest, retrieved);
+        
+        Manager foundManager = managerDao.getManagerByEmail(managerTest.getEmail());
+        assertEquals(managerTest, foundManager);
     }
 
 }
