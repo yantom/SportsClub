@@ -17,7 +17,7 @@ public interface ClubService {
 
 	Club getClubByName(String clubName);
 
-	void assignManagerToClub(Manager m);
+	void assignManagerToClub(Manager m, Club c);
 
 	List<Player> getFreePlayers();
 

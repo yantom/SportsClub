@@ -56,7 +56,6 @@ public class Club {
     public int hashCode() {
         final int prime = 31;
         int hash = 1;
-        hash = prime * hash + (this.id != null ? this.id.hashCode() : 0);
         hash = prime * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
     }
@@ -70,9 +69,6 @@ public class Club {
             return false;
         }
         final Club other = (Club) obj;
-        if (getId() != other.getId() && (getId() == null || !getId().equals(other.getId()))) {
-            return false;
-        }
         if ((getName() == null) ? (other.getName() != null) : !getName().equals(other.getName())) {
             return false;
         }

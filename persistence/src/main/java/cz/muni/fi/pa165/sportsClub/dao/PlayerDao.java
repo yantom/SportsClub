@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
+import java.util.List;
 
 /**
  * Database operations interface for {@link Player}
@@ -39,4 +40,5 @@ public interface PlayerDao {
      */
     Player getPlayerById(Long id);
 
+    List<Player> getAllPlayers();
 }

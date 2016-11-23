@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import java.util.List;
 
 /**
  *
@@ -36,5 +37,9 @@ public interface ClubDao {
      * @param club
      */
     void updateClub(Club club);
+    
+    Club getClubByName(String name);
+    
+    List<Club> getAllClubs();
     
 }

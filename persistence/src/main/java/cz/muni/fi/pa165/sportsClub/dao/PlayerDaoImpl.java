@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
+import java.util.Collections;
+import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,5 +34,11 @@ public class PlayerDaoImpl implements PlayerDao {
     @Override
     public Player getPlayerById(Long id)  {
         return em.find(Player.class, id);
+    }
+
+    @Override
+    public List<Player> getAllPlayers() {
+        return Collections.unmodifiableList(
+                em.createQuery("SELECT p FROM Player p", Player.class).getResultList());
     }
 }
