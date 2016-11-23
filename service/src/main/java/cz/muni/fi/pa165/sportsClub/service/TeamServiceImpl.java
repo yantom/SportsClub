@@ -1,8 +1,5 @@
-package cz.muni.fi.pa165.service;
+package cz.muni.fi.pa165.sportsClub.service;
 
-import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
-import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
-import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,7 +8,6 @@ import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
 import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
-import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;

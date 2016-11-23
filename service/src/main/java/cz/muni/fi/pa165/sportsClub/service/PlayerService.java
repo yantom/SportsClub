@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.service;
+package cz.muni.fi.pa165.sportsClub.service;
 
 import java.util.List;
 
@@ -19,7 +19,5 @@ public interface PlayerService {
 
 	List<Player> getAllPlayersOfClub(Club c);
 
-	// tuple
 	List<PlayerInfo> getPlayerInfos(Player p);
-
 }
