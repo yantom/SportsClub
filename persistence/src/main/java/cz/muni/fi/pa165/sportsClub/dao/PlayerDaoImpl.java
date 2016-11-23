@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -40,5 +41,15 @@ public class PlayerDaoImpl implements PlayerDao {
     public List<Player> getAllPlayers() {
         return Collections.unmodifiableList(
                 em.createQuery("SELECT p FROM Player p", Player.class).getResultList());
+    }
+
+    @Override
+    public Player getPlayerByEmail(String email) {
+        try {
+            return em.createQuery("select p from Player p where email = :email",
+                                Player.class).setParameter("email", email).getSingleResult();
+	} catch (NoResultException nrf) {
+            return null;
+	}
     }
 }

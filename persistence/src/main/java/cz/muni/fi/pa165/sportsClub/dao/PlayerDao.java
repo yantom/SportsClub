@@ -41,4 +41,6 @@ public interface PlayerDao {
     Player getPlayerById(Long id);
 
     List<Player> getAllPlayers();
+    
+    Player getPlayerByEmail(String email);
 }
