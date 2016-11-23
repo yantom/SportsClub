@@ -43,8 +43,13 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     public Player getPlayerByEmail(String email) {
-        //TODO
-        return null;
+        List<Player> players = playerDao.getAllPlayers();
+        Player found = new Player();
+        for(Player p : players) {
+            if(p.getEmail().equals(email))
+                found = p;
+        }
+        return found;
     }
 
     public List<Player> getAllPlayersOfClub(Club c) {
