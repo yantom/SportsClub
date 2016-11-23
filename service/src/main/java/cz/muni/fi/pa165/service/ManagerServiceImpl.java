@@ -6,31 +6,29 @@ import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 
 public class ManagerServiceImpl implements ManagerService {
-	@Inject
+	
+        @Inject
 	ManagerDao managerDao;
 
 	public void createManager(Manager m) {
-		// TODO Auto-generated method stub
+		managerDao.createManager(m);
 
 	}
 
 	public void updateManager(Manager m) {
-		// TODO Auto-generated method stub
+		managerDao.updateManager(m);
 
 	}
 
 	public void deleteManager(Manager m) {
-		// TODO Auto-generated method stub
-
+		managerDao.deleteManager(m);
 	}
 
 	public Manager getManagerById(Long managerId) {
-		// TODO Auto-generated method stub
-		return null;
+		return managerDao.getManagerById(managerId);
 	}
 
 	public Manager getManagerByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		return managerDao.getManagerByEmail(email);
 	}
 }
