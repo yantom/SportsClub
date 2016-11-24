@@ -52,7 +52,7 @@ public class ClubServiceImpl implements ClubService {
 
 	}
 
-	public List<Player> getFreePlayers(Club c) {
+	public List<Player> getFreePlayersOfClub(Club c) {
 		List<Player> players = c.getManager().getPlayers();
                 List<Player> freePlayers = new ArrayList<Player>();
 		for (Player player : players){
