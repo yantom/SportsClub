@@ -3,9 +3,16 @@ package cz.muni.fi.pa165.sportsClub.dao;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import java.util.Collections;
 import java.util.List;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolationException;
+
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +29,13 @@ public class ClubDaoImpl implements ClubDao{
     private EntityManager em;
 
     @Override
-    public void deleteClub(Club club) { em.remove(em.merge(club)); }
+    public void deleteClub(Club club) {
+            em.remove(em.merge(club));
+    }
 
     @Override
     public void createClub(Club club) {
-        em.persist(club);
+            em.persist(club);
     }
 
     @Override

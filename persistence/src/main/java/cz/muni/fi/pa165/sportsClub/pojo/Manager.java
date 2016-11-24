@@ -14,8 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 /**
  * @author Jan Tomasek
@@ -28,11 +27,11 @@ public class Manager {
 	private Long id;
 
 	@Column(nullable = false)
-	@Length(max = 32, min = 2)
+	@Size(max = 32, min = 2)
 	private String firstName;
 
 	@Column(nullable = false)
-	@Length(max = 32, min = 2)
+	@Size(max = 32, min = 2)
 	private String lastName;
 
 	@Column(nullable = false, unique = true)

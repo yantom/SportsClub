@@ -11,16 +11,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.TransactionSystemException;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 /**
@@ -61,7 +64,7 @@ public class ClubTest {
         clubDao.deleteClub(club);
     }
 
-    @Test
+    @Test()
     public void createClubTest(){
         assertNull(club.getId());
 
@@ -70,6 +73,18 @@ public class ClubTest {
 
         Club savedClub = clubDao.getClubById(club.getId());
         assertEquals(club.getId(),savedClub.getId());
+    }
+
+    @Test(expected = DataAccessException.class)
+    public void createExistingClubTest(){
+        assertNull(club.getId());
+
+        clubDao.createClub(club);
+        assertNotNull(club.getId());
+
+        Club savedClub = clubDao.getClubById(club.getId());
+        assertEquals(club.getId(),savedClub.getId());
+        clubDao.createClub(club);
     }
 
     @Test
@@ -105,7 +120,4 @@ public class ClubTest {
         Manager savedManager = club.getManager();
         assertNotNull(savedManager.getId());
     }
-
-
-
 }
