@@ -1,9 +1,14 @@
 package cz.muni.fi.pa165.sportsClub.service.facade;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import cz.muni.fi.pa165.sportsClub.dto.ManagerAuthenticationDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ManagerFacade;
 
+@Transactional
+@Service
 public class ManagerFacadeImpl implements ManagerFacade {
 
 	public void createManager(ManagerDto m) {

@@ -2,11 +2,16 @@ package cz.muni.fi.pa165.sportsClub.service.facade;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamOfPlayerDto;
 import cz.muni.fi.pa165.sportsClub.facade.PlayerFacade;
 
+@Transactional
+@Service
 public class PlayerFacadeImpl implements PlayerFacade {
 
 	public void createPlayer(PlayerDto p) {

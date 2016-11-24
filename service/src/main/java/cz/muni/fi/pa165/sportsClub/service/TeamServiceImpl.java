@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
 import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
 import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
@@ -12,6 +14,7 @@ import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
+@Service
 public class TeamServiceImpl implements TeamService {
 	@Inject
 	TeamDao teamDao;
