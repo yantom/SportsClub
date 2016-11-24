@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -36,9 +38,13 @@ public class Player {
     private String lastName;
 
     @Column(nullable=false)
+	@Min(75)
+	@Max(250)
     private double height;
 
     @Column(nullable=false)
+	@Min(20)
+	@Max(150)
     private double weight;
 
     @Column(nullable=false)
@@ -96,17 +102,17 @@ public class Player {
 		return Collections.unmodifiableList(playerInfos);
 	}
 
-	public void addPlayerInfo(PlayerInfo team) {
-		playerInfos.add(team);
+	public void addPlayerInfo(PlayerInfo pi) {
+		playerInfos.add(pi);
 	}
 
-	public void removePlayerInfo(PlayerInfo team) {
-		playerInfos.remove(team);
+	public void removePlayerInfo(PlayerInfo pi) {
+		playerInfos.remove(pi);
 	}
 
-	public void updatePlayerInfo(PlayerInfo team) {
-		playerInfos.remove(team);
-		playerInfos.add(team);
+	public void updatePlayerInfo(PlayerInfo pi) {
+		playerInfos.remove(pi);
+		playerInfos.add(pi);
 	}
 
 	public Manager getManager() {
@@ -131,9 +137,9 @@ public class Player {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Manager))
+		if (!(obj instanceof Player))
 			return false;
-		Manager other = (Manager) obj;
+		Player other = (Player) obj;
 		if (getEmail() == null) {
 			if (other.getEmail() != null)
 				return false;

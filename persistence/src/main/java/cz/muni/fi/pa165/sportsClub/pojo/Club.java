@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -26,6 +27,7 @@ public class Club {
     
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
+	@NotNull
     private Manager manager;
 
     public Long getId() {

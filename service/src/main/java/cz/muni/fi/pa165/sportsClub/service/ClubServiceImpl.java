@@ -1,16 +1,17 @@
 package cz.muni.fi.pa165.sportsClub.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
 
 import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
-import java.util.ArrayList;
-import org.springframework.stereotype.Service;
 
 @Service
 public class ClubServiceImpl implements ClubService {
