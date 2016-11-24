@@ -19,7 +19,7 @@ public interface ClubService {
 
 	void assignManagerToClub(Manager m, Club c);
 
-	List<Player> getFreePlayers();
+	List<Player> getFreePlayers(Club c);
 
 	List<Club> getAllClubs();
 }

@@ -52,15 +52,15 @@ public class ClubServiceImpl implements ClubService {
 
 	}
 
-	public List<Player> getFreePlayers() {
-		List<Player> players = playerDao.getAllPlayers();
+	public List<Player> getFreePlayers(Club c) {
+		List<Player> players = c.getManager().getPlayers();
                 List<Player> freePlayers = new ArrayList<Player>();
 		for (Player player : players){
                     if (player.getPlayerInfos().isEmpty()){
                         freePlayers.add(player);
                     }
                 }
-                return freePlayers;
+		return freePlayers;
 	}
 
 	public List<Club> getAllClubs() {

@@ -1,18 +1,24 @@
 package cz.muni.fi.pa165.sportsClub.test;
 
+
 import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
 import cz.muni.fi.pa165.sportsClub.service.ClubService;
 import cz.muni.fi.pa165.sportsClub.service.ServiceApplicationContext;
-import org.hibernate.service.spi.ServiceException;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 
+
 import javax.inject.Inject;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
 
 /**
  * @author Simon Sudora 461460
@@ -27,10 +33,10 @@ public class ClubServiceTest extends AbstractTransactionalTestNGSpringContextTes
     @InjectMocks
     private ClubService clubService;
 
-    @BeforeClass
-    public void setup() throws ServiceException {
-        MockitoAnnotations.initMocks(this);
-    }
+//    @BeforeClass
+//    public void setup() throws ServiceException {
+//        MockitoAnnotations.initMocks(this);
+//    }
 
     @Test
     public void getFreePlayersTest(){

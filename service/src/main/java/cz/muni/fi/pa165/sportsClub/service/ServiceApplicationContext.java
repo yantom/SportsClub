@@ -11,6 +11,6 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import(PersistenceApplicationContext.class)
-@ComponentScan(basePackages = "cz.muni.fi.pa165.sportsClub")
+@ComponentScan(basePackages = "cz.muni.fi.pa165.sportsClub.service")
 public class ServiceApplicationContext {
 }
