@@ -3,12 +3,17 @@ package cz.muni.fi.pa165.sportsClub.service.facade;
 import java.util.List;
 import java.util.Locale.Category;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerOfTeamDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
 import cz.muni.fi.pa165.sportsClub.facade.TeamFacade;
 
+@Transactional
+@Service
 public class TeamFacadeImpl implements TeamFacade {
 
 	public void createTeam(TeamDto t) {

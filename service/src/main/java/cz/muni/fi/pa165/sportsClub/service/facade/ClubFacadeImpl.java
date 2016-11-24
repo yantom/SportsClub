@@ -2,51 +2,61 @@ package cz.muni.fi.pa165.sportsClub.service.facade;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.validation.Valid;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ClubFacade;
+import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
+import cz.muni.fi.pa165.sportsClub.service.ClubService;
 
+@Transactional
+@Service
 public class ClubFacadeImpl implements ClubFacade {
 
-	public void createClub(ClubDto c) {
-		// TODO Auto-generated method stub
+	@Inject
+	ClubService clubService;
 
+	public void createClub(@Valid ClubDto c) {
+		clubService.createClub(new ModelMapper().map(c, Club.class));
 	}
 
 	public void updateClub(ClubDto c) {
-		// TODO Auto-generated method stub
-
+		clubService.updateClub(new ModelMapper().map(c, Club.class));
 	}
 
 	public void deleteClub(ClubDto c) {
-		// TODO Auto-generated method stub
-
+		clubService.deleteClub(new ModelMapper().map(c, Club.class));
 	}
 
 	public ClubDto getClubById(Long clubId) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ModelMapper().map(clubService.getClubById(clubId), ClubDto.class);
 	}
 
 	public ClubDto getClubByName(String clubName) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ModelMapper().map(clubService.getClubByName(clubName), ClubDto.class);
 	}
 
 	public void assignManagerToClub(ManagerDto m, ClubDto c) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public List<PlayerDto> getFreePlayers() {
-		// TODO Auto-generated method stub
-		return null;
+		clubService.assignManagerToClub((new ModelMapper().map(m, Manager.class)),
+				(new ModelMapper().map(c, Club.class)));
 	}
 
 	public List<ClubDto> getAllClubs() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ModelMapper().map(clubService.getAllClubs(), new TypeToken<List<ClubDto>>() {
+		}.getType());
+	}
+
+	public List<PlayerDto> getFreePlayers() {
+		throw new UnsupportedOperationException();
 	}
 
 }
