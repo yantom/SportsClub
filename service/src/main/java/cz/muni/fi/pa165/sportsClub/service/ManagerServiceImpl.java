@@ -4,7 +4,9 @@ import javax.inject.Inject;
 
 import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ManagerServiceImpl implements ManagerService {
 	
         @Inject

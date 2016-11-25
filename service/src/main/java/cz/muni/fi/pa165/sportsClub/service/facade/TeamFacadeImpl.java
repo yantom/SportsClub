@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.sportsClub.service.facade;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +44,10 @@ public class TeamFacadeImpl implements TeamFacade {
 
 	public TeamDto getTeamById(Long teamId) {
 		return new ModelMapper().map(teamService.getTeamById(teamId), TeamDto.class);
+	}
+
+	public TeamDto getTeamOfClubByCategory(Locale.Category category) {
+		return null;
 	}
 
 	public TeamDto getTeamOfClubByCategory(Category category, ClubDto c) {

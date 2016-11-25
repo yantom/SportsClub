@@ -15,8 +15,8 @@ import org.modelmapper.ModelMapper;
 @Service
 public class ManagerFacadeImpl implements ManagerFacade {
 
-        @Inject
-        ManagerService managerService;
+    @Inject
+	ManagerService managerService;
     
 	public void createManager(ManagerDto m) {
 		managerService.createManager(new ModelMapper().map(m, Manager.class));
