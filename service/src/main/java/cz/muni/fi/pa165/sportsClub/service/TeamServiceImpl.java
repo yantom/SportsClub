@@ -67,6 +67,7 @@ public class TeamServiceImpl implements TeamService {
             playerInfo.setPlayerId(p.getId());
             playerInfo.setTeam(t);
             playerInfo.setTeamId(t.getId());
+            playerInfo.setJerseyNumber(jerseyNumber);
             playerInfoDao.createPlayerInfo(playerInfo);
             t.addPlayerInfo(playerInfo);
             p.addPlayerInfo(playerInfo);
