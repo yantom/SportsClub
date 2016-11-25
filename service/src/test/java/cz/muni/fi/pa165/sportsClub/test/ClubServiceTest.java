@@ -1,11 +1,17 @@
 package cz.muni.fi.pa165.sportsClub.test;
 
 
-import cz.muni.fi.pa165.sportsClub.dao.*;
-import cz.muni.fi.pa165.sportsClub.enums.Category;
-import cz.muni.fi.pa165.sportsClub.pojo.*;
-import cz.muni.fi.pa165.sportsClub.service.ClubService;
-import cz.muni.fi.pa165.sportsClub.service.ServiceApplicationContext;
+import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,15 +22,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
+import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
+import cz.muni.fi.pa165.sportsClub.enums.Category;
+import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
+import cz.muni.fi.pa165.sportsClub.pojo.Player;
+import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
+import cz.muni.fi.pa165.sportsClub.pojo.Team;
+import cz.muni.fi.pa165.sportsClub.service.ClubService;
 
 
 /**
@@ -32,7 +38,7 @@ import static org.mockito.Mockito.*;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ServiceApplicationContext.class)
+@ContextConfiguration(classes = PersistenceApplicationContext.class)
 @Transactional
 public class ClubServiceTest {
 

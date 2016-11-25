@@ -1,39 +1,35 @@
 package cz.muni.fi.pa165.sportsClub.test;
 
-import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
 import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
-import cz.muni.fi.pa165.sportsClub.pojo.Manager;
-import cz.muni.fi.pa165.sportsClub.pojo.Player;
-import cz.muni.fi.pa165.sportsClub.service.PlayerService;
-import cz.muni.fi.pa165.sportsClub.service.PlayerServiceImpl;
-import cz.muni.fi.pa165.sportsClub.service.ServiceApplicationContext;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import javax.inject.Inject;
-import org.hibernate.service.spi.ServiceException;
 import static org.junit.Assert.assertEquals;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
+
+import javax.inject.Inject;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
+import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
+import cz.muni.fi.pa165.sportsClub.pojo.Player;
+import cz.muni.fi.pa165.sportsClub.service.PlayerService;
+import cz.muni.fi.pa165.sportsClub.service.PlayerServiceImpl;
 
 /**
  *
  * @author David
  */
 
-@ContextConfiguration(classes = ServiceApplicationContext.class)
+@ContextConfiguration(classes = PersistenceApplicationContext.class)
 public class PlayerServiceTest {
     
     @Inject

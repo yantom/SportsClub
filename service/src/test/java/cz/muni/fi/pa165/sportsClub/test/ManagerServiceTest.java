@@ -1,32 +1,34 @@
 package cz.muni.fi.pa165.sportsClub.test;
 
-import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
-import cz.muni.fi.pa165.sportsClub.pojo.Manager;
-import cz.muni.fi.pa165.sportsClub.service.ManagerService;
-import cz.muni.fi.pa165.sportsClub.service.ServiceApplicationContext;
-import javax.inject.Inject;
-import javax.persistence.NoResultException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
+
+import javax.inject.Inject;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
+import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
+import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
+import cz.muni.fi.pa165.sportsClub.service.ManagerService;
 
 /**
  *
  * @author Andrej 410433
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ServiceApplicationContext.class)
+@ContextConfiguration(classes = PersistenceApplicationContext.class)
 @Transactional
 public class ManagerServiceTest {
 
