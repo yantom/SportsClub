@@ -16,14 +16,17 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 
 /**
@@ -32,57 +35,63 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceApplicationContext.class)
+@Transactional
 public class ClubServiceTest {
 
     @Mock
-    ClubDao clubDao;
+    private ClubDao clubDao;
 
     @Mock
-    ManagerDao managerDao;
+    private ManagerDao managerDao;
 
     @Mock
-    PlayerDao playerDao;
+    private PlayerDao playerDao;
 
     @Mock
-    PlayerInfoDao playerInfoDao;
+    private PlayerInfoDao playerInfoDao;
 
     @Mock
-    TeamDao teamDao;
+    private TeamDao teamDao;
+
+    @Mock
+    private Manager manager;
+
+    @Mock
+    private Club club;
+
+    @Mock
+    private Player player1;
+
+    @Mock
+    private Player player2;
+
+    @Mock
+    private Player player3;
 
     @Inject
     @InjectMocks
     private ClubService clubService;
 
+    private PlayerInfo playerInfo;
+    private Team team;
+
     @Before
-    public void setup() throws ServiceException {
+    public void setup(){
         MockitoAnnotations.initMocks(this);
-    }
 
-    @Test
-    public void getFreePlayersTest(){
-
-        Manager manager = new Manager();
         manager.setEmail("david@koncak.com");
         manager.setPassword("TheBest99");
         manager.setFirstName("David");
         manager.setLastName("Koncak");
 
-        Club club = new Club();
         club.setName("FC Slavia Praha");
         club.setManager(manager);
-
         manager.setClub(club);
-        managerDao.createManager(manager);
-        clubDao.createClub(club);
 
-        Team team = new Team();
+        team = new Team();
         team.setManager(manager);
         team.setCategory(Category.MEN);
-        teamDao.createTeam(team);
 
-
-        //player of club without team
-        Player player1 = new Player();
         player1.setFirstName("Simon");
         player1.setLastName("Sudora");
         player1.setEmail("simon@sudora.com");
@@ -90,10 +99,7 @@ public class ClubServiceTest {
         player1.setWeight(120);
         player1.setDateOfBirth(LocalDate.parse("2000-06-15"));
         player1.setManager(manager);
-        playerDao.createPlayer(player1);
 
-        //player of club without team
-        Player player2 = new Player();
         player2.setFirstName("Jan");
         player2.setLastName("Tomasek");
         player2.setEmail("jan@tomasek.com");
@@ -101,11 +107,7 @@ public class ClubServiceTest {
         player2.setWeight(120);
         player2.setDateOfBirth(LocalDate.parse("2000-06-15"));
         player2.setManager(manager);
-        playerDao.createPlayer(player2);
 
-
-        //player of club with team
-        Player player3 = new Player();
         player3.setFirstName("Andrej");
         player3.setLastName("Bonis");
         player3.setEmail("andrej@bonis.com");
@@ -113,24 +115,39 @@ public class ClubServiceTest {
         player3.setWeight(120);
         player3.setDateOfBirth(LocalDate.parse("2000-06-15"));
         player3.setManager(manager);
-        playerDao.createPlayer(player3);
 
-
-        PlayerInfo playerInfo = new PlayerInfo();
+        playerInfo = new PlayerInfo();
         playerInfo.setJerseyNumber(15);
         playerInfo.setPlayer(player3);
         playerInfo.setTeam(team);
-        playerInfoDao.createPlayerInfo(playerInfo);
 
+    }
+
+    @Test
+    public void getFreePlayersTest(){
         List<Player> freePlayers = new ArrayList<Player>();
         freePlayers.add(player1);
         freePlayers.add(player2);
+
+        List<Player> playersOfClub = new ArrayList<Player>();
+        playersOfClub.add(player1);
+        playersOfClub.add(player2);
+        playersOfClub.add(player3);
+
+        List<PlayerInfo> playerInfos = new ArrayList<PlayerInfo>();
+        playerInfos.add(playerInfo);
+
+        when(club.getManager()).thenReturn(manager);
+        when(manager.getPlayers()).thenReturn(playersOfClub);
+        when(player1.getPlayerInfos()).thenReturn(new ArrayList<PlayerInfo>());
+        when(player2.getPlayerInfos()).thenReturn(new ArrayList<PlayerInfo>());
+        when(player3.getPlayerInfos()).thenReturn(playerInfos);
+
 
         List<Player> returnedFreePlayers = clubService.getFreePlayersOfClub(club);
 
         assertEquals(freePlayers.size(),returnedFreePlayers.size());
         assertTrue(returnedFreePlayers.contains(freePlayers.get(0)));
         assertTrue(returnedFreePlayers.contains(freePlayers.get(1)));
-
     }
 }
