@@ -23,7 +23,7 @@ import cz.muni.fi.pa165.sportsClub.service.ClubService;
 public class ClubFacadeImpl implements ClubFacade {
 
 	@Inject
-	ClubService clubService;
+	private ClubService clubService;
 
 	public void createClub(@Valid ClubDto c) {
 		clubService.createClub(new ModelMapper().map(c, Club.class));

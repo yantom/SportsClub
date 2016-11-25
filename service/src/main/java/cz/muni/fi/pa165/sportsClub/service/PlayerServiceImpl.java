@@ -21,10 +21,10 @@ import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 public class PlayerServiceImpl implements PlayerService {
 
     @Inject
-    PlayerDao playerDao;
+    private PlayerDao playerDao;
     
     @Inject
-    ClubDao clubDao;
+    private ClubDao clubDao;
 
     public void createPlayer(Player p) {
         playerDao.createPlayer(p);
