@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.sportsClub.service;
 
 import javax.inject.Inject;
 
+import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,21 +21,35 @@ public class ManagerServiceImpl implements ManagerService {
 		managerDao.createManager(m);
 	}
         */
-
-        public void updateManager(Manager m) {
-		managerDao.updateManager(m);
-
+    public void updateManager(Manager m) {
+		try {
+			managerDao.updateManager(m);
+		} catch (Exception e) {
+			throw new DaoLayerException("can not update manager", e);
+		}
 	}
 
 	public void deleteManager(Manager m) {
-		managerDao.deleteManager(m);
+		try {
+			managerDao.deleteManager(m);
+		} catch (Exception e) {
+			throw new DaoLayerException("can not delete manager", e);
+		}
 	}
 
 	public Manager getManagerById(Long managerId) {
-		return managerDao.getManagerById(managerId);
+		try {
+			return managerDao.getManagerById(managerId);
+		} catch (Exception e) {
+			throw new DaoLayerException("can not find manager by id", e);
+		}
 	}
 
 	public Manager getManagerByEmail(String email) {
-		return managerDao.getManagerByEmail(email);
+		try {
+			return managerDao.getManagerByEmail(email);
+		} catch (Exception e) {
+			throw new DaoLayerException("can not find manager by email", e);
+		}
 	}
 }

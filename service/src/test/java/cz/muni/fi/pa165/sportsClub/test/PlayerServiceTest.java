@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.sportsClub.test;
 
 import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
+import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
@@ -89,7 +90,7 @@ public class PlayerServiceTest {
         playerService.updatePlayer(player);
     }
     
-    @Test(expected = NullPointerException.class)
+    @Test(expected = DaoLayerException.class)
     public void deletePlayerBeforeSavingTest(){
         playerService.deletePlayer(player);
         verify(playerDao, times(1)).deletePlayer(player);
