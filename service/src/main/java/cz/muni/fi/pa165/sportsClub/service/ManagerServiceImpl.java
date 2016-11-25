@@ -12,12 +12,14 @@ public class ManagerServiceImpl implements ManagerService {
         @Inject
 	private ManagerDao managerDao;
 
+        /**
 	public void createManager(Manager m) {
 		managerDao.createManager(m);
 
 	}
+        */
 
-	public void updateManager(Manager m) {
+        public void updateManager(Manager m) {
 		managerDao.updateManager(m);
 
 	}
