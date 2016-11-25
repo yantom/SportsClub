@@ -27,9 +27,9 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy="team", cascade = CascadeType.ALL)
-	private List<PlayerInfo> playerInfos = new ArrayList<>();
-    
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+    private List<PlayerInfo> playerInfos = new ArrayList<>();
+
     @NotNull
     private Category category;
 
@@ -39,54 +39,54 @@ public class Team {
 
     /**
      * Gets a proper manager
-     * 
+     *
      * @return manager
      */
     public Manager getManager() {
         return manager;
     }
-    
+
     /**
      * Sets a proper manager
-     * 
+     *
      * @param manager proper manager
      */
     public void setManager(Manager manager) {
         this.manager = manager;
     }
-    
+
     /**
      * Sets list of player infos
-     * 
+     *
      * @param playerInfo player infos of team
      */
     public void setPlayerInfos(List<PlayerInfo> playerInfo) {
         this.playerInfos = playerInfo;
     }
 
-        /**
+    /**
      * Gets list of player infos
-     * 
+     *
      * @return all player infos of team
      */
     public List<PlayerInfo> getPlayerInfos() {
-		return Collections.unmodifiableList(playerInfos);
-	}
+        return Collections.unmodifiableList(playerInfos);
+    }
 
-	public void addPlayerInfo(PlayerInfo team) {
-		playerInfos.add(team);
-	}
+    public void addPlayerInfo(PlayerInfo team) {
+        playerInfos.add(team);
+    }
 
-	public void removePlayerInfo(PlayerInfo team) {
-		playerInfos.remove(team);
-	}
+    public void removePlayerInfo(PlayerInfo team) {
+        playerInfos.remove(team);
+    }
 
-	public void updatePlayerInfo(PlayerInfo team) {
-		playerInfos.remove(team);
-		playerInfos.add(team);
-	}
-   
-        /**
+    public void updatePlayerInfo(PlayerInfo team) {
+        playerInfos.remove(team);
+        playerInfos.add(team);
+    }
+
+    /**
      * Gets age category of team
      *
      * @return age category of team

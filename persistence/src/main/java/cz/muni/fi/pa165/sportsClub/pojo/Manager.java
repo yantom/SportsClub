@@ -26,14 +26,17 @@ public class Manager {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
+        @NotNull
 	@Column(nullable = false)
 	@Size(max = 32, min = 2)
 	private String firstName;
 
+        @NotNull
 	@Column(nullable = false)
 	@Size(max = 32, min = 2)
 	private String lastName;
 
+        @NotNull
 	@Column(nullable = false, unique = true)
 	@Pattern(regexp = "[^@]+@[^@]+\\.[^@]+")
 	private String email;
@@ -42,6 +45,7 @@ public class Manager {
 	@Column(unique = true)
 	private String mobile;
 
+        @NotNull
 	@Column(nullable = false)
 	private String password;
 

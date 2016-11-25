@@ -14,20 +14,19 @@ import javax.validation.constraints.NotNull;
  *
  * @author David Koncak (410155)
  */
-
 @Entity
 public class Club {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable=false, unique = true)
+    @NotNull
+    @Column(nullable = false, unique = true)
     private String name;
-    
+
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-	@NotNull
     private Manager manager;
 
     public Long getId() {
@@ -53,7 +52,7 @@ public class Club {
     public void setManager(Manager manager) {
         this.manager = manager;
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -67,7 +66,7 @@ public class Club {
         if (obj == null) {
             return false;
         }
-        if (!(obj instanceof Club)){ 
+        if (!(obj instanceof Club)) {
             return false;
         }
         final Club other = (Club) obj;
