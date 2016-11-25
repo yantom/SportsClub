@@ -16,7 +16,7 @@ import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfoId;
 @Repository
 @Transactional
 public class PlayerInfoDaoImpl implements PlayerInfoDao {
-    
+
     @PersistenceContext
     private EntityManager em;
 
@@ -27,15 +27,16 @@ public class PlayerInfoDaoImpl implements PlayerInfoDao {
 
     @Override
     public void deletePlayerInfo(PlayerInfo pi) {
-		em.remove(em.merge(pi));
+        em.remove(em.merge(pi));
     }
 
     @Override
     public void updatePlayerInfo(PlayerInfo pi) {
         em.merge(pi);
     }
+
     @Override
     public PlayerInfo getPlayerInfoById(PlayerInfoId piId) {
-        return em.find(PlayerInfo.class, piId);   
+        return em.find(PlayerInfo.class, piId);
     }
 }

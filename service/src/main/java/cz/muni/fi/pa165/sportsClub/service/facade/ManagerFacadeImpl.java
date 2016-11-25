@@ -6,39 +6,44 @@ import org.springframework.transaction.annotation.Transactional;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerAuthenticationDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ManagerFacade;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
+import cz.muni.fi.pa165.sportsClub.service.ManagerService;
+import javax.inject.Inject;
+import org.modelmapper.ModelMapper;
 
 @Transactional
 @Service
 public class ManagerFacadeImpl implements ManagerFacade {
 
+        @Inject
+        ManagerService managerService;
+    
 	public void createManager(ManagerDto m) {
-		// TODO Auto-generated method stub
+		managerService.createManager(new ModelMapper().map(m, Manager.class));
 
 	}
 
 	public void updateManager(ManagerDto m) {
-		// TODO Auto-generated method stub
+		managerService.updateManager(new ModelMapper().map(m, Manager.class));
 
 	}
 
 	public void deleteManager(ManagerDto m) {
-		// TODO Auto-generated method stub
+		managerService.deleteManager(new ModelMapper().map(m, Manager.class));
 
 	}
 
 	public ManagerDto getManagerById(Long managerId) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ModelMapper().map(managerService.getManagerById(managerId), ManagerDto.class);
 	}
 
 	public ManagerDto getManagerByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ModelMapper().map(managerService.getManagerByEmail(email), ManagerDto.class);
 	}
 
 	public boolean authenticateManager(ManagerAuthenticationDto m) {
-		// TODO Auto-generated method stub
-		return false;
+		//TODO
+                return false;
 	}
 
 }
