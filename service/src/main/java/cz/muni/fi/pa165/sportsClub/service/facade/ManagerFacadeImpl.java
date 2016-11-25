@@ -17,12 +17,15 @@ public class ManagerFacadeImpl implements ManagerFacade {
 
     @Inject
 	ManagerService managerService;
-    
+        
+        /**
 	public void createManager(ManagerDto m) {
 		managerService.createManager(new ModelMapper().map(m, Manager.class));
 
 	}
-
+        */
+    
+    
 	public void updateManager(ManagerDto m) {
 		managerService.updateManager(new ModelMapper().map(m, Manager.class));
 
