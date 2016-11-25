@@ -10,6 +10,7 @@ import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
 import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
@@ -17,9 +18,9 @@ import cz.muni.fi.pa165.sportsClub.pojo.Team;
 @Service
 public class TeamServiceImpl implements TeamService {
 	@Inject
-	TeamDao teamDao;
+	private TeamDao teamDao;
 	@Inject
-	PlayerInfoDao playerInfoDao;
+	private PlayerInfoDao playerInfoDao;
 
 	public void createTeam(Team t) {
 		teamDao.createTeam(t);
@@ -40,12 +41,20 @@ public class TeamServiceImpl implements TeamService {
 		return teamDao.getTeamById(teamId);
 	}
 
-	public Team getTeamOfClubByCategory(Category category) {
-		return null;
+	public Team getTeamOfClubByCategory(Category category, Club c) {
+		Manager manager = c.getManager();
+                List<Team> teams = manager.getTeams();
+                for(Team team: teams){
+                    if (team.getCategory().equals(category)){
+                        return team;
+                    }
+                }
+                return null;
 	}
 
 	public List<Team> getAllTeamsOfClub(Club c) {
-                return null;
+                Manager manager = c.getManager();
+                return manager.getTeams();
 	}
 
 	public List<PlayerInfo> getPlayerInfos(Team t) {

@@ -8,7 +8,7 @@ import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 public class ManagerServiceImpl implements ManagerService {
 	
         @Inject
-	ManagerDao managerDao;
+	private ManagerDao managerDao;
 
 	public void createManager(Manager m) {
 		managerDao.createManager(m);

@@ -17,7 +17,7 @@ public interface TeamService {
 
 	Team getTeamById(Long teamId);
 
-	Team getTeamOfClubByCategory(Category category);
+	Team getTeamOfClubByCategory(Category category, Club c);
 
 	List<Team> getAllTeamsOfClub(Club c);
 
