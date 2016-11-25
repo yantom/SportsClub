@@ -7,32 +7,42 @@ import java.io.Serializable;
  */
 public class PlayerInfoId implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private long playerId;
+    private long playerId;
 
     private long teamId;
 
-    public long getPlayerId() { return playerId; }
+    public long getPlayerId() {
+        return playerId;
+    }
 
-    public long getTeamId() { return teamId; }
+    public long getTeamId() {
+        return teamId;
+    }
 
-	public PlayerInfoId() {
-	}
+    public PlayerInfoId() {
+    }
 
-	public PlayerInfoId(long playerId, long teamId) {
-		this.playerId = playerId;
-		this.teamId = teamId;
-	}
+    public PlayerInfoId(long playerId, long teamId) {
+        this.playerId = playerId;
+        this.teamId = teamId;
+    }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PlayerInfoId)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof PlayerInfoId)) {
+            return false;
+        }
 
         PlayerInfoId that = (PlayerInfoId) o;
 
-        if (getPlayerId() != that.getPlayerId()) return false;
+        if (getPlayerId() != that.getPlayerId()) {
+            return false;
+        }
         return getTeamId() == that.getTeamId();
 
     }
