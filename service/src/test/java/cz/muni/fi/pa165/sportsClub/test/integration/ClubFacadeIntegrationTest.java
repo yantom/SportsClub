@@ -26,13 +26,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
+import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ClubFacade;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
-import cz.muni.fi.pa165.sportsClub.pojo.Player;
-import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
-import cz.muni.fi.pa165.sportsClub.service.ClubService;
-import cz.muni.fi.pa165.sportsClub.service.PlayerService;
-import cz.muni.fi.pa165.sportsClub.service.TeamService;
+import cz.muni.fi.pa165.sportsClub.facade.PlayerFacade;
+import cz.muni.fi.pa165.sportsClub.facade.TeamFacade;
 import cz.muni.fi.pa165.sportsClub.test.TestUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -44,13 +41,10 @@ public class ClubFacadeIntegrationTest {
 	private ClubFacade clubFacade;
 
 	@Inject
-	private PlayerService playerService;
+	private TeamFacade teamFacade;
 
 	@Inject
-	private ClubService clubService;
-
-	@Inject
-	private TeamService teamService;
+	private PlayerFacade playerFacade;
 
 	@PersistenceUnit
 	private EntityManagerFactory emc;
@@ -141,12 +135,8 @@ public class ClubFacadeIntegrationTest {
 	public void getFreePlayers() {
 		List<ClubDto> clubs = clubFacade.getAllClubs();
 		assertEquals(0, clubFacade.getFreePlayers(clubs.get(0)).size());
-		Club c = clubService.getAllClubs().get(0);
-		List<Player> players = playerService.getAllPlayersOfClub(c);
-		Player p = players.get(0);
-		List<PlayerInfo> playerInfos = playerService.getPlayerInfos(p);
-		PlayerInfo pi = playerInfos.get(0);
-		teamService.removePlayerFromTeam(pi.getPlayer(), pi.getTeam());
+		PlayerDto p = playerFacade.getAllPlayersOfClub(clubs.get(0)).get(0);
+		teamFacade.removePlayerFromTeam(p, playerFacade.getTeamsOfPlayer(p).get(0).getTeam());
 		assertEquals(1, clubFacade.getFreePlayers(clubs.get(0)).size());
 	}
 }
