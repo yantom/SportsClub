@@ -10,7 +10,6 @@ import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import org.springframework.stereotype.Service;
 
 @Service
-@Transactional
 public class ManagerServiceImpl implements ManagerService {
 	
         @Inject

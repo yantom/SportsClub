@@ -191,12 +191,12 @@ public class ClubServiceTest {
         List<PlayerInfo> playerInfos = new ArrayList<PlayerInfo>();
         playerInfos.add(playerInfo);
 
+        when(clubDao.getWholeClubById(mockClub.getId())).thenReturn(mockClub);
         when(mockClub.getManager()).thenReturn(mockManager);
         when(mockManager.getPlayers()).thenReturn(playersOfClub);
         when(mockPlayer1.getPlayerInfos()).thenReturn(new ArrayList<PlayerInfo>());
         when(mockPlayer2.getPlayerInfos()).thenReturn(new ArrayList<PlayerInfo>());
         when(mockPlayer3.getPlayerInfos()).thenReturn(playerInfos);
-
 
         List<Player> returnedFreePlayers = clubService.getFreePlayersOfClub(mockClub);
         assertEquals(freePlayers,returnedFreePlayers);
