@@ -22,16 +22,25 @@ public class PlayerInfoDaoImpl implements PlayerInfoDao {
 
     @Override
     public void createPlayerInfo(PlayerInfo pi) {
+        if(pi == null){
+            throw new IllegalArgumentException("Argument can not be null");
+        }
         em.persist(pi);
     }
 
     @Override
     public void deletePlayerInfo(PlayerInfo pi) {
+        if(pi == null){
+            throw new IllegalArgumentException("Argument can not be null");
+        }
         em.remove(em.merge(pi));
     }
 
     @Override
     public void updatePlayerInfo(PlayerInfo pi) {
+        if(pi == null){
+            throw new IllegalArgumentException("Argument can not be null");
+        }
         em.merge(pi);
     }
 

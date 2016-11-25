@@ -19,14 +19,25 @@ public class TeamDaoImpl implements TeamDao {
 
     @Override
     public void createTeam(Team team) {
+        if(team == null){
+            throw new IllegalArgumentException("Argument can not be null");
+        }
         em.persist(team);
     }
 
     @Override
-    public void deleteTeam(Team team) { em.remove(em.merge(team)); }
+    public void deleteTeam(Team team) {
+        if(team == null){
+            throw new IllegalArgumentException("Argument can not be null");
+        }
+        em.remove(em.merge(team));
+    }
 
     @Override
     public void updateTeam(Team team) {
+        if(team == null){
+            throw new IllegalArgumentException("Argument can not be null");
+        }
         em.merge(team);
     }
 

@@ -67,7 +67,6 @@ public class ClubTest {
     @Test()
     public void createClubTest(){
         assertNull(club.getId());
-
         clubDao.createClub(club);
         assertNotNull(club.getId());
 

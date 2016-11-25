@@ -24,13 +24,28 @@ public class PlayerDaoImpl implements PlayerDao {
     private EntityManager em;
 
     @Override
-    public void createPlayer(Player player) {em.persist(player); }
+    public void createPlayer(Player player) {
+        if(player == null){
+            throw new IllegalArgumentException("Argument can not be null");
+        }
+        em.persist(player);
+    }
 
     @Override
-    public void updatePlayer(Player player) { em.merge(player); }
+    public void updatePlayer(Player player) {
+        if(player == null){
+            throw new IllegalArgumentException("Argument can not be null");
+        }
+        em.merge(player);
+    }
 
     @Override
-    public void deletePlayer(Player player) {em.remove(em.merge(player)); }
+    public void deletePlayer(Player player) {
+        if(player == null){
+            throw new IllegalArgumentException("Argument can not be null");
+        }
+        em.remove(em.merge(player));
+    }
 
     @Override
     public Player getPlayerById(Long id)  {
@@ -39,8 +54,11 @@ public class PlayerDaoImpl implements PlayerDao {
 
     @Override
     public List<Player> getAllPlayers() {
-        return Collections.unmodifiableList(
-                em.createQuery("SELECT p FROM Player p", Player.class).getResultList());
+        try {
+            return em.createQuery("SELECT p FROM Player p", Player.class).getResultList();
+        } catch (NoResultException nrf) {
+            return null;
+        }
     }
 
     @Override
@@ -48,8 +66,8 @@ public class PlayerDaoImpl implements PlayerDao {
         try {
             return em.createQuery("select p from Player p where email = :email",
                                 Player.class).setParameter("email", email).getSingleResult();
-	} catch (NoResultException nrf) {
+	    } catch (NoResultException nrf) {
             return null;
-	}
+	    }
     }
 }

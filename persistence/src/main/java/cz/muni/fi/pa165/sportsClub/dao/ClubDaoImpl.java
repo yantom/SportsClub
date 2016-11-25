@@ -16,6 +16,8 @@ import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 /**
  *
  * @author David Koncak (410155)
@@ -30,12 +32,18 @@ public class ClubDaoImpl implements ClubDao{
 
     @Override
     public void deleteClub(Club club) {
-            em.remove(em.merge(club));
+        if(club == null){
+            throw new IllegalArgumentException("Argument can not be null");
+        }
+        em.remove(em.merge(club));
     }
 
     @Override
-    public void createClub(Club club) {
-            em.persist(club);
+    public void createClub(Club club){
+        if(club == null){
+            throw new IllegalArgumentException("Argument can not be null");
+        }
+        em.persist(club);
     }
 
     @Override
@@ -45,6 +53,9 @@ public class ClubDaoImpl implements ClubDao{
 
     @Override
     public void updateClub(Club club) {
+        if(club == null){
+            throw new IllegalArgumentException("Argument can not be null");
+        }
         em.merge(club);
     }
 
