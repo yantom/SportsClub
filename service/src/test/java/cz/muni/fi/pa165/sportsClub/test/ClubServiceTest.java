@@ -39,7 +39,6 @@ import cz.muni.fi.pa165.sportsClub.service.ClubService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
-@Transactional
 public class ClubServiceTest {
 
     @Mock
