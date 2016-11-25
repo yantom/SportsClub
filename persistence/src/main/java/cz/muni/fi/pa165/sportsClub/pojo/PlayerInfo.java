@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
 import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -110,7 +111,7 @@ public class PlayerInfo {
 
     @Override
     public String toString() {
-        return "#" + jerseyNumber + ", " + player + ", " + team;
+		return "#" + jerseyNumber + ", " + player + ", " + team + ", " + playerId + ", " + teamId;
     }
     
         @Override

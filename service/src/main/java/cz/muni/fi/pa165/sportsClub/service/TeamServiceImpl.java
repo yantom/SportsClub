@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
 import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
@@ -16,6 +17,7 @@ import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
 @Service
+@Transactional
 public class TeamServiceImpl implements TeamService {
 	@Inject
 	private TeamDao teamDao;
@@ -85,12 +87,12 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	public void removePlayerFromTeam(Player p, Team t) {
+
 		List<PlayerInfo> playerInfos = p.getPlayerInfos();
                 for(PlayerInfo info: playerInfos){
                     if(info.getTeamId() == t.getId()){
-                        t.removePlayerInfo(info);
+				playerInfoDao.deletePlayerInfo(info);
                     }
-                }
-                
+		}
 	}
 }

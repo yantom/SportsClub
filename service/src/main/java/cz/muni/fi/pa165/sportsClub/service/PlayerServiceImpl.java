@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
@@ -18,6 +19,7 @@ import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
  * @author Andrej Bonis 410433
  */
 @Service
+@Transactional
 public class PlayerServiceImpl implements PlayerService {
 
     @Inject
@@ -50,13 +52,14 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     public List<Player> getAllPlayersOfClub(Club c) {
-        Club club = clubDao.getClubById(c.getId());
-        return club.getManager().getPlayers();
-
+		List<Player> players = clubDao.getClubById(c.getId()).getManager().getPlayers();
+		players.size();
+		return players;
     }
 
     public List<PlayerInfo> getPlayerInfos(Player p) {
-        Player player = playerDao.getPlayerById(p.getId());
-        return player.getPlayerInfos();
+		List<PlayerInfo> playerInfos = playerDao.getPlayerById(p.getId()).getPlayerInfos();
+		playerInfos.size();
+		return playerInfos;
     }
 }

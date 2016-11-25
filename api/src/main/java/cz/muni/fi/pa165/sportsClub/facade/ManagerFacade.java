@@ -4,7 +4,7 @@ import cz.muni.fi.pa165.sportsClub.dto.ManagerAuthenticationDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 
 public interface ManagerFacade {
-	void createManager(ManagerDto m);
+	//void createManager(ManagerDto m);
 
 	void updateManager(ManagerDto m);
 

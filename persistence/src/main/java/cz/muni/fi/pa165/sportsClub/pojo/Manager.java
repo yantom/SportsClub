@@ -7,9 +7,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -23,17 +23,19 @@ import javax.validation.constraints.Size;
 public class Manager {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
+        @NotNull
 	@Column(nullable = false)
 	@Size(max = 32, min = 2)
 	private String firstName;
 
+        @NotNull
 	@Column(nullable = false)
 	@Size(max = 32, min = 2)
 	private String lastName;
 
+        @NotNull
 	@Column(nullable = false, unique = true)
 	@Pattern(regexp = "[^@]+@[^@]+\\.[^@]+")
 	private String email;
@@ -42,11 +44,14 @@ public class Manager {
 	@Column(unique = true)
 	private String mobile;
 
+        @NotNull
 	@Column(nullable = false)
 	private String password;
 
 	@OneToOne(mappedBy="manager",cascade = CascadeType.ALL)
 	@NotNull
+	@MapsId
+	@JoinColumn(name = "id")
 	private Club club;
 
 	@OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
@@ -173,7 +178,8 @@ public class Manager {
 	@Override
 	public String toString() {
 		return "Manager [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", mobile=" + mobile + ", password=" + password + ", club=" + club + "]";
+				+ ", mobile=" + mobile + ", password=" + password + ", clubId=" + club.getId() + ", clubName="
+				+ club.getName() + "]";
 	}
 
 }
