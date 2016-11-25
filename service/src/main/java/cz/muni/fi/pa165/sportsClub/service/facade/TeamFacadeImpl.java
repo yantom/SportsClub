@@ -1,8 +1,13 @@
 package cz.muni.fi.pa165.sportsClub.service.facade;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,11 +19,10 @@ import cz.muni.fi.pa165.sportsClub.enums.Category;
 import cz.muni.fi.pa165.sportsClub.facade.TeamFacade;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
+import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
 import cz.muni.fi.pa165.sportsClub.service.TeamService;
-import javax.inject.Inject;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
+import cz.muni.fi.pa165.sportsClub.service.mappers.PlayerOfTeamMapper;
 
 @Transactional
 @Service
@@ -61,7 +65,14 @@ public class TeamFacadeImpl implements TeamFacade {
 	}
 
 	public List<PlayerOfTeamDto> getPlayersOfTeam(TeamDto t) {
-		return null;
+		ModelMapper mapper = new ModelMapper();
+		mapper.addMappings(new PlayerOfTeamMapper());
+		List<PlayerOfTeamDto> players = new ArrayList<PlayerOfTeamDto>();
+		List<PlayerInfo> infos = teamService.getPlayerInfos(new ModelMapper().map(t, Team.class));
+		for (PlayerInfo playerInfo : infos) {
+			players.add(mapper.map(playerInfo, PlayerOfTeamDto.class));
+		}
+		return players;
 	}
 
 	public void assignPlayerToTeam(PlayerDto p, TeamDto t, int jerseyNumber) {

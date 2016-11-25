@@ -6,7 +6,6 @@ import javax.inject.Inject;
 
 import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
 import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
