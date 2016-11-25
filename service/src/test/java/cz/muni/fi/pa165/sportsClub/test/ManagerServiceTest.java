@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.service.ManagerService;
 import cz.muni.fi.pa165.sportsClub.service.ServiceApplicationContext;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import org.junit.Before;
@@ -38,7 +39,6 @@ public class ManagerServiceTest {
 
     @Mock
     private Manager manager;
-    private Manager manager2;
 
     @Mock
     private Club club;
@@ -51,7 +51,7 @@ public class ManagerServiceTest {
             {
                 setId(1L);
                 setFirstName("Andrej");
-                setFirstName("Bonis");
+                setLastName("Bonis");
                 setEmail("andrej@gmail.com");
                 setPassword("123456789");
                 setClub(club);

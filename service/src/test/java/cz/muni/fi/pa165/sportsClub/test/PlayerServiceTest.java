@@ -53,6 +53,7 @@ public class PlayerServiceTest {
         LocalDate dt1 = LocalDate.parse("2000-06-15");
         
         player = new Player();
+        player.setId(1L);
         player.setEmail("onassis@gmail.com");
         player.setFirstName("Aristoteles");
         player.setLastName("Onassis");
@@ -103,8 +104,8 @@ public class PlayerServiceTest {
     
     @Test
     public void getPlayerByEmailTest(){
-        when(playerDao.getPlayerByEmail("boris.britva@gmail.com")).thenReturn(player);
-        Player returnedPlayer = playerService.getPlayerByEmail("boris.britva@gmail.com");
+        when(playerDao.getPlayerByEmail("onassis@gmail.com")).thenReturn(player);
+        Player returnedPlayer = playerService.getPlayerByEmail("onassis@gmail.com");
         assertEquals(player,returnedPlayer);
     }
     
