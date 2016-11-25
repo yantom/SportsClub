@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
+import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.service.ManagerService;
@@ -74,9 +75,9 @@ public class ManagerServiceTest {
         managerService.updateManager(manager);
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DaoLayerException.class)
     public void updateNullManagerTest() {
-        doThrow(new IllegalArgumentException()).when(managerDao).updateManager(null);
+        doThrow(new DaoLayerException("null Manager")).when(managerDao).updateManager(null);
         managerService.updateManager(null);
     }
 
@@ -86,9 +87,9 @@ public class ManagerServiceTest {
         managerService.deleteManager(manager);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DaoLayerException.class)
     public void deleteNullManagerTest() {
-        doThrow(new IllegalArgumentException()).when(managerDao).deleteManager(null);
+        doThrow(new DaoLayerException("null Manager")).when(managerDao).deleteManager(null);
         managerService.deleteManager(null);
     }
     
