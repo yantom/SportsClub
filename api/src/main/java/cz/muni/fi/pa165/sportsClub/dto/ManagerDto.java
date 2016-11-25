@@ -27,6 +27,10 @@ public class ManagerDto {
 	private String mobile;
 
 	@NotNull
+	@Size(min = 8, max = 64)
+	private String password;
+
+	@NotNull
 	private ClubDto club;
 
 	private List<TeamDto> teams = new ArrayList<>();
@@ -113,6 +117,14 @@ public class ManagerDto {
 	public void updatePlayer(PlayerDto player) {
 		players.remove(player);
 		players.add(player);
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override

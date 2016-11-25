@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.sportsClub.service.facade;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -25,8 +24,10 @@ public class ClubFacadeImpl implements ClubFacade {
 	@Inject
 	private ClubService clubService;
 
-	public void createClub(@Valid ClubDto c) {
-		clubService.createClub(new ModelMapper().map(c, Club.class));
+	public void createClub(ClubDto c) {
+		Club clubEntity = new ModelMapper().map(c, Club.class);
+		clubService.createClub(clubEntity);
+		c.setId(clubEntity.getId());
 	}
 
 	public void updateClub(ClubDto c) {
@@ -55,8 +56,9 @@ public class ClubFacadeImpl implements ClubFacade {
 		}.getType());
 	}
 
-	public List<PlayerDto> getFreePlayers() {
-		throw new UnsupportedOperationException();
+	public List<PlayerDto> getFreePlayers(ClubDto c) {
+		return new ModelMapper().map(clubService.getFreePlayersOfClub(new ModelMapper().map(c, Club.class)),
+				new TypeToken<List<ClubDto>>() {
+				}.getType());
 	}
-
 }

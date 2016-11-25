@@ -190,4 +190,11 @@ public class Player {
         }
         return true;
     }
+
+	@Override
+	public String toString() {
+		return "Player [id=" + id + ", dateOfBirth=" + dateOfBirth + ", email=" + email + ", managerId="
+				+ manager.getId() + ", playerInfosSize=" + playerInfos.size() + "]";
+	}
+
 }

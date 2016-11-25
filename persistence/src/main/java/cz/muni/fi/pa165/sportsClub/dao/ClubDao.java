@@ -1,7 +1,8 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import java.util.List;
+
+import cz.muni.fi.pa165.sportsClub.pojo.Club;
 
 /**
  *
@@ -42,4 +43,12 @@ public interface ClubDao {
     
     List<Club> getAllClubs();
     
+	/**
+	 * 
+	 * @param clubId
+	 * @return completly initialized club with all data
+	 *         (players,teams,associations)
+	 */
+	Club getWholeClubById(Long clubId);
+
 }

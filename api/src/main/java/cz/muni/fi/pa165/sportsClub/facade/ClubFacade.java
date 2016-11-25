@@ -19,7 +19,7 @@ public interface ClubFacade {
 
 	void assignManagerToClub(ManagerDto m, ClubDto c);
 
-	List<PlayerDto> getFreePlayers();
+	List<PlayerDto> getFreePlayers(ClubDto c);
 
 	List<ClubDto> getAllClubs();
 }

@@ -1,20 +1,18 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import java.util.Collections;
 import java.util.List;
-import javax.inject.Inject;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.validation.ConstraintViolationException;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Player;
+import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
 /**
  *
@@ -63,5 +61,19 @@ public class ClubDaoImpl implements ClubDao{
         return Collections.unmodifiableList(
                 em.createQuery("SELECT c FROM Club c", Club.class).getResultList());
     }
-    
+
+	@Override
+	public Club getWholeClubById(Long clubId) {
+		Club c = getClubById(clubId);
+		List<Player> players = c.getManager().getPlayers();
+		List<Team> teams = c.getManager().getTeams();
+		for (Team team : teams) {
+			team.getPlayerInfos().size();
+		}
+		for (Player player : players) {
+			player.getPlayerInfos().size();
+		}
+		return c;
+	}
+
 }

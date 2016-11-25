@@ -1,5 +1,8 @@
 package cz.muni.fi.pa165.sportsClub.service.facade;
 
+import javax.inject.Inject;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,8 +11,6 @@ import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ManagerFacade;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.service.ManagerService;
-import javax.inject.Inject;
-import org.modelmapper.ModelMapper;
 
 @Transactional
 @Service
@@ -20,7 +21,9 @@ public class ManagerFacadeImpl implements ManagerFacade {
         
         /**
 	public void createManager(ManagerDto m) {
-		managerService.createManager(new ModelMapper().map(m, Manager.class));
+		Manager managerEntity = new ModelMapper().map(m, Manager.class);
+		managerService.createManager(managerEntity);
+		m.setId(managerEntity.getId());
 
 	}
         */

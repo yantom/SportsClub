@@ -73,17 +73,17 @@ public class Team {
         return Collections.unmodifiableList(playerInfos);
     }
 
-    public void addPlayerInfo(PlayerInfo team) {
-        playerInfos.add(team);
+	public void addPlayerInfo(PlayerInfo pi) {
+		playerInfos.add(pi);
     }
 
-    public void removePlayerInfo(PlayerInfo team) {
-        playerInfos.remove(team);
+	public void removePlayerInfo(PlayerInfo pi) {
+		playerInfos.remove(pi);
     }
 
-    public void updatePlayerInfo(PlayerInfo team) {
-        playerInfos.remove(team);
-        playerInfos.add(team);
+	public void updatePlayerInfo(PlayerInfo pi) {
+		playerInfos.remove(pi);
+		playerInfos.add(pi);
     }
 
     /**
@@ -125,7 +125,7 @@ public class Team {
 
     @Override
     public String toString() {
-        return getManager().getClub().getName() + " - " + getCategory().toString();
+		return getManager().getClub().getName() + " - " + getCategory().toString() + ", id=" + getId();
     }
 
     @Override
