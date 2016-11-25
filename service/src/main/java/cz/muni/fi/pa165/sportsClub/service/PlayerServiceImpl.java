@@ -19,7 +19,6 @@ import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
  * @author Andrej Bonis 410433
  */
 @Service
-@Transactional
 public class PlayerServiceImpl implements PlayerService {
 
     @Inject

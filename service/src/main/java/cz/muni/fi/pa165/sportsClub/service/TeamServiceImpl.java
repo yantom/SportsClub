@@ -17,7 +17,6 @@ import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
 @Service
-@Transactional
 public class TeamServiceImpl implements TeamService {
 	@Inject
 	private TeamDao teamDao;

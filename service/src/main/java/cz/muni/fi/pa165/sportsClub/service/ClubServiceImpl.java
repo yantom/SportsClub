@@ -15,7 +15,6 @@ import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 
 @Service
-@Transactional
 public class ClubServiceImpl implements ClubService {
 	
         @Inject

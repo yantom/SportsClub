@@ -41,11 +41,11 @@ public class PlayerServiceTest {
     
     @Mock
     private PlayerDao playerDao;
-   
+
     private Player player;
     @Mock
     private Manager manager;
-    
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
