@@ -13,6 +13,8 @@ import javax.inject.Inject;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,18 +25,18 @@ import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.service.PlayerService;
 import cz.muni.fi.pa165.sportsClub.service.PlayerServiceImpl;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  *
  * @author David
  */
 
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
 public class PlayerServiceTest {
     
-    @Inject
-    private PlayerService playerService;
-    
+
     
     @Mock
     private PlayerDao playerDao;
@@ -43,10 +45,16 @@ public class PlayerServiceTest {
     @Mock
     private Manager manager;
 
+
+    @Inject
+    @InjectMocks
+    private PlayerService playerService;
+
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        playerService = new PlayerServiceImpl();
+        //playerService = new PlayerServiceImpl();
         LocalDate dt1 = LocalDate.parse("2000-06-15");
         
         player = new Player();
