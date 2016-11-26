@@ -95,7 +95,7 @@ public class PlayerServiceTest {
         playerService.updatePlayer(player);
     }
     
-    @Test(expected = DaoLayerException.class)
+    @Test
     public void deletePlayerBeforeSavingTest(){
         playerService.deletePlayer(player);
         verify(playerDao, times(1)).deletePlayer(player);
