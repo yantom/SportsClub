@@ -95,11 +95,6 @@ public class PlayerServiceTest {
         playerService.updatePlayer(player);
     }
     
-    @Test
-    public void deletePlayerBeforeSavingTest(){
-        playerService.deletePlayer(player);
-        verify(playerDao, times(1)).deletePlayer(player);
-    }
     
     @Test(expected = RuntimeException.class)
     public void deletePlayerTest() {
