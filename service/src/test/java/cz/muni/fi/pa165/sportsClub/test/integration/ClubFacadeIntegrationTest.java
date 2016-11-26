@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -26,7 +25,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
-import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ClubFacade;
 import cz.muni.fi.pa165.sportsClub.facade.PlayerFacade;
 import cz.muni.fi.pa165.sportsClub.facade.TeamFacade;
@@ -90,15 +88,6 @@ public class ClubFacadeIntegrationTest {
 		assertNotEquals(cNameBefore, cNameAfter);
 	}
 
-	//
-	@Test
-	public void deleteClub() {
-		List<ClubDto> clubs = clubFacade.getAllClubs();
-		ClubDto c = clubFacade.getClubById(clubs.get(0).getId());
-		clubFacade.deleteClub(c);
-		assertNotEquals(clubs.size(), clubFacade.getAllClubs().size());
-	}
-
 	@Test
 	public void getClubById() {
 		assertNotNull(clubFacade.getClubById(clubFacade.getAllClubs().get(0).getId()));
@@ -128,15 +117,5 @@ public class ClubFacadeIntegrationTest {
 	@Test
 	public void getAllClubs() {
 		assertEquals(2, clubFacade.getAllClubs().size());
-	}
-
-	//
-	@Test
-	public void getFreePlayers() {
-		List<ClubDto> clubs = clubFacade.getAllClubs();
-		assertEquals(0, clubFacade.getFreePlayers(clubs.get(0)).size());
-		PlayerDto p = playerFacade.getAllPlayersOfClub(clubs.get(0)).get(0);
-		teamFacade.removePlayerFromTeam(p, playerFacade.getTeamsOfPlayer(p).get(0).getTeam());
-		assertEquals(1, clubFacade.getFreePlayers(clubs.get(0)).size());
 	}
 }
