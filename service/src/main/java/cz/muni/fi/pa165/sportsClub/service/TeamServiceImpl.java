@@ -4,12 +4,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import org.springframework.stereotype.Service;
 
 import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
 import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
+import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
@@ -92,9 +92,7 @@ public class TeamServiceImpl implements TeamService {
 	public void assignPlayerToTeam(Player p, Team t, int jerseyNumber) {
             PlayerInfo playerInfo = new PlayerInfo();
             playerInfo.setPlayer(p);
-            playerInfo.setPlayerId(p.getId());
             playerInfo.setTeam(t);
-            playerInfo.setTeamId(t.getId());
             playerInfo.setJerseyNumber(jerseyNumber);
 		try {
 			playerInfoDao.createPlayerInfo(playerInfo);
@@ -108,7 +106,7 @@ public class TeamServiceImpl implements TeamService {
 	public void changeJerseyNumber(Player p, Team t, int jerseyNumber) {
 		List<PlayerInfo> playerInfos = t.getPlayerInfos();
                 for(PlayerInfo info: playerInfos){
-                    if(info.getPlayerId() == p.getId()){
+			if (info.getPlayer().getId() == p.getId()) {
                         info.setJerseyNumber(jerseyNumber);
                     }
                 }
@@ -119,7 +117,7 @@ public class TeamServiceImpl implements TeamService {
 
 		List<PlayerInfo> playerInfos = p.getPlayerInfos();
                 for(PlayerInfo info: playerInfos){
-                    if(info.getTeamId() == t.getId()){
+			if (info.getTeam().getId() == t.getId()) {
 						try {
 							playerInfoDao.deletePlayerInfo(info);
 						} catch (Exception e) {

@@ -1,12 +1,15 @@
 package cz.muni.fi.pa165.sportsClub.test;
 
-import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
-import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
-import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
-import cz.muni.fi.pa165.sportsClub.enums.Category;
-import cz.muni.fi.pa165.sportsClub.pojo.*;
-import cz.muni.fi.pa165.sportsClub.service.ClubService;
-import cz.muni.fi.pa165.sportsClub.service.TeamService;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,16 +20,16 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
+import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
+import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
+import cz.muni.fi.pa165.sportsClub.enums.Category;
+import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
+import cz.muni.fi.pa165.sportsClub.pojo.Player;
+import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
+import cz.muni.fi.pa165.sportsClub.pojo.Team;
+import cz.muni.fi.pa165.sportsClub.service.TeamService;
 
 /**
  * @author Simon Sudora 461460
@@ -143,13 +146,11 @@ public class TeamServiceTest {
         playerInfo1.setJerseyNumber(11);
         playerInfo1.setTeam(mockTeam);
         playerInfo1.setPlayer(player1);
-        playerInfo1.setPlayerId(player1.getId());
 
         player2.setId(2L);
         playerInfo2.setJerseyNumber(15);
         playerInfo2.setTeam(mockTeam);
         playerInfo2.setPlayer(player2);
-        playerInfo2.setPlayerId(player2.getId());
 
         List<PlayerInfo> playersInfos = new ArrayList<PlayerInfo>();
         playersInfos.add(playerInfo1);
@@ -169,9 +170,6 @@ public class TeamServiceTest {
         playerInfo1.setJerseyNumber(11);
         playerInfo1.setTeam(mockTeam);
         playerInfo1.setPlayer(mockPlayer);
-        playerInfo1.setTeamId(1L);
-
-        playerInfo2.setTeamId(2L);
 
         List<PlayerInfo> playersInfos = new ArrayList<PlayerInfo>();
         playersInfos.add(playerInfo1);

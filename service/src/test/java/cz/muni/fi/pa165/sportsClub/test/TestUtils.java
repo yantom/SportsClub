@@ -108,9 +108,7 @@ public class TestUtils {
 				pi = new PlayerInfo();
 				pi.setJerseyNumber(j);
 				pi.setPlayer(p);
-				pi.setPlayerId(p.getId());
 				pi.setTeam(t);
-				pi.setTeamId(t.getId());
 				em.persist(pi);
 			}
 		}

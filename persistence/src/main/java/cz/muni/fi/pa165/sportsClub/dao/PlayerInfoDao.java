@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
-import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfoId;
 
 /**
  * CRUD operations on PlayerInfo
@@ -36,6 +35,6 @@ public interface PlayerInfoDao {
      * @param piId player info id
      * @return found player info
      */
-    PlayerInfo getPlayerInfoById(PlayerInfoId piId);
+	PlayerInfo getPlayerInfoById(Long pid);
 }
 

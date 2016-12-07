@@ -3,10 +3,13 @@ package cz.muni.fi.pa165.sportsClub.pojo;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -17,27 +20,33 @@ import javax.validation.constraints.NotNull;
  * @author Andrej 410433
  */
 @Entity
-@IdClass(PlayerInfoId.class)
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "playerId", "teamId" }))
 public class PlayerInfo {
 
-    @Id
-    private long playerId;
-
-    @Id
-    private long teamId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
     @NotNull
     @Max(99)
     @Min(0)
     private int jerseyNumber;
 
-    @ManyToOne
-    @PrimaryKeyJoinColumn(name = "PLAYERID", referencedColumnName = "ID")
-    private Player player;
+	@ManyToOne
+	@JoinColumn(name = "playerId")
+	private Player player;
 
-    @ManyToOne
-    @PrimaryKeyJoinColumn(name = "TEAMID", referencedColumnName = "ID")
-    private Team team;
+	@ManyToOne
+	@JoinColumn(name = "teamId")
+	private Team team;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
     /**
      * Gets team
@@ -93,25 +102,9 @@ public class PlayerInfo {
         this.jerseyNumber = jerseyNumber;
     }
 
-    public long getPlayerId() {
-        return playerId;
-    }
-
-    public void setPlayerId(long playerId) {
-        this.playerId = playerId;
-    }
-
-    public long getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(long teamId) {
-        this.teamId = teamId;
-    }
-
     @Override
     public String toString() {
-		return "#" + jerseyNumber + ", " + player + ", " + team + ", " + playerId + ", " + teamId;
+		return "#" + jerseyNumber + ", " + player + ", " + team;
     }
     
         @Override

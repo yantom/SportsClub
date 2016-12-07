@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
-import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfoId;
 
 /**
  *
@@ -45,7 +44,7 @@ public class PlayerInfoDaoImpl implements PlayerInfoDao {
     }
 
     @Override
-    public PlayerInfo getPlayerInfoById(PlayerInfoId piId) {
+	public PlayerInfo getPlayerInfoById(Long piId) {
         return em.find(PlayerInfo.class, piId);
     }
 }

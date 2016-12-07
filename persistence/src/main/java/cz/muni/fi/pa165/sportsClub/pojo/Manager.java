@@ -25,15 +25,15 @@ import javax.validation.constraints.Size;
 public class Manager {
 
 	@Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-        @NotNull
+	@NotNull
 	@Column(nullable = false)
 	@Size(max = 32, min = 2)
 	private String firstName;
 
-        @NotNull
+	@NotNull
 	@Column(nullable = false)
 	@Size(max = 32, min = 2)
 	private String lastName;

@@ -25,7 +25,6 @@ import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
-import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfoId;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
 /**
@@ -88,8 +87,8 @@ public class PlayerInfoTest {
 		testPlayerInfo1.setJerseyNumber(10);
 		testPlayerInfo1.setPlayer(testPlayer1);
 		testPlayerInfo1.setTeam(testTeam1);
-		testPlayerInfo1.setPlayerId(testPlayer1.getId());
-		testPlayerInfo1.setTeamId(testTeam1.getId());
+		// testPlayerInfo1.setPlayerId(testPlayer1.getId());
+		// testPlayerInfo1.setTeamId(testTeam1.getId());
 		em.persist(testPlayerInfo1);
 	}
 
@@ -112,35 +111,32 @@ public class PlayerInfoTest {
 		em.persist(testTeam2);
 		testPlayerInfo2 = new PlayerInfo();
 		testPlayerInfo2.setPlayer(testPlayer1);
-		testPlayerInfo2.setPlayerId(testPlayer1.getId());
+		// testPlayerInfo2.setPlayerId(testPlayer1.getId());
 		testPlayerInfo2.setTeam(testTeam2);
-		testPlayerInfo2.setTeamId(testTeam2.getId());
+		// testPlayerInfo2.setTeamId(testTeam2.getId());
 		testPlayerInfo2.setJerseyNumber(66);
 		playerInfoDao.createPlayerInfo(testPlayerInfo2);
-		PlayerInfoId playerInfoId = new PlayerInfoId(testPlayer1.getId(), testTeam2.getId());
-		assertEquals(testTeam2, em.find(PlayerInfo.class, playerInfoId).getTeam());
-		assertEquals(testPlayer1, em.find(PlayerInfo.class, playerInfoId).getPlayer());
+		PlayerInfo pi = em.find(PlayerInfo.class, testPlayerInfo2.getId());
+		assertEquals(testTeam2, pi.getTeam());
+		assertEquals(testPlayer1, pi.getPlayer());
 	}
 
 	@Test
 	public void updatePlayerInfo() {
 		testPlayerInfo1.setJerseyNumber(99);
 		playerInfoDao.updatePlayerInfo(testPlayerInfo1);
-		PlayerInfoId id = new PlayerInfoId(testPlayerInfo1.getPlayerId(), testPlayerInfo1.getTeamId());
-		assertEquals(99, em.find(PlayerInfo.class, id).getJerseyNumber());
+		assertEquals(99, em.find(PlayerInfo.class, testPlayerInfo1.getId()).getJerseyNumber());
 	}
 
 	@Test
 	public void deletePlayerInfo() {
-		PlayerInfoId id = new PlayerInfoId(testPlayerInfo1.getPlayerId(), testPlayerInfo1.getTeamId());
 		playerInfoDao.deletePlayerInfo(testPlayerInfo1);
-		assertNull(em.find(PlayerInfo.class, id));
+		assertNull(em.find(PlayerInfo.class, testPlayerInfo1.getId()));
 	}
 
 	@Test
 	public void getPlayerInfoById() {
-		PlayerInfoId piID = new PlayerInfoId(testPlayer1.getId(), testTeam1.getId());
-		PlayerInfo retrieved = playerInfoDao.getPlayerInfoById(piID);
+		PlayerInfo retrieved = playerInfoDao.getPlayerInfoById(testPlayerInfo1.getId());
 		assertEquals(testPlayer1, retrieved.getPlayer());
 		assertEquals(testTeam1, retrieved.getTeam());
 		assertEquals(10, retrieved.getJerseyNumber());
