@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.sportsClub.dao;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +56,9 @@ public class ManagerDaoImpl implements ManagerDao{
 		if(m == null){
 			throw new IllegalArgumentException("Argument can not be null");
 		}
-		em.remove(em.merge(m));
+		if (em.contains(m))
+			em.remove(m);
+		else
+			em.remove(em.getReference(Manager.class, m.getId()));
 	}
 }

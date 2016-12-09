@@ -1,30 +1,23 @@
 package cz.muni.fi.pa165.sportsClub.test;
 
-import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
-import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
-import cz.muni.fi.pa165.sportsClub.pojo.Manager;
-import org.hibernate.exception.ConstraintViolationException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import javax.inject.Inject;
+
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.TransactionSystemException;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
+import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
+import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 
 /**
  * @author Simon Sudora 461460
@@ -36,9 +29,6 @@ public class ClubTest {
 
     private Manager manager;
     private Club club;
-
-    @PersistenceContext
-    private EntityManager emc;
 
     @Inject
     private ClubDao clubDao;
@@ -61,7 +51,8 @@ public class ClubTest {
 
     @After
     public void afterTest() {
-        clubDao.deleteClub(club);
+		if (club != null)
+			clubDao.deleteClub(club);
     }
 
     @Test()
@@ -108,6 +99,7 @@ public class ClubTest {
         clubDao.deleteClub(club);
         Club deletedClub = clubDao.getClubById(id);
         assertNull(deletedClub);
+		club = null;
     }
 
     @Test

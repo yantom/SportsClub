@@ -19,7 +19,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import cz.muni.fi.pa165.sportsClub.pojo.validation.Past;
-import javax.persistence.UniqueConstraint;
 
 /**
  * @author Simon Sudora 461460
@@ -69,7 +68,7 @@ public class Player {
     @NotNull
     private Manager manager;
 
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "player", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     private List<PlayerInfo> playerInfos = new ArrayList<>();
 
     public Long getId() {
@@ -194,7 +193,7 @@ public class Player {
 	@Override
 	public String toString() {
 		return "Player [id=" + id + ", dateOfBirth=" + dateOfBirth + ", email=" + email + ", managerId="
-				+ manager.getId() + ", playerInfosSize=" + playerInfos.size() + "]";
+				+ manager.getId() + "]";
 	}
 
 }

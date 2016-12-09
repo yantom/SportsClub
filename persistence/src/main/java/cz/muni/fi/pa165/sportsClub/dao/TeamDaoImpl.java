@@ -1,10 +1,12 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
-import cz.muni.fi.pa165.sportsClub.pojo.Team;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
 /**
  *
@@ -30,7 +32,10 @@ public class TeamDaoImpl implements TeamDao {
         if(team == null){
             throw new IllegalArgumentException("Argument can not be null");
         }
-        em.remove(em.merge(team));
+		if (em.contains(team))
+			em.remove(team);
+		else
+			em.remove(em.getReference(Team.class, team.getId()));
     }
 
     @Override

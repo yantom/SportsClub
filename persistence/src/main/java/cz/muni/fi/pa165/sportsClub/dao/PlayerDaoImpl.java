@@ -1,14 +1,15 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
-import cz.muni.fi.pa165.sportsClub.pojo.Player;
-import java.util.Collections;
 import java.util.List;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import cz.muni.fi.pa165.sportsClub.pojo.Player;
 
 /**
  * This is base implementation of {@link PlayerDao}
@@ -44,7 +45,10 @@ public class PlayerDaoImpl implements PlayerDao {
         if(player == null){
             throw new IllegalArgumentException("Argument can not be null");
         }
-        em.remove(em.merge(player));
+		if (em.contains(player))
+			em.remove(player);
+		else
+			em.remove(em.getReference(Player.class, player.getId()));
     }
 
     @Override

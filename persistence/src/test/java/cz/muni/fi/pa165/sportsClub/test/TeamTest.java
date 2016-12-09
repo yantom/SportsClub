@@ -66,8 +66,6 @@ public class TeamTest {
 
 	@After
 	public void afterTest() {
-		if (testTeam2 != null && testTeam2.getId() != null)
-			em.remove(testTeam2);
 		em.remove(testClub1);
 	}
 	
@@ -76,6 +74,7 @@ public class TeamTest {
 		testTeam2 = new Team();
 		testTeam2.setCategory(Category.U13);
 		testTeam2.setManager(testManager1);
+		testManager1.addTeam(testTeam2);
 		teamDao.createTeam(testTeam2);
 		assertTrue(testTeam2.getId() instanceof Long);
 		assertEquals(testTeam2, em.find(Team.class, testTeam2.getId()));

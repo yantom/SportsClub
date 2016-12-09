@@ -1,20 +1,22 @@
 package cz.muni.fi.pa165.sportsClub.test;
 
-import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
-import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
-import cz.muni.fi.pa165.sportsClub.pojo.Manager;
-import javax.inject.Inject;
-import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
+import javax.inject.Inject;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
+
+import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
+import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
+import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 
 /**
  * Test methods for ManagerDao
@@ -49,7 +51,8 @@ public class ManagerTest {
     
     @After
     public void AfterTest() {
-        managerDao.deleteManager(managerTest);
+		if (managerTest != null)
+			managerDao.deleteManager(managerTest);
     }
 
     @Test
@@ -84,6 +87,7 @@ public class ManagerTest {
         Manager deletedManager = managerDao.getManagerById(managerTest.getId());
         
         assertNull(deletedManager);
+		managerTest = null;
     }
 
     @Test

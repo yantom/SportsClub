@@ -79,26 +79,18 @@ public class PlayerInfoTest {
 		testPlayer1.setManager(testManager1);
 		testManager1.addTeam(testTeam1);
 		testManager1.addPlayer(testPlayer1);
-		testTeam1.addPlayerInfo(testPlayerInfo1);
-		testPlayer1.addPlayerInfo(testPlayerInfo1);
-		em.persist(testClub1);
-
 		testPlayerInfo1 = new PlayerInfo();
 		testPlayerInfo1.setJerseyNumber(10);
 		testPlayerInfo1.setPlayer(testPlayer1);
 		testPlayerInfo1.setTeam(testTeam1);
-		// testPlayerInfo1.setPlayerId(testPlayer1.getId());
-		// testPlayerInfo1.setTeamId(testTeam1.getId());
-		em.persist(testPlayerInfo1);
+		testTeam1.addPlayerInfo(testPlayerInfo1);
+		testPlayer1.addPlayerInfo(testPlayerInfo1);
+
+		em.persist(testClub1);
 	}
 
 	@After
 	public void afterTest() {
-		em.remove(testPlayerInfo1);
-		if (testPlayerInfo2 != null) {
-			em.remove(testPlayerInfo2);
-			testPlayerInfo2 = null;
-		}
 		em.remove(testClub1);
 	}
 
@@ -111,10 +103,10 @@ public class PlayerInfoTest {
 		em.persist(testTeam2);
 		testPlayerInfo2 = new PlayerInfo();
 		testPlayerInfo2.setPlayer(testPlayer1);
-		// testPlayerInfo2.setPlayerId(testPlayer1.getId());
 		testPlayerInfo2.setTeam(testTeam2);
-		// testPlayerInfo2.setTeamId(testTeam2.getId());
 		testPlayerInfo2.setJerseyNumber(66);
+		testTeam2.addPlayerInfo(testPlayerInfo2);
+		testPlayer1.addPlayerInfo(testPlayerInfo2);
 		playerInfoDao.createPlayerInfo(testPlayerInfo2);
 		PlayerInfo pi = em.find(PlayerInfo.class, testPlayerInfo2.getId());
 		assertEquals(testTeam2, pi.getTeam());

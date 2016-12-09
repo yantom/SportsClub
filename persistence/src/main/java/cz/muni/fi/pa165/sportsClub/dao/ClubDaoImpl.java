@@ -7,14 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-
 
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
@@ -37,7 +31,10 @@ public class ClubDaoImpl implements ClubDao{
         if(club == null){
             throw new IllegalArgumentException("Argument can not be null");
         }
-        em.remove(em.merge(club));
+		if (em.contains(club))
+			em.remove(club);
+		else
+			em.remove(em.getReference(Club.class, club.getId()));
     }
 
     @Override

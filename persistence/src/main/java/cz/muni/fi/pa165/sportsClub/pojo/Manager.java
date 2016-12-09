@@ -51,16 +51,16 @@ public class Manager {
 	@Column(nullable = false)
 	private String password;
 
-	@OneToOne(mappedBy="manager",cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "manager", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	@NotNull
 	@MapsId
 	@JoinColumn(name = "id")
 	private Club club;
 
-	@OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "manager", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	private List<Team> teams = new ArrayList<>();
 
-	@OneToMany(mappedBy = "manager", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "manager", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	private List<Player> players = new ArrayList<>();
 
 	public Long getId() {

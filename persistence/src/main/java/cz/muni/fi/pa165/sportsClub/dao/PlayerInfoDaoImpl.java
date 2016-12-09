@@ -32,7 +32,10 @@ public class PlayerInfoDaoImpl implements PlayerInfoDao {
         if(pi == null){
             throw new IllegalArgumentException("Argument can not be null");
         }
-        em.remove(em.merge(pi));
+		if (em.contains(pi))
+			em.remove(pi);
+		else
+			em.remove(em.getReference(PlayerInfo.class, pi.getId()));
     }
 
     @Override

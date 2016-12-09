@@ -25,7 +25,7 @@ public class Club {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     @PrimaryKeyJoinColumn
     private Manager manager;
 
