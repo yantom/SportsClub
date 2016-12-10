@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.sportsClub.test.integration;
+package cz.muni.fi.pa165.sportsClub.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -26,23 +26,13 @@ import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ClubFacade;
-import cz.muni.fi.pa165.sportsClub.facade.PlayerFacade;
-import cz.muni.fi.pa165.sportsClub.facade.TeamFacade;
-import cz.muni.fi.pa165.sportsClub.test.TestUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = PersistenceApplicationContext.class)
 public class ClubFacadeIntegrationTest {
 
-
-    @Inject
+	@Inject
 	private ClubFacade clubFacade;
-
-	@Inject
-	private TeamFacade teamFacade;
-
-	@Inject
-	private PlayerFacade playerFacade;
 
 	@PersistenceUnit
 	private EntityManagerFactory emc;

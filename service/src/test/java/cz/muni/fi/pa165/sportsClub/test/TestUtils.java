@@ -82,6 +82,7 @@ public class TestUtils {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void createPlayerInfos(EntityManager em) {
 		List<Club> clubs = em.createQuery("SELECT c FROM Club c", Club.class).getResultList();
 		int countOfClubs = clubs.size();
@@ -91,7 +92,6 @@ public class TestUtils {
 		List<Team> teams;
 
 		Player p;
-		Club c;
 		Long managerId;
 		PlayerInfo pi;
 		Team t;

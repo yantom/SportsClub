@@ -1,10 +1,7 @@
 package cz.muni.fi.pa165.sportsClub.test;
 
-import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -18,14 +15,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.service.PlayerService;
-import cz.muni.fi.pa165.sportsClub.service.PlayerServiceImpl;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  *

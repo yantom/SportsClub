@@ -5,11 +5,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import org.springframework.stereotype.Service;
 
 import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
-import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
+import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
@@ -17,7 +16,7 @@ import cz.muni.fi.pa165.sportsClub.pojo.Player;
 @Service
 public class ClubServiceImpl implements ClubService {
 	
-        @Inject
+	@Inject
 	private ClubDao clubDao;
 
 
