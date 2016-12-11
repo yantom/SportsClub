@@ -103,27 +103,21 @@ public class TeamServiceImpl implements TeamService {
             p.addPlayerInfo(playerInfo);
 	}
 
-	public void changeJerseyNumber(Player p, Team t, int jerseyNumber) {
-		List<PlayerInfo> playerInfos = t.getPlayerInfos();
-                for(PlayerInfo info: playerInfos){
-			if (info.getPlayer().getId() == p.getId()) {
-                        info.setJerseyNumber(jerseyNumber);
-                    }
-                }
-
+	public void changeJerseyNumber(Player p, Team t, int newjerseyNumber) {
+		try {
+			playerInfoDao.changeJerseyNumber(t, p, newjerseyNumber);
+		}
+		catch (Exception e) {
+			throw new DaoLayerException("can not change jarsey number", e);
+		}
 	}
 
 	public void removePlayerFromTeam(Player p, Team t) {
-
-		List<PlayerInfo> playerInfos = p.getPlayerInfos();
-                for(PlayerInfo info: playerInfos){
-			if (info.getTeam().getId() == t.getId()) {
-						try {
-							playerInfoDao.deletePlayerInfo(info);
-						} catch (Exception e) {
-							throw new DaoLayerException("can not remove player from team", e);
-						}
-                    }
+		try {
+			playerInfoDao.deletePlayerInfoByTeamAndPlayer(t, p);
+		}
+		catch (Exception e) {
+			throw new DaoLayerException("can not remove player from team", e);
 		}
 	}
 }

@@ -11,7 +11,7 @@ import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 @Service
 public class ManagerServiceImpl implements ManagerService {
 	
-        @Inject
+	@Inject
 	private ManagerDao managerDao;
 
         /**

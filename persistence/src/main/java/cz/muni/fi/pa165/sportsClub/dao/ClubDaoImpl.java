@@ -39,8 +39,6 @@ public class ClubDaoImpl implements ClubDao{
 
     @Override
     public void createClub(Club club){
-        //em.find(Club.class, club.getId());
-
         if(club == null){
             throw new IllegalArgumentException("Argument can not be null");
         }
@@ -54,9 +52,6 @@ public class ClubDaoImpl implements ClubDao{
 
     @Override
     public void updateClub(Club club) {
-        if(em.find(Club.class,club.getId()) == null){
-            throw new IllegalArgumentException("Can not update club that is not in DB");
-        }
         if(club == null){
             throw new IllegalArgumentException("Argument can not be null");
         }

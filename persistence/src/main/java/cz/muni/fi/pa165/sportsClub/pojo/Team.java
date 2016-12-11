@@ -27,7 +27,7 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-	@OneToMany(mappedBy = "team", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@OneToMany(mappedBy = "team", cascade = { CascadeType.REMOVE })
     private List<PlayerInfo> playerInfos = new ArrayList<>();
 
     @NotNull

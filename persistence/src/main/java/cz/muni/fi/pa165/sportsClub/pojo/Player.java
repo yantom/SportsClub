@@ -69,7 +69,7 @@ public class Player {
     @NotNull
     private Manager manager;
 
-	@OneToMany(mappedBy = "player", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "player", cascade = { CascadeType.REMOVE }, fetch = FetchType.EAGER)
     private List<PlayerInfo> playerInfos = new ArrayList<>();
 
     public Long getId() {

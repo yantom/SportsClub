@@ -108,8 +108,7 @@ public class ClubTest {
 
     @Test
     public void deleteClubTest(){
-        Club originalClub = club;
-        clubDao.createClub(originalClub);
+        clubDao.createClub(club);
         Long id = club.getId();
 
         clubDao.deleteClub(club);

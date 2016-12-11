@@ -140,7 +140,7 @@ public class TeamServiceTest {
         assertEquals(returnedTeams, teams);
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void changeJerseyNumberTest(){
         player1.setId(1L);
         playerInfo1.setJerseyNumber(11);
@@ -156,8 +156,7 @@ public class TeamServiceTest {
         playersInfos.add(playerInfo1);
         playersInfos.add(playerInfo2);
 
-        when(mockTeam.getPlayerInfos()).thenReturn(playersInfos);
-
+        doThrow(new RuntimeException()).when(playerInfoDao).changeJerseyNumber(mockTeam, player1, 20);
         teamService.changeJerseyNumber(player1, mockTeam, 20);
 
         assertEquals(playerInfo1.getJerseyNumber(),20);
@@ -177,7 +176,7 @@ public class TeamServiceTest {
 
         when(mockTeam.getId()).thenReturn(1l);
         when(mockPlayer.getPlayerInfos()).thenReturn(playersInfos);
-        doThrow(new RuntimeException()).when(playerInfoDao).deletePlayerInfo(playerInfo1);
+        doThrow(new RuntimeException()).when(playerInfoDao).deletePlayerInfoByTeamAndPlayer(mockTeam, mockPlayer);
 
         teamService.removePlayerFromTeam(mockPlayer, mockTeam);
     }
