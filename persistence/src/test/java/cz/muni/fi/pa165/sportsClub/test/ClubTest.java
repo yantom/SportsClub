@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -75,6 +76,21 @@ public class ClubTest {
         Club savedClub = clubDao.getClubById(club.getId());
         assertEquals(club.getId(),savedClub.getId());
         clubDao.createClub(club);
+    }
+
+    @Test(expected = DataAccessException.class)
+    public void createClubWithExistingNameTest(){
+        assertNull(club.getId());
+
+        clubDao.createClub(club);
+        assertNotNull(club.getId());
+
+        Club savedClub = clubDao.getClubById(club.getId());
+        assertEquals(club.getId(),savedClub.getId());
+        Club club2 = new Club();
+        club2.setManager(manager);
+        club2.setName(club.getName());
+        clubDao.createClub(club2);
     }
 
     @Test
