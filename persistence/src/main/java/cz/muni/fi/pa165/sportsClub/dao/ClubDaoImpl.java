@@ -77,8 +77,8 @@ public class ClubDaoImpl implements ClubDao{
 	@Override
 	public Club getWholeClubById(Long clubId) {
 		Club c = getClubById(clubId);
-		List<Player> players = c.getManager().getPlayers();
-		List<Team> teams = c.getManager().getTeams();
+		List<Player> players = c.getPlayers();
+		List<Team> teams = c.getTeams();
 		for (Team team : teams) {
 			team.getPlayerInfos().size();
 		}

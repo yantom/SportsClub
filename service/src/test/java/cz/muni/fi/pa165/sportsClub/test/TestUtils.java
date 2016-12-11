@@ -55,7 +55,7 @@ public class TestUtils {
 			for (int i = 0; i < Category.values().length; i++) {
 				t = new Team();
 				t.setCategory(Category.values()[i]);
-				t.setManager(club.getManager());
+				t.setClub(club);
 				em.persist(t);
 			}
 		}
@@ -75,9 +75,9 @@ public class TestUtils {
 			p.setHeight(120);
 			p.setWeight(120);
 			c = clubs.get(i % countOfClubs);
-			p.setManager(c.getManager());
+			p.setClub(c);
 			p.setDateOfBirth(categoryToLocalDate(Category.values()[i % Category.values().length]));
-			p.setManager(c.getManager());
+			p.setClub(c);
 			em.persist(p);
 		}
 	}
@@ -86,20 +86,20 @@ public class TestUtils {
 	public static void createPlayerInfos(EntityManager em) {
 		List<Club> clubs = em.createQuery("SELECT c FROM Club c", Club.class).getResultList();
 		int countOfClubs = clubs.size();
-		Query playerQuery = em.createQuery("SELECT p FROM Player p where p.manager.id = :managerId ", Player.class);
+		Query playerQuery = em.createQuery("SELECT p FROM Player p where p.club.id = :clubId ", Player.class);
 		List<Player> players;
-		Query teamQuery = em.createQuery("SELECT p FROM Team p where p.manager.id = :managerId ", Team.class);
+		Query teamQuery = em.createQuery("SELECT p FROM Team p where p.club.id = :clubId ", Team.class);
 		List<Team> teams;
 
 		Player p;
-		Long managerId;
+		Long clubId;
 		PlayerInfo pi;
 		Team t;
 
 		for (int i = 0; i < countOfClubs; i++) {
-			managerId = clubs.get(i).getManager().getId();
-			playerQuery.setParameter("managerId", managerId);
-			teamQuery.setParameter("managerId", managerId);
+			clubId = clubs.get(i).getId();
+			playerQuery.setParameter("clubId", clubId);
+			teamQuery.setParameter("clubId", clubId);
 			players = playerQuery.getResultList();
 			teams = teamQuery.getResultList();
 			for (int j = 0; j < players.size(); j++) {

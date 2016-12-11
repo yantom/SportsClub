@@ -79,7 +79,7 @@ public class ClubServiceTest {
         mockManager.setClub(mockClub);
 
         team = new Team();
-        team.setManager(mockManager);
+		team.setClub(mockClub);
         team.setCategory(Category.MEN);
 
         mockPlayer1.setFirstName("Simon");
@@ -88,7 +88,7 @@ public class ClubServiceTest {
         mockPlayer1.setHeight(180);
         mockPlayer1.setWeight(120);
         mockPlayer1.setDateOfBirth(LocalDate.parse("2000-06-15"));
-        mockPlayer1.setManager(mockManager);
+		mockPlayer1.setClub(mockClub);
 
         mockPlayer2.setFirstName("Jan");
         mockPlayer2.setLastName("Tomasek");
@@ -96,7 +96,7 @@ public class ClubServiceTest {
         mockPlayer2.setHeight(180);
         mockPlayer2.setWeight(120);
         mockPlayer2.setDateOfBirth(LocalDate.parse("2000-06-15"));
-        mockPlayer2.setManager(mockManager);
+		mockPlayer2.setClub(mockClub);
 
         mockPlayer3.setFirstName("Andrej");
         mockPlayer3.setLastName("Bonis");
@@ -104,7 +104,7 @@ public class ClubServiceTest {
         mockPlayer3.setHeight(180);
         mockPlayer3.setWeight(120);
         mockPlayer3.setDateOfBirth(LocalDate.parse("2000-06-15"));
-        mockPlayer3.setManager(mockManager);
+		mockPlayer3.setClub(mockClub);
 
         playerInfo = new PlayerInfo();
         playerInfo.setJerseyNumber(15);
@@ -197,7 +197,7 @@ public class ClubServiceTest {
 
         when(clubDao.getWholeClubById(mockClub.getId())).thenReturn(mockClub);
         when(mockClub.getManager()).thenReturn(mockManager);
-        when(mockManager.getPlayers()).thenReturn(playersOfClub);
+		when(mockClub.getPlayers()).thenReturn(playersOfClub);
         when(mockPlayer1.getPlayerInfos()).thenReturn(new ArrayList<PlayerInfo>());
         when(mockPlayer2.getPlayerInfos()).thenReturn(new ArrayList<PlayerInfo>());
         when(mockPlayer3.getPlayerInfos()).thenReturn(playerInfos);

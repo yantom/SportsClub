@@ -59,8 +59,8 @@ public class PlayerTest {
         player1.setHeight(120);
         player1.setWeight(120);
 		player1.setDateOfBirth(LocalDate.parse("2000-06-15"));
-		player1.setManager(manager);
-		manager.addPlayer(player1);
+		player1.setClub(club);
+		club.addPlayer(player1);
     }
     
 	@After
