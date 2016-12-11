@@ -1,5 +1,17 @@
 <html>
-<body>
-<h2>Hello World!</h2>
+<head>
+<!-- dependencies -->
+<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="assets/css/bootstrap-theme.css" rel="stylesheet">
+<script src="assets/libs/angular/angular.min.js"></script>
+<script src="assets/libs/angular/angular-ui-router.min.js"></script>
+<script src="assets/libs/ui-bootstrap-tpls-2.3.1.min.js"></script>
+<!-- source files -->
+<script src="app/app.module.js"></script>
+<script src="app/app.routes.js"></script>
+<script src="app/components/home/homeCtrl.js"></script>
+</head>
+<body ng-app="sportsClub">
+<div ui-view></div>
 </body>
 </html>
