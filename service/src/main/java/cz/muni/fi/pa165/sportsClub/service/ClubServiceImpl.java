@@ -77,7 +77,7 @@ public class ClubServiceImpl implements ClubService {
 
         try {
             c = clubDao.getWholeClubById(c.getId());
-            List<Player> players = c.getManager().getPlayers();
+			List<Player> players = c.getPlayers();
             List<Player> freePlayers = new ArrayList<Player>();
             for (Player player : players){
                 if (player.getPlayerInfos().isEmpty()){

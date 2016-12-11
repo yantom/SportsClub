@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import org.springframework.stereotype.Service;
 
 import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
+import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
@@ -69,7 +69,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     public List<Player> getAllPlayersOfClub(Club c) {
         try {
-            List<Player> players = clubDao.getClubById(c.getId()).getManager().getPlayers();
+			List<Player> players = clubDao.getClubById(c.getId()).getPlayers();
             players.size();
             return players;
         } catch (Exception e) {

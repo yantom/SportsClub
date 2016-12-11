@@ -67,7 +67,7 @@ public class Player {
 
     @ManyToOne
     @NotNull
-    private Manager manager;
+	private Club club;
 
 	@OneToMany(mappedBy = "player", cascade = { CascadeType.REMOVE }, fetch = FetchType.EAGER)
     private List<PlayerInfo> playerInfos = new ArrayList<>();
@@ -153,12 +153,12 @@ public class Player {
         playerInfos.add(pi);
     }
 
-    public Manager getManager() {
-        return manager;
+	public Club getClub() {
+		return club;
     }
 
-    public void setManager(Manager manager) {
-        this.manager = manager;
+	public void setClub(Club club) {
+		this.club = club;
     }
 
     @Override
@@ -194,7 +194,7 @@ public class Player {
 	@Override
 	public String toString() {
 		return "Player [id=" + id + ", dateOfBirth=" + dateOfBirth + ", email=" + email + ", managerId="
-				+ manager.getId() + "]";
+				+ club.getId() + "]";
 	}
 
 }

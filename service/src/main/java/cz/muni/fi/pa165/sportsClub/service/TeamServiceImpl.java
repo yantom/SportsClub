@@ -11,7 +11,6 @@ import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
 import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
-import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
@@ -57,8 +56,7 @@ public class TeamServiceImpl implements TeamService {
 
 	public Team getTeamOfClubByCategory(Category category, Club c) {
 		try {
-			Manager manager = c.getManager();
-			List<Team> teams = manager.getTeams();
+			List<Team> teams = c.getTeams();
 			for(Team team: teams){
 				if (team.getCategory().equals(category)){
 					return team;
@@ -73,8 +71,7 @@ public class TeamServiceImpl implements TeamService {
 
 	public List<Team> getAllTeamsOfClub(Club c) {
 		try {
-			Manager manager = c.getManager();
-			return manager.getTeams();
+			return c.getTeams();
 		} catch (Exception e) {
 			throw new DaoLayerException("can not obtain all teams of club", e);
 		}

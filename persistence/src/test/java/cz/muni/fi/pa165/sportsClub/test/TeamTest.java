@@ -59,8 +59,8 @@ public class TeamTest {
 		testManager1.setClub(testClub1);
 		testTeam1 = new Team();
 		testTeam1.setCategory(Category.MEN);
-		testTeam1.setManager(testManager1);
-		testManager1.addTeam(testTeam1);
+		testTeam1.setClub(testClub1);
+		testClub1.addTeam(testTeam1);
 		em.persist(testClub1);
 	}
 
@@ -73,8 +73,8 @@ public class TeamTest {
 	public void createTeam() {
 		testTeam2 = new Team();
 		testTeam2.setCategory(Category.U13);
-		testTeam2.setManager(testManager1);
-		testManager1.addTeam(testTeam2);
+		testTeam2.setClub(testClub1);
+		testClub1.addTeam(testTeam2);
 		teamDao.createTeam(testTeam2);
 		assertTrue(testTeam2.getId() instanceof Long);
 		assertEquals(testTeam2, em.find(Team.class, testTeam2.getId()));

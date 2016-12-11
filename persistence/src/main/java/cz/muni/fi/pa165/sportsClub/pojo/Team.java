@@ -35,24 +35,14 @@ public class Team {
 
     @ManyToOne
     @NotNull
-    private Manager manager;
+	private Club club;
 
-    /**
-     * Gets a proper manager
-     *
-     * @return manager
-     */
-    public Manager getManager() {
-        return manager;
+	public Club getClub() {
+		return club;
     }
 
-    /**
-     * Sets a proper manager
-     *
-     * @param manager proper manager
-     */
-    public void setManager(Manager manager) {
-        this.manager = manager;
+	public void setClub(Club club) {
+		this.club = club;
     }
 
     /**
@@ -125,7 +115,7 @@ public class Team {
 
     @Override
     public String toString() {
-		return getManager().getClub().getName() + " - " + getCategory().toString() + ", id=" + getId();
+		return getClub().getName() + " - " + getCategory().toString() + ", id=" + getId();
     }
 
     @Override
@@ -141,15 +131,15 @@ public class Team {
         if (!getCategory().equals(team.getCategory())) {
             return false;
         }
-        if (getManager() == null || team.getManager() == null) {
+		if (getClub() == null || team.getClub() == null) {
             return true;
         }
-        return getManager().getEmail().equals(team.getManager().getEmail());
+		return getClub().getName().equals(team.getClub().getName());
 
     }
 
     @Override
     public int hashCode() {
-        return 31 * getCategory().hashCode() + ((getManager() == null) ? 0 : getManager().getEmail().hashCode());
+		return 31 * getCategory().hashCode() + ((getClub() == null) ? 0 : getClub().getName().hashCode());
     }
 }

@@ -84,9 +84,9 @@ public class PlayerInfoTest {
 
 		testClub1.setManager(testManager1);
 		testManager1.setClub(testClub1);
-		testTeam1.setManager(testManager1);
-		testPlayer1.setManager(testManager1);
 
+		testTeam1.setClub(testClub1);
+		testPlayer1.setClub(testClub1);
 
 		testPlayerInfo1 = new PlayerInfo();
 		testPlayerInfo1.setJerseyNumber(10);
@@ -113,10 +113,11 @@ public class PlayerInfoTest {
 
 		Team testTeam2 = new Team();
 		testTeam2.setCategory(Category.U19);
-		testTeam2.setManager(testManager1);
-		testManager1.addTeam(testTeam2);
+		testTeam2.setClub(testClub1);
 		teamDao.createTeam(testTeam2);
 
+		testTeam2.setClub(testClub1);
+		testClub1.addTeam(testTeam2);
 		testPlayerInfo2 = new PlayerInfo();
 		testPlayerInfo2.setPlayer(testPlayer1);
 		testPlayerInfo2.setTeam(testTeam2);

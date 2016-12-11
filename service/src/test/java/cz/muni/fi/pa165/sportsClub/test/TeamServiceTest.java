@@ -119,7 +119,7 @@ public class TeamServiceTest {
         teams.add(team2);
 
         when(mockClub.getManager()).thenReturn(mockManager);
-        when(mockManager.getTeams()).thenReturn(teams);
+		when(mockClub.getTeams()).thenReturn(teams);
 
         Team returnedTeam = teamService.getTeamOfClubByCategory(Category.U13, mockClub);
         assertNotNull(returnedTeam.getCategory());
@@ -133,7 +133,7 @@ public class TeamServiceTest {
         teams.add(team2);
 
         when(mockClub.getManager()).thenReturn(mockManager);
-        when(mockManager.getTeams()).thenReturn(teams);
+		when(mockClub.getTeams()).thenReturn(teams);
 
         List<Team> returnedTeams = teamService.getAllTeamsOfClub( mockClub);
         assertNotNull(returnedTeams);

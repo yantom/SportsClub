@@ -1,9 +1,5 @@
 package cz.muni.fi.pa165.sportsClub.dto;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -32,10 +28,6 @@ public class ManagerDto {
 
 	@NotNull
 	private ClubDto club;
-
-	private List<TeamDto> teams = new ArrayList<>();
-
-	private List<PlayerDto> players = new ArrayList<>();
 
 	public Long getId() {
 		return this.id;
@@ -83,40 +75,6 @@ public class ManagerDto {
 
 	public void setClub(ClubDto club) {
 		this.club = club;
-	}
-
-	public List<TeamDto> getTeams() {
-		return Collections.unmodifiableList(teams);
-	}
-
-	public void addTeam(TeamDto team) {
-		teams.add(team);
-	}
-
-	public void removeTeam(TeamDto team) {
-		teams.remove(team);
-	}
-
-	public void updateTeam(TeamDto team) {
-		teams.remove(team);
-		teams.add(team);
-	}
-
-	public List<PlayerDto> getPlayers() {
-		return Collections.unmodifiableList(players);
-	}
-
-	public void addPlayer(PlayerDto player) {
-		players.add(player);
-	}
-
-	public void removePlayer(PlayerDto player) {
-		players.remove(player);
-	}
-
-	public void updatePlayer(PlayerDto player) {
-		players.remove(player);
-		players.add(player);
 	}
 
 	public String getPassword() {

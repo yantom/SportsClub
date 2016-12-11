@@ -1,11 +1,16 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.NotNull;
@@ -28,6 +33,12 @@ public class Club {
 	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     @PrimaryKeyJoinColumn
     private Manager manager;
+
+	@OneToMany(mappedBy = "club", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	private List<Team> teams = new ArrayList<>();
+
+	@OneToMany(mappedBy = "club", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	private List<Player> players = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -52,6 +63,40 @@ public class Club {
     public void setManager(Manager manager) {
         this.manager = manager;
     }
+
+	public List<Team> getTeams() {
+		return Collections.unmodifiableList(teams);
+	}
+
+	public void addTeam(Team team) {
+		teams.add(team);
+	}
+
+	public void removeTeam(Team team) {
+		teams.remove(team);
+	}
+
+	public void updateTeam(Team team) {
+		teams.remove(team);
+		teams.add(team);
+	}
+
+	public List<Player> getPlayers() {
+		return Collections.unmodifiableList(players);
+	}
+
+	public void addPlayer(Player player) {
+		players.add(player);
+	}
+
+	public void removePlayer(Player player) {
+		players.remove(player);
+	}
+
+	public void updatePlayer(Player player) {
+		players.remove(player);
+		players.add(player);
+	}
 
     @Override
     public int hashCode() {
