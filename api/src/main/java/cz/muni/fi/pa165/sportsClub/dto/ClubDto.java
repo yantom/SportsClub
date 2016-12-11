@@ -1,5 +1,9 @@
 package cz.muni.fi.pa165.sportsClub.dto;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
 public class ClubDto {
@@ -7,6 +11,10 @@ public class ClubDto {
 	    @NotNull
 	    private String name;
 	    private ManagerDto manager;
+
+	private List<TeamDto> teams = new ArrayList<>();
+
+	private List<PlayerDto> players = new ArrayList<>();
 
 	    public Long getId() {
 	        return id;
@@ -32,6 +40,40 @@ public class ClubDto {
 	        this.manager = manager;
 	    }
 	    
+	public List<TeamDto> getTeams() {
+		return Collections.unmodifiableList(teams);
+	}
+
+	public void addTeam(TeamDto team) {
+		teams.add(team);
+	}
+
+	public void removeTeam(TeamDto team) {
+		teams.remove(team);
+	}
+
+	public void updateTeam(TeamDto team) {
+		teams.remove(team);
+		teams.add(team);
+	}
+
+	public List<PlayerDto> getPlayers() {
+		return Collections.unmodifiableList(players);
+	}
+
+	public void addPlayer(PlayerDto player) {
+		players.add(player);
+	}
+
+	public void removePlayer(PlayerDto player) {
+		players.remove(player);
+	}
+
+	public void updatePlayer(PlayerDto player) {
+		players.remove(player);
+		players.add(player);
+	}
+
 	    @Override
 	    public int hashCode() {
 	        final int prime = 31;
