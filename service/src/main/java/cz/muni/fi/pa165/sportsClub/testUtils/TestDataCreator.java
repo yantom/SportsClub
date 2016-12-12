@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.sportsClub.test.utils;
+package cz.muni.fi.pa165.sportsClub.testUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;

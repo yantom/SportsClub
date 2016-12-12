@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.sportsClub.test.utils;
+package cz.muni.fi.pa165.sportsClub.testUtils;
 
 /*
  * Slightly modified version of the com.ibatis.common.jdbc.ScriptRunner class

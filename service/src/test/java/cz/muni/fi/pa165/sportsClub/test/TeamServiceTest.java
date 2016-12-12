@@ -20,7 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
+import cz.muni.fi.pa165.sportsClub.ServiceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
 import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
@@ -36,7 +36,7 @@ import cz.muni.fi.pa165.sportsClub.service.TeamService;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = PersistenceApplicationContext.class)
+@ContextConfiguration(classes = ServiceApplicationContext.class)
 @Transactional
 public class TeamServiceTest {
     @Mock

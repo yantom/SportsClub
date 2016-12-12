@@ -17,7 +17,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
+import cz.muni.fi.pa165.sportsClub.ServiceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
@@ -29,7 +29,7 @@ import cz.muni.fi.pa165.sportsClub.service.PlayerService;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = PersistenceApplicationContext.class)
+@ContextConfiguration(classes = ServiceApplicationContext.class)
 public class PlayerServiceTest {
     
 

@@ -18,33 +18,27 @@ public class ManagerFacadeImpl implements ManagerFacade {
 
     @Inject
 	ManagerService managerService;
-        
-        /**
-	public void createManager(ManagerDto m) {
-		Manager managerEntity = new ModelMapper().map(m, Manager.class);
-		managerService.createManager(managerEntity);
-		m.setId(managerEntity.getId());
 
-	}
-        */
-    
-    
 	public void updateManager(ManagerDto m) {
 		managerService.updateManager(new ModelMapper().map(m, Manager.class));
-
 	}
 
 	public void deleteManager(ManagerDto m) {
 		managerService.deleteManager(new ModelMapper().map(m, Manager.class));
-
 	}
 
 	public ManagerDto getManagerById(Long managerId) {
-		return new ModelMapper().map(managerService.getManagerById(managerId), ManagerDto.class);
+		Manager m = managerService.getManagerById(managerId);
+		if (m == null)
+			return null;
+		return new ModelMapper().map(m, ManagerDto.class);
 	}
 
 	public ManagerDto getManagerByEmail(String email) {
-		return new ModelMapper().map(managerService.getManagerByEmail(email), ManagerDto.class);
+		Manager m = managerService.getManagerByEmail(email);
+		if (m == null)
+			return null;
+		return new ModelMapper().map(m, ManagerDto.class);
 	}
 
 	public boolean authenticateManager(ManagerAuthenticationDto m) {

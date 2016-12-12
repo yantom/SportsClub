@@ -1,12 +1,12 @@
 package cz.muni.fi.pa165.sportsClub.facade;
 
 import java.util.List;
-import java.util.Locale.Category;
 
 import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerOfTeamDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
+import cz.muni.fi.pa165.sportsClub.enums.Category;
 
 public interface TeamFacade {
 	void createTeam(TeamDto t);
@@ -17,7 +17,7 @@ public interface TeamFacade {
 
 	TeamDto getTeamById(Long teamId);
 
-	TeamDto getTeamOfClubByCategory(Category category);
+	TeamDto getTeamOfClubByCategory(Category category, ClubDto c);
 
 	List<TeamDto> getAllTeamsOfClub(ClubDto c);
 

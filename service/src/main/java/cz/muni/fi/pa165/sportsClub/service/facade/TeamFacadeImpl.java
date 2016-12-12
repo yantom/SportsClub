@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.sportsClub.service.facade;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -28,8 +27,8 @@ import cz.muni.fi.pa165.sportsClub.service.mappers.PlayerOfTeamMapper;
 @Service
 public class TeamFacadeImpl implements TeamFacade {
     
-        @Inject
-        private TeamService teamService;
+	@Inject
+	private TeamService teamService;
 
 	public void createTeam(TeamDto t) {
 		teamService.createTeam(new ModelMapper().map(t, Team.class));
@@ -47,16 +46,15 @@ public class TeamFacadeImpl implements TeamFacade {
 	}
 
 	public TeamDto getTeamById(Long teamId) {
-		return new ModelMapper().map(teamService.getTeamById(teamId), TeamDto.class);
-	}
-
-	public TeamDto getTeamOfClubByCategory(Locale.Category category) {
-		return null;
+		Team t = teamService.getTeamById(teamId);
+		return new ModelMapper().map(t, TeamDto.class);
 	}
 
 	public TeamDto getTeamOfClubByCategory(Category category, ClubDto c) {
-		return new ModelMapper().map(teamService.getTeamOfClubByCategory(
-                        category, new ModelMapper().map(c, Club.class)), TeamDto.class);
+		Team t = teamService.getTeamOfClubByCategory(category, new ModelMapper().map(c, Club.class));
+		if (t == null)
+			return null;
+		return new ModelMapper().map(t, TeamDto.class);
 	}
 
 	public List<TeamDto> getAllTeamsOfClub(ClubDto c) {
@@ -91,5 +89,4 @@ public class TeamFacadeImpl implements TeamFacade {
 		teamService.removePlayerFromTeam(new ModelMapper().map(p, Player.class),
                         new ModelMapper().map(t, Team.class));
 	}
-        
 }

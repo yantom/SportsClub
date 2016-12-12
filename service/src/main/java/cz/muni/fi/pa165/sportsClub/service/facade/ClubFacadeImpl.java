@@ -39,11 +39,17 @@ public class ClubFacadeImpl implements ClubFacade {
 	}
 
 	public ClubDto getClubById(Long clubId) {
-		return new ModelMapper().map(clubService.getClubById(clubId), ClubDto.class);
+		Club c = clubService.getClubById(clubId);
+		if (c == null)
+			return null;
+		return new ModelMapper().map(c, ClubDto.class);
 	}
 
 	public ClubDto getClubByName(String clubName) {
-		return new ModelMapper().map(clubService.getClubByName(clubName), ClubDto.class);
+		Club c = clubService.getClubByName(clubName);
+		if (c == null)
+			return null;
+		return new ModelMapper().map(c, ClubDto.class);
 	}
 
 	public void assignManagerToClub(ManagerDto m, ClubDto c) {

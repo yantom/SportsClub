@@ -43,11 +43,17 @@ public class PlayerFacadeImpl implements PlayerFacade {
 	}
 
 	public PlayerDto getPlayerById(Long playerId) {
-		return new ModelMapper().map(playerService.getPlayerById(playerId), PlayerDto.class);
+		Player p = playerService.getPlayerById(playerId);
+		if (p == null)
+			return null;
+		return new ModelMapper().map(p, PlayerDto.class);
 	}
 
 	public PlayerDto getPlayerByEmail(String email) {
-		return new ModelMapper().map(playerService.getPlayerByEmail(email), PlayerDto.class);
+		Player p = playerService.getPlayerByEmail(email);
+		if (p == null)
+			return null;
+		return new ModelMapper().map(p, PlayerDto.class);
 	}
 
 	public List<TeamOfPlayerDto> getTeamsOfPlayer(PlayerDto p) {

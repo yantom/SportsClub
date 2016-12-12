@@ -17,7 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
+import cz.muni.fi.pa165.sportsClub.ServiceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
 import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
@@ -29,7 +29,7 @@ import cz.muni.fi.pa165.sportsClub.service.ManagerService;
  * @author Andrej 410433
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = PersistenceApplicationContext.class)
+@ContextConfiguration(classes = ServiceApplicationContext.class)
 @Transactional
 public class ManagerServiceTest {
 

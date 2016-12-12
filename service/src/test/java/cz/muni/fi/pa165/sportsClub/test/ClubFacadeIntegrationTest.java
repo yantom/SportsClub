@@ -28,8 +28,8 @@ import cz.muni.fi.pa165.sportsClub.ServiceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ClubFacade;
-import cz.muni.fi.pa165.sportsClub.test.utils.ScriptRunner;
-import cz.muni.fi.pa165.sportsClub.test.utils.TestDataCreator;
+import cz.muni.fi.pa165.sportsClub.testUtils.ScriptRunner;
+import cz.muni.fi.pa165.sportsClub.testUtils.TestDataCreator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceApplicationContext.class)
