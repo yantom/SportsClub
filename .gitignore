@@ -134,3 +134,4 @@ fabric.properties
 modules.xml
 .idea/
 *.ipr
+service/src/test/resources/testInit.sql
