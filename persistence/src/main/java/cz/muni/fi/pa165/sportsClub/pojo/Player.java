@@ -197,4 +197,14 @@ public class Player {
 				+ club.getId() + "]";
 	}
 
+	public String toInsertStatement() {
+		return "INSERT INTO Player (id,firstName,lastName,email,mobile,weight,height,dateOfBirth,club_id) VALUES ("
+				+ getId() + "," + DBEntityUtils.quote(getFirstName()) + "," + DBEntityUtils.quote(getLastName()) + ","
+				+ DBEntityUtils.quote(getEmail()) + "," + DBEntityUtils.quote(getMobile()) + "," + getWeight() + "," + getHeight() + ","
+				+ DBEntityUtils.dateToVarBinary(getDateOfBirth()) + "," +
+				+ getClub().getId()
+				+ ");"
+				+ System.lineSeparator();
+	}
+
 }

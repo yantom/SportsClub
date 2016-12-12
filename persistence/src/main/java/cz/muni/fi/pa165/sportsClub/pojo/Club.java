@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
 public class Club {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
@@ -127,4 +127,8 @@ public class Club {
 				+ manager.getEmail() + "]";
 	}
 
+	public String toInsertStatement() {
+		return "INSERT INTO Club (id,name) VALUES (" + getId() + "," + DBEntityUtils.quote(getName()) + ");"
+				+ System.lineSeparator();
+	}
 }

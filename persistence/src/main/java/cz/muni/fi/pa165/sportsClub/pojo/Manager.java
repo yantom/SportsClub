@@ -3,8 +3,6 @@ package cz.muni.fi.pa165.sportsClub.pojo;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -20,7 +18,6 @@ import javax.validation.constraints.Size;
 public class Manager {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@NotNull
@@ -140,4 +137,9 @@ public class Manager {
 				+ club.getName() + "]";
 	}
 
+	public String toInsertStatement() {
+		return "INSERT INTO Manager (id,firstName,lastName,email,mobile,password) VALUES (" + getId() + ","
+				+ DBEntityUtils.quote(getFirstName()) + "," + DBEntityUtils.quote(getLastName()) + "," + DBEntityUtils.quote(getEmail()) + ","
+				+ DBEntityUtils.quote(getMobile()) + "," + DBEntityUtils.quote(getPassword()) + ");" + System.lineSeparator();
+	}
 }

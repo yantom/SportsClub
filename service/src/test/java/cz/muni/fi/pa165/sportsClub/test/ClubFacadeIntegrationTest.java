@@ -5,57 +5,61 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
+import javax.sql.DataSource;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
+import cz.muni.fi.pa165.sportsClub.ServiceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ClubFacade;
+import cz.muni.fi.pa165.sportsClub.test.utils.ScriptRunner;
+import cz.muni.fi.pa165.sportsClub.test.utils.TestDataCreator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = PersistenceApplicationContext.class)
+@ContextConfiguration(classes = ServiceApplicationContext.class)
 public class ClubFacadeIntegrationTest {
 
 	@Inject
 	private ClubFacade clubFacade;
 
-	@PersistenceUnit
-	private EntityManagerFactory emc;
+	@Inject
+	private DataSource ds;
+
+	@BeforeClass
+	public static void suiteSetup() throws IOException {
+		TestDataCreator.createTestDataScript(2, 20);
+	}
 
 	@Before
-	public void setup() throws IOException, URISyntaxException {
-		EntityManager em = emc.createEntityManager();
-		TestUtils.createTestData(em, 2, 40);
-		em.close();
+	public void setup() throws FileNotFoundException, IOException, SQLException {
+		try (Connection conn = ds.getConnection()) {
+			ScriptRunner runner = new ScriptRunner(conn, false, false);
+			runner.runScript(new BufferedReader(new FileReader("src/test/resources/testInit.sql")));
+		}
 	}
 
 	@After
-	public void tearDown() throws IOException, URISyntaxException {
-		EntityManager em = emc.createEntityManager();
-		em.getTransaction().begin();
-		for (String line : Files
-				.readAllLines(Paths.get(getClass().getClassLoader().getResource("delete.sql").toURI()))) {
-			if (line.isEmpty())
-				continue;
-			em.createNativeQuery(line).executeUpdate();
+	public void tearDown() throws IOException, URISyntaxException, SQLException {
+		try (Connection conn = ds.getConnection()) {
+			ScriptRunner runner = new ScriptRunner(conn, false, false);
+			runner.runScript(new BufferedReader(new FileReader("src/test/resources/delete.sql")));
 		}
-		em.getTransaction().commit();
-		em.close();
 	}
 
 	@Test

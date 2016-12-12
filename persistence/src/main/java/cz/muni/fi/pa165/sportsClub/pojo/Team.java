@@ -118,6 +118,11 @@ public class Team {
 		return getClub().getName() + " - " + getCategory().toString() + ", id=" + getId();
     }
 
+	public String toInsertStatement() {
+		return "INSERT INTO Team (id,category,club_id) VALUES (" + getId() + "," + getCategory().ordinal() + ","
+				+ getClub().getId() + ");" + System.lineSeparator();
+	}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

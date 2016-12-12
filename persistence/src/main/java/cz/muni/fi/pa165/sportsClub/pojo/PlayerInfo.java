@@ -107,6 +107,11 @@ public class PlayerInfo {
 		return "#" + jerseyNumber + ", " + player + ", " + team;
     }
     
+	public String toInsertStatement() {
+		return "INSERT INTO PlayerInfo (id,jerseyNumber,playerId,teamId) VALUES (" + getId() + "," + getJerseyNumber()
+				+ "," + getPlayer().getId() + "," + getTeam().getId() + ");" + System.lineSeparator();
+	}
+
         @Override
     public int hashCode() {
         int hash = 7;
