@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +18,8 @@ import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
+import cz.muni.fi.pa165.sportsClub.service.BeanMappingService;
 import cz.muni.fi.pa165.sportsClub.service.TeamService;
-import cz.muni.fi.pa165.sportsClub.service.mappers.PlayerOfTeamMapper;
 
 @Transactional
 @Service
@@ -30,63 +28,69 @@ public class TeamFacadeImpl implements TeamFacade {
 	@Inject
 	private TeamService teamService;
 
+	@Inject
+	private BeanMappingService beanMappingService;
+
 	public void createTeam(TeamDto t) {
-		teamService.createTeam(new ModelMapper().map(t, Team.class));
+		teamService.createTeam(beanMappingService.mapTo(t, Team.class));
 
 	}
 
 	public void updateTeam(TeamDto t) {
-		teamService.updateTeam(new ModelMapper().map(t, Team.class));
+		teamService.updateTeam(beanMappingService.mapTo(t, Team.class));
 
 	}
 
 	public void deleteTeam(TeamDto t) {
-		teamService.deleteTeam(new ModelMapper().map(t, Team.class));
+		teamService.deleteTeam(beanMappingService.mapTo(t, Team.class));
 
 	}
 
 	public TeamDto getTeamById(Long teamId) {
 		Team t = teamService.getTeamById(teamId);
-		return new ModelMapper().map(t, TeamDto.class);
+		return beanMappingService.mapTo(t, TeamDto.class);
 	}
 
 	public TeamDto getTeamOfClubByCategory(Category category, ClubDto c) {
-		Team t = teamService.getTeamOfClubByCategory(category, new ModelMapper().map(c, Club.class));
+		Team t = teamService.getTeamOfClubByCategory(category, beanMappingService.mapTo(c, Club.class));
 		if (t == null)
 			return null;
-		return new ModelMapper().map(t, TeamDto.class);
+		return beanMappingService.mapTo(t, TeamDto.class);
 	}
 
 	public List<TeamDto> getAllTeamsOfClub(ClubDto c) {
-            return new ModelMapper().map(teamService.getAllTeamsOfClub(new ModelMapper().map(c, Club.class)), 
-                    new TypeToken<List<TeamDto>>(){}.getType());
+		return beanMappingService.mapTo(teamService.getAllTeamsOfClub(beanMappingService.mapTo(c, Club.class)),
+				TeamDto.class);
 	}
 
 	public List<PlayerOfTeamDto> getPlayersOfTeam(TeamDto t) {
-		ModelMapper mapper = new ModelMapper();
-		mapper.addMappings(new PlayerOfTeamMapper());
 		List<PlayerOfTeamDto> players = new ArrayList<PlayerOfTeamDto>();
-		List<PlayerInfo> infos = teamService.getPlayerInfos(new ModelMapper().map(t, Team.class));
+		List<PlayerInfo> infos = teamService.getPlayerInfos(beanMappingService.mapTo(t, Team.class));
+		PlayerOfTeamDto playerOfTeam;
 		for (PlayerInfo playerInfo : infos) {
-			players.add(mapper.map(playerInfo, PlayerOfTeamDto.class));
+			playerOfTeam = new PlayerOfTeamDto();
+			playerOfTeam.setJerseyNumber(playerInfo.getJerseyNumber());
+			playerOfTeam.setPlayerOlderThanTeamLimit(playerInfo.isPlayerOlderThanTeamLimit());
+			playerOfTeam.setPlayer(beanMappingService.mapTo(playerInfo.getPlayer(), PlayerDto.class));
+			players.add(playerOfTeam);
 		}
 		return players;
 	}
 
 	public void assignPlayerToTeam(PlayerDto p, TeamDto t, int jerseyNumber) {
-		teamService.assignPlayerToTeam(new ModelMapper().map(p, Player.class),
-                        new ModelMapper().map(t, Team.class), jerseyNumber);
+		teamService.assignPlayerToTeam(beanMappingService.mapTo(p, Player.class),
+				beanMappingService.mapTo(t, Team.class), jerseyNumber);
 
 	}
 
 	public void changeJerseyNumber(PlayerDto p, TeamDto t, int jerseyNumber) {
-		teamService.changeJerseyNumber(new ModelMapper().map(p, Player.class), 
-                        new ModelMapper().map(t, Team.class), jerseyNumber);
+		teamService.changeJerseyNumber(beanMappingService.mapTo(p, Player.class),
+				beanMappingService.mapTo(t, Team.class), jerseyNumber);
 
 	}
 
 	public void removePlayerFromTeam(PlayerDto p, TeamDto t) {
-		teamService.removePlayerFromTeam(new ModelMapper().map(p, Player.class),
-                        new ModelMapper().map(t, Team.class));
+		teamService.removePlayerFromTeam(beanMappingService.mapTo(p, Player.class),
+				beanMappingService.mapTo(t, Team.class));
 	}
 }

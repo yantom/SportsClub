@@ -9,6 +9,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import cz.muni.fi.pa165.sportsClub.rest.serializers.LocalDateDeserializer;
+import cz.muni.fi.pa165.sportsClub.rest.serializers.LocalDateSerializer;
+
 public class PlayerDto {
 	private Long id;
 
@@ -25,6 +31,8 @@ public class PlayerDto {
 	private double weight;
 
 	@NotNull
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate dateOfBirth;
 
 	@NotNull
@@ -34,7 +42,7 @@ public class PlayerDto {
 	@Pattern(regexp = "(\\+|00)?\\d+")
 	private String mobile;
 
-	private ManagerDto manager;
+	private ClubDto club;
 
 	private List<TeamOfPlayerDto> playerInfos = new ArrayList<>();
 
@@ -119,12 +127,12 @@ public class PlayerDto {
 		playerInfos.add(t);
 	}
 
-	public ManagerDto getManager() {
-		return manager;
+	public ClubDto getClub() {
+		return club;
 	}
 
-	public void setManager(ManagerDto manager) {
-		this.manager = manager;
+	public void setManager(ClubDto club) {
+		this.club = club;
 	}
 
 	@Override

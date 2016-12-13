@@ -74,6 +74,11 @@ public class ClubDto {
 		players.add(player);
 	}
 
+	@Override
+	public String toString() {
+		return "Club [id=" + id + ", name=" + name + "]";
+	}
+
 	    @Override
 	    public int hashCode() {
 	        final int prime = 31;

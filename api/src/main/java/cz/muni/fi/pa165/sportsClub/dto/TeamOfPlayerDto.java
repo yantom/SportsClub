@@ -12,6 +12,8 @@ public class TeamOfPlayerDto {
 	@Min(0)
 	private int jerseyNumber;
 
+	private boolean playerOlderThanTeamLimit;
+
 	private TeamDto team;
 
 	/**
@@ -49,6 +51,14 @@ public class TeamOfPlayerDto {
 	 */
 	public void setJerseyNumber(int jerseyNumber) {
 		this.jerseyNumber = jerseyNumber;
+	}
+
+	public boolean isPlayerOlderThanTeamLimit() {
+		return playerOlderThanTeamLimit;
+	}
+
+	public void setPlayerOlderThanTeamLimit(boolean value) {
+		playerOlderThanTeamLimit = value;
 	}
 
 	@Override

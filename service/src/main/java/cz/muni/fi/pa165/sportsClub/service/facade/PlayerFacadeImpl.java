@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,8 +16,8 @@ import cz.muni.fi.pa165.sportsClub.facade.PlayerFacade;
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
+import cz.muni.fi.pa165.sportsClub.service.BeanMappingService;
 import cz.muni.fi.pa165.sportsClub.service.PlayerService;
-import cz.muni.fi.pa165.sportsClub.service.mappers.TeamOfPlayerMapper;
 
 @Transactional
 @Service
@@ -28,49 +26,55 @@ public class PlayerFacadeImpl implements PlayerFacade {
 	@Inject
 	PlayerService playerService;
 
+	@Inject
+	private BeanMappingService beanMappingService;
+
 	public void createPlayer(PlayerDto p) {
-		Player playerEntity = new ModelMapper().map(p, Player.class);
+		Player playerEntity = beanMappingService.mapTo(p, Player.class);
 		playerService.createPlayer(playerEntity);
 		p.setId(playerEntity.getId());
 	}
 
 	public void updatePlayer(PlayerDto p) {
-		playerService.updatePlayer(new ModelMapper().map(p, Player.class));
+		playerService.updatePlayer(beanMappingService.mapTo(p, Player.class));
 	}
 
 	public void deletePlayer(PlayerDto p) {
-		playerService.deletePlayer(new ModelMapper().map(p, Player.class));
+		playerService.deletePlayer(beanMappingService.mapTo(p, Player.class));
 	}
 
 	public PlayerDto getPlayerById(Long playerId) {
 		Player p = playerService.getPlayerById(playerId);
 		if (p == null)
 			return null;
-		return new ModelMapper().map(p, PlayerDto.class);
+		PlayerDto pp = beanMappingService.mapTo(p, PlayerDto.class);
+		return pp;
 	}
 
 	public PlayerDto getPlayerByEmail(String email) {
 		Player p = playerService.getPlayerByEmail(email);
 		if (p == null)
 			return null;
-		return new ModelMapper().map(p, PlayerDto.class);
+		return beanMappingService.mapTo(p, PlayerDto.class);
 	}
 
 	public List<TeamOfPlayerDto> getTeamsOfPlayer(PlayerDto p) {
-		ModelMapper mapper = new ModelMapper();
-		mapper.addMappings(new TeamOfPlayerMapper());
 		List<TeamOfPlayerDto> teams = new ArrayList<TeamOfPlayerDto>();
-		List<PlayerInfo> infos = playerService.getPlayerInfos(new ModelMapper().map(p, Player.class));
+		List<PlayerInfo> infos = playerService.getPlayerInfos(beanMappingService.mapTo(p, Player.class));
+		TeamOfPlayerDto teamOfPlayer;
 		for (PlayerInfo playerInfo : infos) {
-			teams.add(mapper.map(playerInfo, TeamOfPlayerDto.class));
+			teamOfPlayer = new TeamOfPlayerDto();
+			teamOfPlayer.setJerseyNumber(playerInfo.getJerseyNumber());
+			teamOfPlayer.setPlayerOlderThanTeamLimit(playerInfo.isPlayerOlderThanTeamLimit());
+			teamOfPlayer.setTeam(beanMappingService.mapTo(playerInfo.getTeam(), TeamDto.class));
+			teams.add(teamOfPlayer);
 		}
 		return teams;
 	}
 
 	public List<PlayerDto> getAllPlayersOfClub(ClubDto c) {
-		return new ModelMapper().map(playerService.getAllPlayersOfClub(new ModelMapper().map(c, Club.class)),
-				new TypeToken<List<TeamDto>>() {
-				}.getType());
+		return beanMappingService.mapTo(playerService.getAllPlayersOfClub(beanMappingService.mapTo(c, Club.class)),
+				PlayerDto.class);
 	}
 	
 	

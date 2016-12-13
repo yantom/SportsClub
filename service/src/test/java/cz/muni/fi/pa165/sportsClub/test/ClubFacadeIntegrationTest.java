@@ -74,17 +74,17 @@ public class ClubFacadeIntegrationTest {
 	public void updateClub() {
 		ClubDto c = clubFacade.getClubById(clubFacade.getAllClubs().get(0).getId());
 		String cNameBefore = c.getName();
-		System.out.println(cNameBefore);
 		c.setName("newName");
 		clubFacade.updateClub(c);
 		String cNameAfter = clubFacade.getClubById(clubFacade.getAllClubs().get(0).getId()).getName();
-		System.out.println(cNameAfter);
 		assertNotEquals(cNameBefore, cNameAfter);
 	}
 
 	@Test
 	public void getClubById() {
-		assertNotNull(clubFacade.getClubById(clubFacade.getAllClubs().get(0).getId()));
+		ClubDto c = clubFacade.getClubById(clubFacade.getAllClubs().get(0).getId());
+		assertNotNull(c);
+		assertNotNull(c.getManager());
 	}
 
 	@Test

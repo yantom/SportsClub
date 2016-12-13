@@ -65,7 +65,7 @@ public class Player {
     @Pattern(regexp = "(\\+|00)?\\d+")
     private String mobile;
 
-    @ManyToOne
+	@ManyToOne
     @NotNull
 	private Club club;
 
@@ -201,7 +201,7 @@ public class Player {
 		return "INSERT INTO Player (id,firstName,lastName,email,mobile,weight,height,dateOfBirth,club_id) VALUES ("
 				+ getId() + "," + DBEntityUtils.quote(getFirstName()) + "," + DBEntityUtils.quote(getLastName()) + ","
 				+ DBEntityUtils.quote(getEmail()) + "," + DBEntityUtils.quote(getMobile()) + "," + getWeight() + "," + getHeight() + ","
-				+ DBEntityUtils.dateToVarBinary(getDateOfBirth()) + "," +
+				+ DBEntityUtils.quote(getDateOfBirth().toString()) + "," +
 				+ getClub().getId()
 				+ ");"
 				+ System.lineSeparator();

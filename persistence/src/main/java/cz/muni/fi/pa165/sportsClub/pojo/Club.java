@@ -123,8 +123,7 @@ public class Club {
 
 	@Override
 	public String toString() {
-		return "Club [id=" + id + ", name=" + name + ", managerId=" + manager.getId() + ", managerEmail="
-				+ manager.getEmail() + "]";
+		return "Club [id=" + id + ", name=" + name + "]";
 	}
 
 	public String toInsertStatement() {

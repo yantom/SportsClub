@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -8,11 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import cz.muni.fi.pa165.sportsClub.enums.Category;
 
 /**
  * Represents player with specific jersey number in given team
@@ -31,6 +36,9 @@ public class PlayerInfo {
     @Max(99)
     @Min(0)
     private int jerseyNumber;
+
+	@Transient
+	private boolean playerOlderThanTeamLimit;
 
 	@ManyToOne
 	@JoinColumn(name = "playerId")
@@ -102,9 +110,31 @@ public class PlayerInfo {
         this.jerseyNumber = jerseyNumber;
     }
 
+	public boolean isPlayerOlderThanTeamLimit() {
+		return playerOlderThanTeamLimit;
+	}
+
+	public void setPlayerOlderThanTeamLimit(boolean value) {
+		playerOlderThanTeamLimit = value;
+	}
+
+	@PostLoad
+	public void setOlderThenLimit() {
+		Category c = getTeam().getCategory();
+		if (c == Category.MEN) {
+			playerOlderThanTeamLimit = false;
+			return;
+		}
+		if (!LocalDate.now().minusYears(c.getAgeLimit()).isBefore(getPlayer().getDateOfBirth())) {
+			playerOlderThanTeamLimit = true;
+			return;
+		}
+		playerOlderThanTeamLimit = false;
+	}
+
     @Override
     public String toString() {
-		return "#" + jerseyNumber + ", " + player + ", " + team;
+		return "#" + jerseyNumber + ", " + player + ", " + team + "isOlder:" + isPlayerOlderThanTeamLimit();
     }
     
 	public String toInsertStatement() {
