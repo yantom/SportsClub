@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerOfTeamDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
@@ -31,41 +30,47 @@ public class TeamFacadeImpl implements TeamFacade {
 	@Inject
 	private BeanMappingService beanMappingService;
 
+	@Override
 	public void createTeam(TeamDto t) {
 		teamService.createTeam(beanMappingService.mapTo(t, Team.class));
-
 	}
 
+	@Override
 	public void updateTeam(TeamDto t) {
 		teamService.updateTeam(beanMappingService.mapTo(t, Team.class));
 
 	}
 
-	public void deleteTeam(TeamDto t) {
-		teamService.deleteTeam(beanMappingService.mapTo(t, Team.class));
+	@Override
+	public void deleteTeam(Long id) {
+		teamService.deleteTeam(new Team(id));
 
 	}
 
+	@Override
 	public TeamDto getTeamById(Long teamId) {
 		Team t = teamService.getTeamById(teamId);
 		return beanMappingService.mapTo(t, TeamDto.class);
 	}
 
-	public TeamDto getTeamOfClubByCategory(Category category, ClubDto c) {
-		Team t = teamService.getTeamOfClubByCategory(category, beanMappingService.mapTo(c, Club.class));
+	@Override
+	public TeamDto getTeamOfClubByCategory(Category category, Long clubId) {
+		Team t = teamService.getTeamOfClubByCategory(category, new Club(clubId));
 		if (t == null)
 			return null;
 		return beanMappingService.mapTo(t, TeamDto.class);
 	}
 
-	public List<TeamDto> getAllTeamsOfClub(ClubDto c) {
-		return beanMappingService.mapTo(teamService.getAllTeamsOfClub(beanMappingService.mapTo(c, Club.class)),
+	@Override
+	public List<TeamDto> getAllTeamsOfClub(Long clubId) {
+		return beanMappingService.mapTo(teamService.getAllTeamsOfClub(new Club(clubId)),
 				TeamDto.class);
 	}
 
-	public List<PlayerOfTeamDto> getPlayersOfTeam(TeamDto t) {
+	@Override
+	public List<PlayerOfTeamDto> getPlayersOfTeam(Long teamId) {
 		List<PlayerOfTeamDto> players = new ArrayList<PlayerOfTeamDto>();
-		List<PlayerInfo> infos = teamService.getPlayerInfos(beanMappingService.mapTo(t, Team.class));
+		List<PlayerInfo> infos = teamService.getPlayerInfos(new Team(teamId));
 		PlayerOfTeamDto playerOfTeam;
 		for (PlayerInfo playerInfo : infos) {
 			playerOfTeam = new PlayerOfTeamDto();
@@ -77,20 +82,20 @@ public class TeamFacadeImpl implements TeamFacade {
 		return players;
 	}
 
-	public void assignPlayerToTeam(PlayerDto p, TeamDto t, int jerseyNumber) {
-		teamService.assignPlayerToTeam(beanMappingService.mapTo(p, Player.class),
-				beanMappingService.mapTo(t, Team.class), jerseyNumber);
+	@Override
+	public void assignPlayerToTeam(Long pID, Long tID, int jerseyNumber) {
+		teamService.assignPlayerToTeam(new Player(pID), new Team(tID), jerseyNumber);
 
 	}
 
-	public void changeJerseyNumber(PlayerDto p, TeamDto t, int jerseyNumber) {
-		teamService.changeJerseyNumber(beanMappingService.mapTo(p, Player.class),
-				beanMappingService.mapTo(t, Team.class), jerseyNumber);
+	@Override
+	public void changeJerseyNumber(Long pID, Long tID, int jerseyNumber) {
+		teamService.changeJerseyNumber(new Player(pID), new Team(tID), jerseyNumber);
 
 	}
 
-	public void removePlayerFromTeam(PlayerDto p, TeamDto t) {
-		teamService.removePlayerFromTeam(beanMappingService.mapTo(p, Player.class),
-				beanMappingService.mapTo(t, Team.class));
+	@Override
+	public void removePlayerFromTeam(Long pID, Long tID) {
+		teamService.removePlayerFromTeam(new Player(pID), new Team(tID));
 	}
 }

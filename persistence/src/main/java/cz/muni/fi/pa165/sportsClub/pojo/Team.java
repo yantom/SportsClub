@@ -37,6 +37,13 @@ public class Team {
     @NotNull
 	private Club club;
 
+	public Team() {
+	}
+
+	public Team(Long id) {
+		this.id = id;
+	}
+
 	public Club getClub() {
 		return club;
     }

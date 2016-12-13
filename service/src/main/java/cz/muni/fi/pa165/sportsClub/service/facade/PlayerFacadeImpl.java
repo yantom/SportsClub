@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamOfPlayerDto;
@@ -29,28 +28,30 @@ public class PlayerFacadeImpl implements PlayerFacade {
 	@Inject
 	private BeanMappingService beanMappingService;
 
+	@Override
 	public void createPlayer(PlayerDto p) {
 		Player playerEntity = beanMappingService.mapTo(p, Player.class);
 		playerService.createPlayer(playerEntity);
 		p.setId(playerEntity.getId());
 	}
 
+	@Override
 	public void updatePlayer(PlayerDto p) {
 		playerService.updatePlayer(beanMappingService.mapTo(p, Player.class));
 	}
 
-	public void deletePlayer(PlayerDto p) {
-		playerService.deletePlayer(beanMappingService.mapTo(p, Player.class));
+	@Override
+	public void deletePlayer(Long id) {
+		playerService.deletePlayer(new Player(id));
 	}
 
+	@Override
 	public PlayerDto getPlayerById(Long playerId) {
 		Player p = playerService.getPlayerById(playerId);
-		if (p == null)
-			return null;
-		PlayerDto pp = beanMappingService.mapTo(p, PlayerDto.class);
-		return pp;
+		return beanMappingService.mapTo(p, PlayerDto.class);
 	}
 
+	@Override
 	public PlayerDto getPlayerByEmail(String email) {
 		Player p = playerService.getPlayerByEmail(email);
 		if (p == null)
@@ -58,9 +59,10 @@ public class PlayerFacadeImpl implements PlayerFacade {
 		return beanMappingService.mapTo(p, PlayerDto.class);
 	}
 
-	public List<TeamOfPlayerDto> getTeamsOfPlayer(PlayerDto p) {
+	@Override
+	public List<TeamOfPlayerDto> getTeamsOfPlayer(Long playerId) {
 		List<TeamOfPlayerDto> teams = new ArrayList<TeamOfPlayerDto>();
-		List<PlayerInfo> infos = playerService.getPlayerInfos(beanMappingService.mapTo(p, Player.class));
+		List<PlayerInfo> infos = playerService.getPlayerInfos(new Player(playerId));
 		TeamOfPlayerDto teamOfPlayer;
 		for (PlayerInfo playerInfo : infos) {
 			teamOfPlayer = new TeamOfPlayerDto();
@@ -72,8 +74,9 @@ public class PlayerFacadeImpl implements PlayerFacade {
 		return teams;
 	}
 
-	public List<PlayerDto> getAllPlayersOfClub(ClubDto c) {
-		return beanMappingService.mapTo(playerService.getAllPlayersOfClub(beanMappingService.mapTo(c, Club.class)),
+	@Override
+	public List<PlayerDto> getAllPlayersOfClub(Long clubId) {
+		return beanMappingService.mapTo(playerService.getAllPlayersOfClub(new Club(clubId)),
 				PlayerDto.class);
 	}
 	

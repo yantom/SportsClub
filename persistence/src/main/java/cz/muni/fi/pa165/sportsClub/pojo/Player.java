@@ -72,6 +72,13 @@ public class Player {
 	@OneToMany(mappedBy = "player", cascade = { CascadeType.REMOVE }, fetch = FetchType.EAGER)
     private List<PlayerInfo> playerInfos = new ArrayList<>();
 
+	public Player() {
+	}
+
+	public Player(Long id) {
+		this.id = id;
+	}
+
     public Long getId() {
         return id;
     }

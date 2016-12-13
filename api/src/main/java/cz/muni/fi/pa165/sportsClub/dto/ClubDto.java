@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.sportsClub.dto;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -41,7 +40,7 @@ public class ClubDto {
 	    }
 	    
 	public List<TeamDto> getTeams() {
-		return Collections.unmodifiableList(teams);
+		return teams;
 	}
 
 	public void addTeam(TeamDto team) {
@@ -58,7 +57,7 @@ public class ClubDto {
 	}
 
 	public List<PlayerDto> getPlayers() {
-		return Collections.unmodifiableList(players);
+		return players;
 	}
 
 	public void addPlayer(PlayerDto player) {

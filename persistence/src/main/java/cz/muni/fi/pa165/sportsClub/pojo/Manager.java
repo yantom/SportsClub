@@ -49,6 +49,13 @@ public class Manager {
 	@JoinColumn(name = "id")
 	private Club club;
 
+	public Manager() {
+	}
+
+	public Manager(Long id) {
+		this.id = id;
+	}
+
 	public Long getId() {
 		return this.id;
 	}

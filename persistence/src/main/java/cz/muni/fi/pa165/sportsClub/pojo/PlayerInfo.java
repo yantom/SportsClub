@@ -48,6 +48,13 @@ public class PlayerInfo {
 	@JoinColumn(name = "teamId")
 	private Team team;
 
+	public PlayerInfo() {
+	}
+
+	public PlayerInfo(Long id) {
+		this.id = id;
+	}
+
 	public Long getId() {
 		return id;
 	}
