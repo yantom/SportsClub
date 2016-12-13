@@ -76,15 +76,7 @@ public class ClubServiceImpl implements ClubService {
 	public List<Player> getFreePlayersOfClub(Club c) {
 
         try {
-            c = clubDao.getWholeClubById(c.getId());
-			List<Player> players = c.getPlayers();
-            List<Player> freePlayers = new ArrayList<Player>();
-            for (Player player : players){
-                if (player.getPlayerInfos().isEmpty()){
-                    freePlayers.add(player);
-                }
-            }
-            return freePlayers;
+            return clubDao.getFreePlayers(c);
         } catch (Exception e) {
             throw new DaoLayerException("can not obtain free players of club", e);
         }

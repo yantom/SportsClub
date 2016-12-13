@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.sportsClub.dao;
 import java.util.List;
 
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Player;
 
 /**
  *
@@ -50,5 +51,13 @@ public interface ClubDao {
 	 *         (players,teams,associations)
 	 */
 	Club getWholeClubById(Long clubId);
+
+    /**
+     *
+     * @param club
+     * @return all the free players of the club
+     */
+    List<Player> getFreePlayers(Club club);
+
 
 }

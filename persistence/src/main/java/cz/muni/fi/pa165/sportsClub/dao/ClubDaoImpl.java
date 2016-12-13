@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,4 +89,13 @@ public class ClubDaoImpl implements ClubDao{
 		return c;
 	}
 
+    @Override
+    public List<Player> getFreePlayers(Club club) {
+        TypedQuery<Player> query = em.createQuery("SELECT p FROM Player p " +
+                                                "LEFT JOIN p.playerInfos pi " +
+                                                "WHERE p.club = :club " +
+                                                "AND pi.player = null", Player.class);
+        query.setParameter("club", club);
+        return query.getResultList();
+    }
 }
