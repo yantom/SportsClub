@@ -45,10 +45,7 @@ public class PlayerFacadeImpl implements PlayerFacade {
 
 	public PlayerDto getPlayerById(Long playerId) {
 		Player p = playerService.getPlayerById(playerId);
-		if (p == null)
-			return null;
-		PlayerDto pp = beanMappingService.mapTo(p, PlayerDto.class);
-		return pp;
+		return beanMappingService.mapTo(p, PlayerDto.class);
 	}
 
 	public PlayerDto getPlayerByEmail(String email) {

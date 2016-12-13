@@ -18,7 +18,6 @@ import javax.sql.DataSource;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,7 +28,6 @@ import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ClubFacade;
 import cz.muni.fi.pa165.sportsClub.testUtils.ScriptRunner;
-import cz.muni.fi.pa165.sportsClub.testUtils.TestDataCreator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceApplicationContext.class)
@@ -40,11 +38,6 @@ public class ClubFacadeIntegrationTest {
 
 	@Inject
 	private DataSource ds;
-
-	@BeforeClass
-	public static void suiteSetup() throws IOException {
-		TestDataCreator.createTestDataScript(2, 20);
-	}
 
 	@Before
 	public void setup() throws FileNotFoundException, IOException, SQLException {

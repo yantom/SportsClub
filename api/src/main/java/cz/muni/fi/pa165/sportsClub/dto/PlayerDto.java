@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.sportsClub.dto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -111,7 +110,7 @@ public class PlayerDto {
 	}
 
 	public List<TeamOfPlayerDto> getPlayerInfos() {
-		return Collections.unmodifiableList(playerInfos);
+		return playerInfos;
 	}
 
 	public void addPlayerInfo(TeamOfPlayerDto t) {
@@ -131,7 +130,7 @@ public class PlayerDto {
 		return club;
 	}
 
-	public void setManager(ClubDto club) {
+	public void setClub(ClubDto club) {
 		this.club = club;
 	}
 
