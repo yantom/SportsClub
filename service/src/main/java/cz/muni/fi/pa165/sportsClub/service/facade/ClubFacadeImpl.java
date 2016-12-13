@@ -26,20 +26,24 @@ public class ClubFacadeImpl implements ClubFacade {
 	@Inject
 	private BeanMappingService beanMappingService;
 
+	@Override
 	public void createClub(ClubDto c) {
 		Club clubEntity = beanMappingService.mapTo(c, Club.class);
 		clubService.createClub(clubEntity);
 		c.setId(clubEntity.getId());
 	}
 
+	@Override
 	public void updateClub(ClubDto c) {
 		clubService.updateClub(beanMappingService.mapTo(c, Club.class));
 	}
 
-	public void deleteClub(ClubDto c) {
-		clubService.deleteClub(beanMappingService.mapTo(c, Club.class));
+	@Override
+	public void deleteClub(Long id) {
+		clubService.deleteClub(new Club(id));
 	}
 
+	@Override
 	public ClubDto getClubById(Long clubId) {
 		Club c = clubService.getClubById(clubId);
 		if (c == null)
@@ -47,6 +51,7 @@ public class ClubFacadeImpl implements ClubFacade {
 		return beanMappingService.mapTo(c, ClubDto.class);
 	}
 
+	@Override
 	public ClubDto getClubByName(String clubName) {
 		Club c = clubService.getClubByName(clubName);
 		if (c == null)
@@ -54,17 +59,19 @@ public class ClubFacadeImpl implements ClubFacade {
 		return beanMappingService.mapTo(c, ClubDto.class);
 	}
 
-	public void assignManagerToClub(ManagerDto m, ClubDto c) {
-		clubService.assignManagerToClub((beanMappingService.mapTo(m, Manager.class)),
-				(beanMappingService.mapTo(c, Club.class)));
+	@Override
+	public void assignManagerToClub(ManagerDto m, Long clubId) {
+		clubService.assignManagerToClub((beanMappingService.mapTo(m, Manager.class)), new Club(clubId));
 	}
 
+	@Override
 	public List<ClubDto> getAllClubs() {
 		return beanMappingService.mapTo(clubService.getAllClubs(), ClubDto.class);
 	}
 
-	public List<PlayerDto> getFreePlayers(ClubDto c) {
-		return beanMappingService.mapTo(clubService.getFreePlayersOfClub(beanMappingService.mapTo(c, Club.class)),
+	@Override
+	public List<PlayerDto> getFreePlayers(Long clubId) {
+		return beanMappingService.mapTo(clubService.getFreePlayersOfClub(new Club(clubId)),
 				PlayerDto.class);
 	}
 }

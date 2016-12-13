@@ -40,6 +40,14 @@ public class Club {
 	@OneToMany(mappedBy = "club", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	private List<Player> players = new ArrayList<>();
 
+	public Club() {
+
+	}
+
+	public Club(Long id) {
+		this.id = id;
+	}
+
     public Long getId() {
         return id;
     }

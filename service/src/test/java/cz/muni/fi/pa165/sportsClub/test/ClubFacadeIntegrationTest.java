@@ -97,7 +97,7 @@ public class ClubFacadeIntegrationTest {
 		m.setFirstName("mana");
 		m.setLastName("man");
 		m.setPassword("12345678");
-		clubFacade.assignManagerToClub(m, c);
+		clubFacade.assignManagerToClub(m, c.getId());
 		assertNotNull(clubFacade.getClubById(c.getId()).getManager());
 	}
 

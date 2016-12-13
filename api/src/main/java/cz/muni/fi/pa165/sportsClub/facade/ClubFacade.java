@@ -11,15 +11,15 @@ public interface ClubFacade {
 
 	void updateClub(ClubDto c);
 
-	void deleteClub(ClubDto c);
+	void deleteClub(Long clubId);
 
 	ClubDto getClubById(Long clubId);
 
 	ClubDto getClubByName(String clubName);
 
-	void assignManagerToClub(ManagerDto m, ClubDto c);
+	void assignManagerToClub(ManagerDto m, Long clubId);
 
-	List<PlayerDto> getFreePlayers(ClubDto c);
+	List<PlayerDto> getFreePlayers(Long clubId);
 
 	List<ClubDto> getAllClubs();
 }

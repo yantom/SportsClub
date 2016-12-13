@@ -22,14 +22,17 @@ public class ManagerFacadeImpl implements ManagerFacade {
 	@Inject
 	private BeanMappingService beanMappingService;
 
+	@Override
 	public void updateManager(ManagerDto m) {
 		managerService.updateManager(beanMappingService.mapTo(m, Manager.class));
 	}
 
-	public void deleteManager(ManagerDto m) {
-		managerService.deleteManager(beanMappingService.mapTo(m, Manager.class));
+	@Override
+	public void deleteManager(Long id) {
+		managerService.deleteManager(new Manager(id));
 	}
 
+	@Override
 	public ManagerDto getManagerById(Long managerId) {
 		Manager m = managerService.getManagerById(managerId);
 		if (m == null)
@@ -37,6 +40,7 @@ public class ManagerFacadeImpl implements ManagerFacade {
 		return beanMappingService.mapTo(m, ManagerDto.class);
 	}
 
+	@Override
 	public ManagerDto getManagerByEmail(String email) {
 		Manager m = managerService.getManagerByEmail(email);
 		if (m == null)

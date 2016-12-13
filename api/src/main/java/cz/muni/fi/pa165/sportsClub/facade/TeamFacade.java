@@ -2,8 +2,6 @@ package cz.muni.fi.pa165.sportsClub.facade;
 
 import java.util.List;
 
-import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
-import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerOfTeamDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
@@ -13,19 +11,19 @@ public interface TeamFacade {
 
 	void updateTeam(TeamDto t);
 
-	void deleteTeam(TeamDto t);
+	void deleteTeam(Long id);
 
 	TeamDto getTeamById(Long teamId);
 
-	TeamDto getTeamOfClubByCategory(Category category, ClubDto c);
+	TeamDto getTeamOfClubByCategory(Category category, Long clubId);
 
-	List<TeamDto> getAllTeamsOfClub(ClubDto c);
+	List<TeamDto> getAllTeamsOfClub(Long clubId);
 
-	List<PlayerOfTeamDto> getPlayersOfTeam(TeamDto t);
+	List<PlayerOfTeamDto> getPlayersOfTeam(Long teamId);
 
-	void assignPlayerToTeam(PlayerDto p, TeamDto t, int jerseyNumber);
+	void assignPlayerToTeam(Long pID, Long tID, int jerseyNumber);
 
-	void changeJerseyNumber(PlayerDto p, TeamDto t, int jerseyNumber);
+	void changeJerseyNumber(Long pID, Long tID, int jerseyNumber);
 
-	void removePlayerFromTeam(PlayerDto p, TeamDto t);
+	void removePlayerFromTeam(Long pID, Long tID);
 }
