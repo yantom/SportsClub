@@ -19,12 +19,12 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 
 	@Override
 	protected String[] getServletMappings() {
-		return new String[] { "/" };
+		return new String[] { "/pa165" };
 	}
 
-	 @Override
-	 protected Filter[] getServletFilters() {
+	@Override
+	protected Filter[] getServletFilters() {
 		CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter("utf-8", true);
 		return new Filter[] { encodingFilter };
-	 }
+	}
 }
