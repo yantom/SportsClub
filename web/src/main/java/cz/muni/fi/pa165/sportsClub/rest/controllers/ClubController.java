@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/rest/club")
+@RequestMapping("/club")
 public class ClubController {
 
     @Inject

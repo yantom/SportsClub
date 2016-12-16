@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/rest/player")
+@RequestMapping("/player")
 public class PlayerController {
 
     @Inject
