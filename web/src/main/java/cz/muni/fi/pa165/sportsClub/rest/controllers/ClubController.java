@@ -26,7 +26,7 @@ public class ClubController {
     @Inject
     private ClubFacade clubFacade;
 
-    @RequestMapping(path = "{managerId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "{managerId}/teams", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final List<TeamDto> getTeams(@PathVariable long managerId){
        return managerFacade.getManagerById(managerId).getClub().getTeams();
     }
