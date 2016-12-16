@@ -1,13 +1,12 @@
 package cz.muni.fi.pa165.sportsClub.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
+import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
+import cz.muni.fi.pa165.sportsClub.pojo.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
-import cz.muni.fi.pa165.sportsClub.pojo.Manager;
-import cz.muni.fi.pa165.sportsClub.pojo.Team;
+
+import java.time.LocalDate;
+
+import static org.junit.Assert.*;
 
 /**
  * 
@@ -41,10 +41,18 @@ public class TeamTest {
 	@Inject
 	private TeamDao teamDao;
 
+	@Inject
+	private PlayerInfoDao playerInfoDao;
+
+	@Inject
+	private PlayerDao playerDao;
+
 	private Team testTeam1;
 	private Team testTeam2;
 	private Manager testManager1;
 	private Club testClub1;
+	private PlayerInfo testPlayerInfo1;
+	private Player testPlayer1;
 
 	@Before
 	public void beforeTest() {
@@ -62,6 +70,21 @@ public class TeamTest {
 		testTeam1.setClub(testClub1);
 		testClub1.addTeam(testTeam1);
 		em.persist(testClub1);
+
+		testPlayer1 = new Player();
+		testPlayer1.setDateOfBirth(LocalDate.of(1994, 5, 30));
+		testPlayer1.setFirstName("first");
+		testPlayer1.setLastName("last");
+		testPlayer1.setEmail("test@gmail.com");
+		testPlayer1.setHeight(175);
+		testPlayer1.setWeight(75);
+		testPlayer1.setMobile("00421605487986");
+		testPlayer1.setClub(testClub1);
+
+		testPlayerInfo1 = new PlayerInfo();
+		testPlayerInfo1.setJerseyNumber(10);
+		testPlayerInfo1.setPlayer(testPlayer1);
+		testPlayerInfo1.setTeam(testTeam1);
 	}
 
 	@After
@@ -99,5 +122,16 @@ public class TeamTest {
 		Team retrieved = teamDao.getTeamById(testTeam1.getId());
 		assertEquals(testTeam1, retrieved);
 		assertEquals(retrieved.getPlayerInfos().size(), 0);
+	}
+
+	@Test
+	public void isJerseyNumberUniqueTest(){
+		playerDao.createPlayer(testPlayer1);
+		playerInfoDao.createPlayerInfo(testPlayerInfo1);
+		assertFalse(teamDao.isJerseyNumberUnique(testTeam1, 10));
+		assertTrue(teamDao.isJerseyNumberUnique(testTeam1, 11));
+		playerInfoDao.deletePlayerInfo(testPlayerInfo1);
+		playerDao.deletePlayer(testPlayer1);
+
 	}
 }

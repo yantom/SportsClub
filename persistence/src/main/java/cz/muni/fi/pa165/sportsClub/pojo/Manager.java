@@ -43,7 +43,7 @@ public class Manager {
 	@Column(nullable = false)
 	private String password;
 
-	@OneToOne(mappedBy = "manager", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@OneToOne(mappedBy = "manager", cascade = { CascadeType.ALL})
 	@NotNull
 	@MapsId
 	@JoinColumn(name = "id")

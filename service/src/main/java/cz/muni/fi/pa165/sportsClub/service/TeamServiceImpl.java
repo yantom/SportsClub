@@ -17,104 +17,135 @@ import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
 @Service
 public class TeamServiceImpl implements TeamService {
-	@Inject
-	private TeamDao teamDao;
-	@Inject
-	private PlayerInfoDao playerInfoDao;
+    @Inject
+    private TeamDao teamDao;
 
-	public void createTeam(Team t) {
-		try {
-			teamDao.createTeam(t);
-		} catch (Exception e) {
-			throw new DaoLayerException("can not create team", e);
-		}
-	}
+    @Inject
+    private TeamDao playerDao;
 
-	public void updateTeam(Team t) {
-		try {
-			teamDao.updateTeam(t);
-		} catch (Exception e) {
-			throw new DaoLayerException("can not update team", e);
-		}
-	}
+    @Inject
+    private PlayerInfoDao playerInfoDao;
 
-	public void deleteTeam(Team t) {
-		try {
-			teamDao.deleteTeam(t);
-		} catch (Exception e) {
-			throw new DaoLayerException("can not delete team", e);
-		}
-	}
+    public void createTeam(Team t) {
+        try {
+            teamDao.createTeam(t);
+        } catch (Exception e) {
+            throw new DaoLayerException("can not create team", e);
+        }
+    }
 
-	public Team getTeamById(Long teamId) {
-		try {
-			return teamDao.getTeamById(teamId);
-		} catch (Exception e) {
-			throw new DaoLayerException("can not find team by id", e);
-		}
-	}
+    public void updateTeam(Team t) {
+        try {
+            teamDao.updateTeam(t);
+        } catch (Exception e) {
+            throw new DaoLayerException("can not update team", e);
+        }
+    }
 
-	public Team getTeamOfClubByCategory(Category category, Club c) {
-		try {
-			List<Team> teams = c.getTeams();
-			for(Team team: teams){
-				if (team.getCategory().equals(category)){
-					return team;
-				}
-			}
-			return null;
-		} catch (Exception e) {
-			throw new DaoLayerException("can not find team of club by category", e);
-		}
+    public void deleteTeam(Team t) {
+        try {
+            teamDao.deleteTeam(t);
+        } catch (Exception e) {
+            throw new DaoLayerException("can not delete team", e);
+        }
+    }
 
-	}
+    public Team getTeamById(Long teamId) {
+        try {
+            return teamDao.getTeamById(teamId);
+        } catch (Exception e) {
+            throw new DaoLayerException("can not find team by id", e);
+        }
+    }
 
-	public List<Team> getAllTeamsOfClub(Club c) {
-		try {
-			return c.getTeams();
-		} catch (Exception e) {
-			throw new DaoLayerException("can not obtain all teams of club", e);
-		}
+    public Team getTeamOfClubByCategory(Category category, Club c) {
+        try {
+            List<Team> teams = c.getTeams();
+            for (Team team : teams) {
+                if (team.getCategory().equals(category)) {
+                    return team;
+                }
+            }
+            return null;
+        } catch (Exception e) {
+            throw new DaoLayerException("can not find team of club by category", e);
+        }
 
-	}
+    }
 
-	public List<PlayerInfo> getPlayerInfos(Team t) {
-		try {
-			return t.getPlayerInfos();
-		} catch (Exception e) {
-			throw new DaoLayerException("can not obtain players infos", e);
-		}
-	}
+    public List<Team> getAllTeamsOfClub(Club c) {
+        try {
+            return c.getTeams();
+        } catch (Exception e) {
+            throw new DaoLayerException("can not obtain all teams of club", e);
+        }
 
-	public void assignPlayerToTeam(Player p, Team t, int jerseyNumber) {
-            PlayerInfo playerInfo = new PlayerInfo();
-            playerInfo.setPlayer(p);
-            playerInfo.setTeam(t);
-            playerInfo.setJerseyNumber(jerseyNumber);
-		try {
-			playerInfoDao.createPlayerInfo(playerInfo);
-		} catch (Exception e) {
-			throw new DaoLayerException("can not assign player to team", e);
-		}
-		t.addPlayerInfo(playerInfo);
-            p.addPlayerInfo(playerInfo);
-	}
+    }
 
-	public void changeJerseyNumber(Player p, Team t, int newjerseyNumber) {
-		try {
-			playerInfoDao.changeJerseyNumber(t, p, newjerseyNumber);
-		}
-		catch (Exception e) {
-			throw new DaoLayerException("can not change jarsey number", e);
-		}
-	}
+    public List<PlayerInfo> getPlayerInfos(Team t) {
+        try {
+            return t.getPlayerInfos();
+        } catch (Exception e) {
+            throw new DaoLayerException("can not obtain players infos", e);
+        }
+    }
 
-	public void removePlayerFromTeam(Player p, Team t) {
-		try {
-			playerInfoDao.deletePlayerInfoByTeamAndPlayer(t, p);
-		}
-		catch (Exception e) {
-			throw new DaoLayerException("can not remove player from team", e);
-		}
-	}
+    public void assignFreePlayerToTeam(Player p, Team t, int jerseyNumber) {
+        if(!playerDao.isPlayerFree(p)){
+            throw new IllegalArgumentException("Player is not free!");
+        }
+        if(!playerDao.playerMeetsAgeLimit(p)){
+            throw new IllegalArgumentException("Player does not match age criteria of team");
+        }
+        if(!teamDao.isJerseyNumberUnique(t,newjerseyNumber)){
+            throw new IllegalArgumentException("Jersey number is not unique in the team");
+        }
+        PlayerInfo playerInfo = new PlayerInfo();
+        playerInfo.setPlayer(p);
+        playerInfo.setTeam(t);
+        playerInfo.setJerseyNumber(jerseyNumber);
+        try {
+            playerInfoDao.createPlayerInfo(playerInfo);
+        } catch (Exception e) {
+            throw new DaoLayerException("can not assign player to team", e);
+        }
+    }
+
+    public void assignNewPlayerToTeam(Player p, Team t, int jerseyNumber) {
+        if(!playerDao.playerMeetsAgeLimit(p)){
+            throw new IllegalArgumentException("Player does not match age criteria of team");
+        }
+        if(!teamDao.isJerseyNumberUnique(t, newjerseyNumber)){
+            throw new IllegalArgumentException("Jersey number is not unique in the team");
+        }
+        PlayerInfo playerInfo = new PlayerInfo();
+        playerInfo.setPlayer(p);
+        playerInfo.setTeam(t);
+        playerInfo.setJerseyNumber(jerseyNumber);
+        p.setClub(t.getClub());
+        try {
+            playerInfoDao.createPlayerInfo(playerInfo);
+        } catch (Exception e) {
+            throw new DaoLayerException("can not assign player to team", e);
+        }
+    }
+
+    public void changeJerseyNumber(Player p, Team t, int newjerseyNumber) {
+        if(!teamDao.isJerseyNumberUnique(t,newjerseyNumber)){
+            throw new IllegalArgumentException("Jersey number is not unique in the team");
+        }
+        try {
+            playerInfoDao.changeJerseyNumber(t, p, newjerseyNumber);
+        } catch (Exception e) {
+            throw new DaoLayerException("can not change jarsey number", e);
+        }
+    }
+
+    public void removePlayerFromTeam(Player p, Team t) {
+        try {
+            playerInfoDao.deletePlayerInfoByTeamAndPlayer(t, p);
+        } catch (Exception e) {
+            throw new DaoLayerException("can not remove player from team", e);
+        }
+    }
 }

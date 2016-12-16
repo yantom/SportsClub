@@ -36,4 +36,12 @@ public interface TeamDao {
      * @return found team
      */
     Team getTeamById(Long id);
+
+    /**
+     * check if given jersey number already exist in the team
+     *
+     * @param team,jerseyNumber
+     * @return found team
+     */
+    boolean isJerseyNumberUnique(Team team, int jerseyNumber);
 }

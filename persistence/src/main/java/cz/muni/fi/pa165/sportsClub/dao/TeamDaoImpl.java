@@ -2,11 +2,16 @@ package cz.muni.fi.pa165.sportsClub.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
+
+import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
+
+import java.util.List;
 
 /**
  *
@@ -50,5 +55,15 @@ public class TeamDaoImpl implements TeamDao {
     public Team getTeamById(Long id) {
         return em.find(Team.class, id);
     }
-    
+
+    @Override
+    public boolean isJerseyNumberUnique(Team team, int jerseyNumber) {
+        TypedQuery<PlayerInfo> query = em.createQuery("SELECT pi FROM Team t " +
+                    "JOIN t.playerInfos pi " +
+                    "WHERE pi.jerseyNumber = :jerseyNumber", PlayerInfo.class);
+            query.setParameter("jerseyNumber", jerseyNumber);
+        if(query.getResultList().isEmpty())
+            return true;
+        return false;
+    }
 }
