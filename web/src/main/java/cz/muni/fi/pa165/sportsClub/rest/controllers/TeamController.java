@@ -41,4 +41,18 @@ public class TeamController {
                     .body(e.getMessage());
         }
     }
+
+    @RequestMapping(value = "/{teamId}/{playerId}", method = RequestMethod.DELETE)
+    public final ResponseEntity removePlayerFromRoster(@PathVariable long teamId,@PathVariable long playerId){
+        try {
+            teamFacade.removePlayerFromTeam(teamId, playerId);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Player was successfully removed from team roster");
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
+        }
+    }
 }
