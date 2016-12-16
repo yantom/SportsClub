@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
 import org.springframework.stereotype.Service;
 
 import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
@@ -23,7 +24,7 @@ public class TeamServiceImpl implements TeamService {
     private TeamDao teamDao;
 
     @Inject
-    private TeamDao playerDao;
+    private ClubDao clubDao;
 
     @Inject
     private PlayerInfoDao playerInfoDao;
@@ -154,6 +155,18 @@ public class TeamServiceImpl implements TeamService {
             playerInfoDao.deletePlayerInfoByTeamAndPlayer(t, p);
         } catch (Exception e) {
             throw new DaoLayerException("can not remove player from team", e);
+        }
+    }
+
+    public List<Player> findSuitablePlayersForTeam(Team team) {
+        LocalDate today = LocalDate.now();
+        int ageLimit = team.getCategory().getAgeLimit();
+        LocalDate ageLimitDate = today.minusYears(ageLimit);
+        System.out.println(ageLimitDate);
+        try {
+            return clubDao.getPlayersWithHigherDobThan(team.getClub(),ageLimitDate);
+        } catch (Exception e) {
+            throw new DaoLayerException("can not obtain find suitable players for team", e);
         }
     }
 }

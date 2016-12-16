@@ -35,6 +35,8 @@ public class ClubTest {
 
     private Manager manager;
     private Club club;
+    private Player player1;
+    private Player player2;
 
     @Inject
     private ClubDao clubDao;
@@ -62,6 +64,26 @@ public class ClubTest {
 
         manager.setClub(club);
         club.setManager(manager);
+
+        player1 = new Player();
+        player1.setEmail("onassis@gmail.com");
+        player1.setFirstName("Aristoteles");
+        player1.setLastName("Onassis");
+        player1.setHeight(120);
+        player1.setWeight(120);
+        player1.setDateOfBirth(LocalDate.parse("2000-06-15"));
+        player1.setClub(club);
+
+        player2 = new Player();
+        player2.setEmail("pepapppp@noooooovak.com");
+        player2.setFirstName("Pepa");
+        player2.setLastName("Novak");
+        player2.setHeight(150);
+        player2.setWeight(67);
+        player2.setMobile("+42190000000");
+        player2.setDateOfBirth(LocalDate.parse("1991-06-15"));
+        player2.setClub(club);
+
     }
 
     @After
@@ -146,25 +168,6 @@ public class ClubTest {
         clubDao.createClub(club);
         assertNotNull(club.getId());
 
-        Player player1 = new Player();
-        player1.setEmail("onassis@gmail.com");
-        player1.setFirstName("Aristoteles");
-        player1.setLastName("Onassis");
-        player1.setHeight(120);
-        player1.setWeight(120);
-        player1.setDateOfBirth(LocalDate.parse("2000-06-15"));
-        player1.setClub(club);
-
-        Player player2 = new Player();
-        player2.setEmail("pepapppp@noooooovak.com");
-        player2.setFirstName("Pepa");
-        player2.setLastName("Novak");
-        player2.setHeight(150);
-        player2.setWeight(67);
-        player2.setMobile("+42190000000");
-        player2.setDateOfBirth(LocalDate.parse("1991-06-15"));
-        player2.setClub(club);
-
         playerDao.createPlayer(player1);
         playerDao.createPlayer(player2);
         assertNotNull(player1.getId());
@@ -186,6 +189,21 @@ public class ClubTest {
 
         assertEquals(1, freePlayers.size());
         assertEquals(player2, freePlayers.get(0));
+
+    }
+
+    @Test
+    public void getPlayersWithHigherDobThan(){
+        clubDao.createClub(club);
+        assertNotNull(club.getId());
+        playerDao.createPlayer(player1);
+        playerDao.createPlayer(player2);
+
+        LocalDate ageLimitDate = LocalDate.parse("1995-06-15");
+        List<Player> freePlayers = clubDao.getPlayersWithHigherDobThan(club, ageLimitDate);
+
+        assertEquals(1,freePlayers.size());
+        assertEquals(player1 ,freePlayers.get(0));
 
     }
 }

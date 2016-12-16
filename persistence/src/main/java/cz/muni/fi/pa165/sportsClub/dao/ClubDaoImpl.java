@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -96,6 +97,16 @@ public class ClubDaoImpl implements ClubDao{
                                                 "WHERE p.club = :club " +
                                                 "AND pi.player = null", Player.class);
         query.setParameter("club", club);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Player> getPlayersWithHigherDobThan(Club club, LocalDate ageLimitDate) {
+        TypedQuery<Player> query = em.createQuery("SELECT p FROM Player p " +
+                                                "WHERE p.club = :club " +
+                                                "AND p.dateOfBirth >= :ageLimitDate", Player.class);
+        query.setParameter("club", club);
+        query.setParameter("ageLimitDate", ageLimitDate);
         return query.getResultList();
     }
 }

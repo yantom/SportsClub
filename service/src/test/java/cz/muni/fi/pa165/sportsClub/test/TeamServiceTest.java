@@ -188,5 +188,4 @@ public class TeamServiceTest {
         team1.setCategory(Category.U13);
         teamService.assignNewPlayerToTeam(player1,team1,10);
     }
-
 }
