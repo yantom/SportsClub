@@ -1,4 +1,12 @@
-<h1>Clubs</h1>
+<h1>Clubs
+<button type="button" class="btn btn-success" ng-click="createNewClub()">
+<span class="glyphicon glyphicon-plus"></span>
+</button>
+</h1>
 <ul class="list-group">
-  <li class="list-group-item" ng-repeat="club in clubs">{{club.name}}</li>
+  <li class="list-group-item" ng-repeat="club in clubs" "><span ng-click="clickOnClub(club.id)">{{club.name}}</span>
+  	<button type="button" class="btn btn-danger" ng-click="deleteClub(club.id)">
+<span class="glyphicon glyphicon-remove"></span>
+</button>
+  </li>
 </ul>
