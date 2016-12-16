@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import cz.muni.fi.pa165.sportsClub.pojo.Club;
@@ -59,5 +60,11 @@ public interface ClubDao {
      */
     List<Player> getFreePlayers(Club club);
 
+    /**
+     *
+     * @param club,ageLimitDate
+     * @return list of players with higher date of birth than certain date
+     */
+    List<Player> getPlayersWithHigherDobThan(Club club, LocalDate ageLimitDate);
 
 }
