@@ -1,0 +1,13 @@
+cz\muni\fi\pa165\sportsClub\dto\PlayerDto.class
+cz\muni\fi\pa165\sportsClub\rest\serializers\LocalDateSerializer.class
+cz\muni\fi\pa165\sportsClub\dto\TeamOfPlayerDto.class
+cz\muni\fi\pa165\sportsClub\dto\TeamDto.class
+cz\muni\fi\pa165\sportsClub\facade\TeamFacade.class
+cz\muni\fi\pa165\sportsClub\facade\ManagerFacade.class
+cz\muni\fi\pa165\sportsClub\facade\ClubFacade.class
+cz\muni\fi\pa165\sportsClub\dto\ManagerAuthenticationDto.class
+cz\muni\fi\pa165\sportsClub\facade\PlayerFacade.class
+cz\muni\fi\pa165\sportsClub\rest\serializers\LocalDateDeserializer.class
+cz\muni\fi\pa165\sportsClub\dto\ManagerDto.class
+cz\muni\fi\pa165\sportsClub\dto\ClubDto.class
+cz\muni\fi\pa165\sportsClub\dto\PlayerOfTeamDto.class
