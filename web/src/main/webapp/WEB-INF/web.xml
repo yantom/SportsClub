@@ -38,7 +38,7 @@
     <login-config>
         <auth-method>FORM</auth-method>
         <form-login-config>
-            <form-login-page>/app/components/home.html</form-login-page>
+            <form-login-page>/app/components/home/home.html</form-login-page>
             <!-- <form-error-page>/WEB-INF/hidden-jsps/login-failed.jsp</form-error-page> -->
         </form-login-config>
     </login-config>
