@@ -12,7 +12,7 @@ import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.facade.ClubFacade;
 
 @RestController
-@RequestMapping("/rest/test")
+@RequestMapping("/test")
 public class TestController {
 	@Inject
 	ClubFacade clubFacade;
