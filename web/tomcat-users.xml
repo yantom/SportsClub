@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="windows-1250"?>
+<tomcat-users>
+
+    <role rolename="admin" description="administrator"/>
+    <role rolename="manager" description="manager"/>
+
+    <user username="admin" password="admin" roles="admin, manager"/>
+    <user username="0man@mail.com" password="0password" roles="manager"/>
+    <user username="1man@mail.com" password="1password" roles="manager"/>
+
+</tomcat-users>
+
