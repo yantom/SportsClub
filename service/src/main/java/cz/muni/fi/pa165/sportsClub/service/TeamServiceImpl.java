@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.sportsClub.service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -90,14 +92,20 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-    public void assignFreePlayerToTeam(Player p, Team t, int jerseyNumber) {
-        if(!playerDao.isPlayerFree(p)){
-            throw new IllegalArgumentException("Player is not free!");
-        }
-        if(!playerDao.playerMeetsAgeLimit(p)){
+    private boolean playerMeetsAgeLimit(Player player, Team team){
+        LocalDate today = LocalDate.now();
+        LocalDate birthday = player.getDateOfBirth();
+
+        int age = Period.between(birthday, today).getYears();
+        team.getCategory().getAgeLimit();
+        return age <= team.getCategory().getAgeLimit();
+    }
+
+    public void assignExistingPlayerToTeam(Player p, Team t, int jerseyNumber) {
+        if(!playerMeetsAgeLimit(p,t)){
             throw new IllegalArgumentException("Player does not match age criteria of team");
         }
-        if(!teamDao.isJerseyNumberUnique(t,newjerseyNumber)){
+        if(!teamDao.isJerseyNumberUnique(t,jerseyNumber)){
             throw new IllegalArgumentException("Jersey number is not unique in the team");
         }
         PlayerInfo playerInfo = new PlayerInfo();
@@ -112,10 +120,10 @@ public class TeamServiceImpl implements TeamService {
     }
 
     public void assignNewPlayerToTeam(Player p, Team t, int jerseyNumber) {
-        if(!playerDao.playerMeetsAgeLimit(p)){
+        if(!playerMeetsAgeLimit(p,t)){
             throw new IllegalArgumentException("Player does not match age criteria of team");
         }
-        if(!teamDao.isJerseyNumberUnique(t, newjerseyNumber)){
+        if(!teamDao.isJerseyNumberUnique(t, jerseyNumber)){
             throw new IllegalArgumentException("Jersey number is not unique in the team");
         }
         PlayerInfo playerInfo = new PlayerInfo();

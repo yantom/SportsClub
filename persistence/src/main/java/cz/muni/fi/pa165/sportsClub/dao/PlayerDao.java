@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
+import cz.muni.fi.pa165.sportsClub.pojo.Team;
+
 import java.util.List;
 
 /**

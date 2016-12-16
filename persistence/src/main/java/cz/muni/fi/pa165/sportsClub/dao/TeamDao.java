@@ -41,7 +41,7 @@ public interface TeamDao {
      * check if given jersey number already exist in the team
      *
      * @param team,jerseyNumber
-     * @return found team
+     * @return if jersey number is unique
      */
     boolean isJerseyNumberUnique(Team team, int jerseyNumber);
 }

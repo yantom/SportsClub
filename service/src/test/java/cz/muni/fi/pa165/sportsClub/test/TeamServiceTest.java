@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,28 +88,21 @@ public class TeamServiceTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void createClubTest(){
+    public void createTeamTest(){
         doThrow(new RuntimeException()).when(teamDao).createTeam(mockTeam);
         teamService.createTeam(mockTeam);
     }
 
     @Test(expected = RuntimeException.class)
-    public void deleteClubTest(){
+    public void deleteTeamTest(){
         doThrow(new RuntimeException()).when(teamDao).deleteTeam(mockTeam);
         teamService.deleteTeam(mockTeam);
     }
 
     @Test(expected = RuntimeException.class)
-    public void updateClubTest(){
+    public void updateTeamTest(){
         doThrow(new RuntimeException()).when(teamDao).updateTeam(mockTeam);
         teamService.updateTeam(mockTeam);
-    }
-
-    @Test
-    public void getClubByIdTest(){
-        when(teamDao.getTeamById(1L)).thenReturn(mockTeam);
-        Team returnedTeam = teamService.getTeamById(1L);
-        assertEquals(mockTeam,returnedTeam);
     }
 
     @Test
@@ -179,6 +173,20 @@ public class TeamServiceTest {
         doThrow(new RuntimeException()).when(playerInfoDao).deletePlayerInfoByTeamAndPlayer(mockTeam, mockPlayer);
 
         teamService.removePlayerFromTeam(mockPlayer, mockTeam);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void assignExistingPlayerToTeamTest(){
+        player1.setDateOfBirth(LocalDate.parse("2000-06-15"));
+        team1.setCategory(Category.U13);
+        teamService.assignExistingPlayerToTeam(player1,team1,10);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void assignNewPlayerToTeamTest(){
+        player1.setDateOfBirth(LocalDate.parse("2000-06-15"));
+        team1.setCategory(Category.U13);
+        teamService.assignNewPlayerToTeam(player1,team1,10);
     }
 
 }

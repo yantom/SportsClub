@@ -23,11 +23,13 @@ public interface TeamService {
 
 	List<PlayerInfo> getPlayerInfos(Team t);
 
-	void assignFreePlayerToTeam(Player p, Team t, int jerseyNumber);
+	void assignExistingPlayerToTeam(Player p, Team t, int jerseyNumber);
 
 	void assignNewPlayerToTeam(Player p, Team t, int jerseyNumber);
 
 	void changeJerseyNumber(Player p, Team t, int jerseyNumber);
 
 	void removePlayerFromTeam(Player p, Team t);
+
+
 }

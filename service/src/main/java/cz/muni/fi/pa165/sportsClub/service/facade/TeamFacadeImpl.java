@@ -83,9 +83,13 @@ public class TeamFacadeImpl implements TeamFacade {
 	}
 
 	@Override
-	public void assignPlayerToTeam(Long pID, Long tID, int jerseyNumber) {
-		teamService.assignPlayerToTeam(new Player(pID), new Team(tID), jerseyNumber);
+	public void assignExistingPlayerToTeam(Long pID, Long tID, int jerseyNumber) {
+		teamService.assignExistingPlayerToTeam(new Player(pID), new Team(tID), jerseyNumber);
+	}
 
+	@Override
+	public void assignNewPlayerToTeam(Long pID, Long tID, int jerseyNumber) {
+		teamService.assignNewPlayerToTeam(new Player(pID), new Team(tID), jerseyNumber);
 	}
 
 	@Override
