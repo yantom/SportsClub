@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author David Koncak, 410155
  */
+@RestController
+@RequestMapping("/rest/club")
 public class ClubRestController {
     
     @Inject
@@ -46,7 +49,7 @@ public class ClubRestController {
         return clubFacade.getAllClubs();
     }
     
-    @RequestMapping(path = "/free", method = RequestMethod.GET)
+    @RequestMapping(path = "/free/{id}", method = RequestMethod.GET)
     public List<PlayerDto> freePlayers(@PathVariable("id") long id) {
         return clubFacade.getFreePlayers(id);
     }
