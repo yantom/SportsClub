@@ -9,7 +9,6 @@ public class ClubDto {
 	    private Long id;
 	    @NotNull
 	    private String name;
-	    private ManagerDto manager;
 
 	private List<TeamDto> teams = new ArrayList<>();
 
@@ -29,14 +28,6 @@ public class ClubDto {
 
 	    public void setName(String name) {
 	        this.name = name;
-	    }
-
-	    public ManagerDto getManager() {
-	        return manager;
-	    }
-
-	    public void setManager(ManagerDto manager) {
-	        this.manager = manager;
 	    }
 	    
 	public List<TeamDto> getTeams() {

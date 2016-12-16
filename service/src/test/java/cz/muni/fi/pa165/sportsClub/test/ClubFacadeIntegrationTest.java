@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.sportsClub.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -27,6 +26,7 @@ import cz.muni.fi.pa165.sportsClub.ServiceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ClubFacade;
+import cz.muni.fi.pa165.sportsClub.facade.ManagerFacade;
 import cz.muni.fi.pa165.sportsClub.testUtils.ScriptRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -35,6 +35,9 @@ public class ClubFacadeIntegrationTest {
 
 	@Inject
 	private ClubFacade clubFacade;
+
+	@Inject
+	private ManagerFacade managerFacade;
 
 	@Inject
 	private DataSource ds;
@@ -77,7 +80,6 @@ public class ClubFacadeIntegrationTest {
 	public void getClubById() {
 		ClubDto c = clubFacade.getClubById(clubFacade.getAllClubs().get(0).getId());
 		assertNotNull(c);
-		assertNotNull(c.getManager());
 	}
 
 	@Test
@@ -90,7 +92,6 @@ public class ClubFacadeIntegrationTest {
 		ClubDto c = new ClubDto();
 		c.setName("newClubName");
 		clubFacade.createClub(c);
-		assertNull(c.getManager());
 		assertNotNull(c.getId());
 		ManagerDto m = new ManagerDto();
 		m.setEmail("mana@gmail.com");
@@ -98,7 +99,7 @@ public class ClubFacadeIntegrationTest {
 		m.setLastName("man");
 		m.setPassword("12345678");
 		clubFacade.assignManagerToClub(m, c.getId());
-		assertNotNull(clubFacade.getClubById(c.getId()).getManager());
+		assertNotNull(managerFacade.getManagerByEmail("mana@gmail.com").getClub());
 	}
 
 	@Test
