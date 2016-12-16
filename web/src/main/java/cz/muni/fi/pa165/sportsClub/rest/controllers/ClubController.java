@@ -12,11 +12,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.util.List;
 
 
 @RestController
-@RequestMapping("/club")
+@RequestMapping("/rest/club")
 public class ClubController {
 
     @Inject
@@ -34,6 +35,32 @@ public class ClubController {
     public final List<PlayerDto> getFreePlayers(@PathVariable long managerId){
         ClubDto clubDto = managerFacade.getManagerById(managerId).getClub();
         return clubFacade.getFreePlayers(clubDto.getId());
+    }
+
+    @RequestMapping(path = "/create", method = RequestMethod.POST)
+    public ClubDto create(@Valid @RequestBody ClubDto club) {
+        clubFacade.createClub(club);
+        return club;
+    }
+
+    @RequestMapping(path = "/update", method = RequestMethod.POST)
+    public void update(@Valid @RequestBody ClubDto club) {
+        clubFacade.updateClub(club);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") long id) {
+        clubFacade.deleteClub(id);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public ClubDto findById(@PathVariable("id") long id) {
+        return clubFacade.getClubById(id);
+    }
+
+    @RequestMapping(path = "/findall", method = RequestMethod.GET)
+    public List<ClubDto> findAll() {
+        return clubFacade.getAllClubs();
     }
 
 
