@@ -7,7 +7,7 @@ angular.module('sportsClub').factory('homeService',
 
                 service.Login = function (email, password, callback) {
 
-                    $http.post('/app/components', {email: email, password: password})
+                    $http.post('/app/components/home/home.html', {email: email, password: password})
                             .success(function (response) {
                                 callback(response);
                             });
