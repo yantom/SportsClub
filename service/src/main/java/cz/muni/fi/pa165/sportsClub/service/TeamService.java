@@ -32,4 +32,6 @@ public interface TeamService {
 	void removePlayerFromTeam(Player p, Team t);
 
 	List<Player> findSuitablePlayersForTeam(Team team);
+        
+        boolean isJerseyNumberUnique(Team team, int jerseyNumber);
 }

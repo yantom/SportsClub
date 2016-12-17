@@ -181,4 +181,13 @@ public class TeamServiceImpl implements TeamService {
             throw new DaoLayerException("can not obtain find suitable players for team", e);
         }
     }
+
+    @Override
+    public boolean isJerseyNumberUnique(Team team, int jerseyNumber) {
+        try {
+            return teamDao.isJerseyNumberUnique(team, jerseyNumber);
+        } catch (Exception e) {
+            throw new DaoLayerException("can not tell if team contains this jerseyNumber", e);
+        }
+    }
 }

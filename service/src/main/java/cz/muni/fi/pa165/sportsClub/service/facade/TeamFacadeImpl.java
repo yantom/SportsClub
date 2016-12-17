@@ -103,4 +103,9 @@ public class TeamFacadeImpl implements TeamFacade {
 	public void removePlayerFromTeam(Long pID, Long tID) {
 		teamService.removePlayerFromTeam(new Player(pID), new Team(tID));
 	}
+
+    @Override
+    public boolean isJerseyNumberUnique(Long tID, int jerseyNumber) {
+        return teamService.isJerseyNumberUnique(new Team(tID), jerseyNumber);
+    }
 }
