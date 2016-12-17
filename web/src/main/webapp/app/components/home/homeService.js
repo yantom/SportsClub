@@ -5,6 +5,16 @@ angular.module('sportsClub').factory('homeService',
             function (Base64, $http, $cookieStore, $rootScope, $timeout) {
                 var service = {};
 
+                service.Login = function (email, password, callback) {
+
+                    $http.post('/app/components', {email: email, password: password})
+                            .success(function (response) {
+                                callback(response);
+                            });
+
+                };
+
+
                 service.SetCredentials = function (email, password) {
                     var authdata = Base64.encode(email + ':' + password);
 
