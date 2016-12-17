@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cz.muni.fi.pa165.sportsClub.ServiceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.service.PlayerService;
 
@@ -40,7 +40,7 @@ public class PlayerServiceTest {
     private Player player;
 
 	@Mock
-	private Club club;
+	private Manager manager;
 
 
     @Inject
@@ -62,7 +62,7 @@ public class PlayerServiceTest {
         player.setHeight(120);
         player.setWeight(120);
         player.setDateOfBirth(dt1);
-		player.setClub(club);
+		player.setManager(manager);
         
     }
 

@@ -6,10 +6,10 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
+import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
 import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 
@@ -25,9 +25,10 @@ public class PlayerServiceImpl implements PlayerService {
     private PlayerDao playerDao;
     
     @Inject
-    private ClubDao clubDao;
+	private ManagerDao managerDao;
 
-    public void createPlayer(Player p) {
+	@Override
+	public void createPlayer(Player p) {
         try {
             playerDao.createPlayer(p);
         } catch (Exception e) {
@@ -35,7 +36,8 @@ public class PlayerServiceImpl implements PlayerService {
         }
     }
 
-    public void updatePlayer(Player p) {
+	@Override
+	public void updatePlayer(Player p) {
         try {
             playerDao.updatePlayer(p);
         } catch (Exception e) {
@@ -43,7 +45,8 @@ public class PlayerServiceImpl implements PlayerService {
         }
     }
 
-    public void deletePlayer(Player p) {
+	@Override
+	public void deletePlayer(Player p) {
         try {
             playerDao.deletePlayer(p);
         } catch (Exception e) {
@@ -51,7 +54,8 @@ public class PlayerServiceImpl implements PlayerService {
         }
     }
 
-    public Player getPlayerById(Long playerId) {
+	@Override
+	public Player getPlayerById(Long playerId) {
         try {
             return playerDao.getPlayerById(playerId);
         } catch (Exception e) {
@@ -59,7 +63,8 @@ public class PlayerServiceImpl implements PlayerService {
         }
     }
 
-    public Player getPlayerByEmail(String email) {
+	@Override
+	public Player getPlayerByEmail(String email) {
         try {
             return playerDao.getPlayerByEmail(email);
         } catch (Exception e) {
@@ -67,18 +72,20 @@ public class PlayerServiceImpl implements PlayerService {
         }
     }
 
-    public List<Player> getAllPlayersOfClub(Club c) {
+	@Override
+	public List<Player> getAllPlayersOfClub(Manager m) {
         try {
-			List<Player> players = clubDao.getClubById(c.getId()).getPlayers();
+			List<Player> players = managerDao.getManagerById(m.getId()).getPlayers();
             players.size();
             return players;
         } catch (Exception e) {
-            throw new DaoLayerException("can not obtain all players of club", e);
+			throw new DaoLayerException("can not obtain all players of manager", e);
         }
 
     }
 
-    public List<PlayerInfo> getPlayerInfos(Player p) {
+	@Override
+	public List<PlayerInfo> getPlayerInfos(Player p) {
         try {
             List<PlayerInfo> playerInfos = playerDao.getPlayerById(p.getId()).getPlayerInfos();
             playerInfos.size();

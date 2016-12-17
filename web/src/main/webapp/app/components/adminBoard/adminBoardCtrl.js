@@ -1,40 +1,26 @@
 "use strict";
 angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibModal,$http) {
-	$scope.clubs;
+	$scope.managers;
 	
-	$scope.clickOnClub = function(clubId){
-		$http.get(restInterface + '/club/findall').then(
-			function(response){
-				openManagerModal(response.data);
-			},
+	$scope.deleteManager = function(managerId){
+		$http.remove(restInterface + '/manager/'+managerId).then(
 			function(){
-				alert("error occured while retrieving manager");
-			}
-		);
-	}
-	
-	$scope.createNewClub = function(){
-		openManagerModal(null);
-	}
-	
-	$scope.deleteClub = function(clubId){
-		$http.delete(restInterface + '/club/'+clubId).then(
-			function(response){
-				for(i=0; i<clubs.size;i++){
-					if($scope.clubs[i].id = clubId){
-						$scope.clubs.splice(i,1)
+				console.log(managers.length);
+				for(i=0; i < managers.length; i++){
+					if($scope.managers[i].id == managerId){
+						$scope.managers.splice(i,1);
 						break;
 					}
 				}
 				alert("Club deleted");
 			},
 			function(){
-				alert("error occured while deleting club");
+				alert("error occured while deleting manager");
 			}
 		);
 	}
 	
-	var openManagerModal = function(managerData){
+	$scope.openManagerModal = function(managerData){
 		var modalInstance = $uibModal.open({	
 			templateUrl : 'app/components/managerModal/managerModal.html',
 			controller : 'managerModalCtrl',
@@ -45,18 +31,18 @@ angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibMo
 			}
 		});
 		modalInstance.result.then(function(updatedData) {
-				loadClubs();
+				loadManagers();
 			}, function () {
 			});
 	}
 	
-	var loadClubs = function(){
-		$http.get(restInterface + '/club/findall').then(
+	var loadManagers = function(){
+		$http.get(restInterface + '/manager/findall').then(
 			function(response) {
-				$scope.clubs = response.data;
+				$scope.managers = response.data;
 			},
 			function(err) {
-				alert("error occured while retrieving all clubs");
+				alert("error occured while retrieving all managers");
 			}
 		);
 	}
@@ -74,7 +60,7 @@ angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibMo
 	}
 	
 	var init = function(){
-		loadClubs();
+		loadManagers();
 	}
 	
 	init();

@@ -1,11 +1,11 @@
 <h1>Clubs
-<button type="button" class="btn btn-success" ng-click="createNewClub()">
+<button type="button" class="btn btn-success" ng-click="openManagerModal(null)">
 <span class="glyphicon glyphicon-plus"></span>
 </button>
 </h1>
 <ul class="list-group">
-  <li class="list-group-item" ng-repeat="club in clubs" "><span ng-click="clickOnClub(club.id)">{{club.name}}</span>
-  	<button type="button" class="btn btn-danger" ng-click="deleteClub(club.id)">
+  <li class="list-group-item" ng-repeat="manager in managers" "><span ng-click="openManagerModal(manager)">{{manager.lastName}} {{manager.firstName}} : <b>{{manager.clubName}}</b></span>
+  	<button type="button" class="btn btn-danger" ng-click="deleteManager(manager.id)">
 <span class="glyphicon glyphicon-remove"></span>
 </button>
   </li>

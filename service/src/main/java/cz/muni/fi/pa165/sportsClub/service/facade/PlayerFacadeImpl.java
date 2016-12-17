@@ -12,7 +12,7 @@ import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamOfPlayerDto;
 import cz.muni.fi.pa165.sportsClub.facade.PlayerFacade;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.service.BeanMappingService;
@@ -76,7 +76,7 @@ public class PlayerFacadeImpl implements PlayerFacade {
 
 	@Override
 	public List<PlayerDto> getAllPlayersOfClub(Long clubId) {
-		return beanMappingService.mapTo(playerService.getAllPlayersOfClub(new Club(clubId)),
+		return beanMappingService.mapTo(playerService.getAllPlayersOfClub(new Manager(clubId)),
 				PlayerDto.class);
 	}
 	

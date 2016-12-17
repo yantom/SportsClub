@@ -1,24 +1,40 @@
 package cz.muni.fi.pa165.sportsClub.pojo;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
- * @author Jan Tomasek
+ *
+ * @author David Koncak (410155)
  */
 @Entity
 public class Manager {
 
 	@Id
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @NotNull
+    @Column(nullable = false, unique = true)
+	private String clubName;
+
+	@OneToMany(mappedBy = "manager", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	private List<Team> teams = new ArrayList<>();
+
+	@OneToMany(mappedBy = "manager", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	private List<Player> players = new ArrayList<>();
 
 	@NotNull
 	@Column(nullable = false)
@@ -30,7 +46,7 @@ public class Manager {
 	@Size(max = 32, min = 2)
 	private String lastName;
 
-        @NotNull
+	@NotNull
 	@Column(nullable = false, unique = true)
 	@Pattern(regexp = "[^@]+@[^@]+\\.[^@]+")
 	private String email;
@@ -39,15 +55,9 @@ public class Manager {
 	@Column(unique = true)
 	private String mobile;
 
-        @NotNull
+	@NotNull
 	@Column(nullable = false)
 	private String password;
-
-	@OneToOne(mappedBy = "manager", cascade = { CascadeType.ALL})
-	@NotNull
-	@MapsId
-	@JoinColumn(name = "id")
-	private Club club;
 
 	public Manager() {
 	}
@@ -56,13 +66,21 @@ public class Manager {
 		this.id = id;
 	}
 
-	public Long getId() {
-		return this.id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+	public String getClubName() {
+		return clubName;
+    }
+
+	public void setClubName(String name) {
+		this.clubName = name;
+    }
 
 	public String getFirstName() {
 		return this.firstName;
@@ -71,7 +89,7 @@ public class Manager {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	
+
 	public String getLastName() {
 		return this.lastName;
 	}
@@ -103,50 +121,75 @@ public class Manager {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public Club getClub() {
-		return this.club;
+
+	public List<Team> getTeams() {
+		return Collections.unmodifiableList(teams);
 	}
 
-	public void setClub(Club club) {
-		this.club = club;
+	public void addTeam(Team team) {
+		teams.add(team);
+	}
+
+	public void removeTeam(Team team) {
+		teams.remove(team);
+	}
+
+	public void updateTeam(Team team) {
+		teams.remove(team);
+		teams.add(team);
+	}
+
+	public List<Player> getPlayers() {
+		return Collections.unmodifiableList(players);
+	}
+
+	public void addPlayer(Player player) {
+		players.add(player);
+	}
+
+	public void removePlayer(Player player) {
+		players.remove(player);
+	}
+
+	public void updatePlayer(Player player) {
+		players.remove(player);
+		players.add(player);
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
-		return result;
-	}
+    public int hashCode() {
+        final int prime = 31;
+        int hash = 1;
+		hash = prime * hash + (this.getEmail() != null ? this.getEmail().hashCode() : 0);
+        return hash;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Manager))
-			return false;
-		Manager other = (Manager) obj;
-		if (getEmail() == null) {
-			if (other.getEmail() != null)
-				return false;
-		} else if (!getEmail().equals(other.getEmail()))
-			return false;
-		return true;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Manager)) {
+            return false;
+        }
+        final Manager other = (Manager) obj;
+		if ((getEmail() == null) ? (other.getEmail() != null) : !getEmail().equals(other.getEmail())) {
+            return false;
+        }
+        return true;
 	}
 
 	@Override
 	public String toString() {
 		return "Manager [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", mobile=" + mobile + ", password=" + password + ", clubId=" + club.getId() + ", clubName="
-				+ club.getName() + "]";
+				+ ", mobile=" + mobile + ", password=" + password + ", clubName=" + clubName + "]";
 	}
 
 	public String toInsertStatement() {
-		return "INSERT INTO Manager (id,firstName,lastName,email,mobile,password) VALUES (" + getId() + ","
-				+ DBEntityUtils.quote(getFirstName()) + "," + DBEntityUtils.quote(getLastName()) + "," + DBEntityUtils.quote(getEmail()) + ","
-				+ DBEntityUtils.quote(getMobile()) + "," + DBEntityUtils.quote(getPassword()) + ");" + System.lineSeparator();
+		return "INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName) VALUES (" + getId() + ","
+				+ DBEntityUtils.quote(getFirstName()) + "," + DBEntityUtils.quote(getLastName()) + ","
+				+ DBEntityUtils.quote(getEmail()) + "," + DBEntityUtils.quote(getMobile()) + ","
+				+ DBEntityUtils.quote(getPassword()) + "," + DBEntityUtils.quote(getClubName()) + ");"
+				+ System.lineSeparator();
 	}
 }

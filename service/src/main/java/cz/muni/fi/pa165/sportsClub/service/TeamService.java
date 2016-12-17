@@ -3,7 +3,7 @@ package cz.muni.fi.pa165.sportsClub.service;
 import java.util.List;
 
 import cz.muni.fi.pa165.sportsClub.enums.Category;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
@@ -17,9 +17,9 @@ public interface TeamService {
 
 	Team getTeamById(Long teamId);
 
-	Team getTeamOfClubByCategory(Category category, Club c);
+	Team getTeamOfClubByCategory(Category category, Manager c);
 
-	List<Team> getAllTeamsOfClub(Club c);
+	List<Team> getAllTeamsOfClub(Manager m);
 
 	List<PlayerInfo> getPlayerInfos(Team t);
 

@@ -67,7 +67,7 @@ public class Player {
 
 	@ManyToOne
     @NotNull
-	private Club club;
+	private Manager manager;
 
 	@OneToMany(mappedBy = "player", cascade = { CascadeType.REMOVE }, fetch = FetchType.EAGER)
     private List<PlayerInfo> playerInfos = new ArrayList<>();
@@ -160,12 +160,12 @@ public class Player {
         playerInfos.add(pi);
     }
 
-	public Club getClub() {
-		return club;
+	public Manager getManager() {
+		return manager;
     }
 
-	public void setClub(Club club) {
-		this.club = club;
+	public void setManager(Manager manager) {
+		this.manager = manager;
     }
 
     @Override
@@ -201,15 +201,15 @@ public class Player {
 	@Override
 	public String toString() {
 		return "Player [id=" + id + ", dateOfBirth=" + dateOfBirth + ", email=" + email + ", managerId="
-				+ club.getId() + "]";
+				+ manager.getId() + "]";
 	}
 
 	public String toInsertStatement() {
-		return "INSERT INTO Player (id,firstName,lastName,email,mobile,weight,height,dateOfBirth,club_id) VALUES ("
+		return "INSERT INTO Player (id,firstName,lastName,email,mobile,weight,height,dateOfBirth,manager_id) VALUES ("
 				+ getId() + "," + DBEntityUtils.quote(getFirstName()) + "," + DBEntityUtils.quote(getLastName()) + ","
 				+ DBEntityUtils.quote(getEmail()) + "," + DBEntityUtils.quote(getMobile()) + "," + getWeight() + "," + getHeight() + ","
 				+ DBEntityUtils.quote(getDateOfBirth().toString()) + "," +
-				+ getClub().getId()
+				+getManager().getId()
 				+ ");"
 				+ System.lineSeparator();
 	}

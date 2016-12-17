@@ -15,12 +15,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
-import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
+import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
 import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
@@ -36,7 +35,7 @@ import cz.muni.fi.pa165.sportsClub.pojo.Team;
 public class PlayerInfoTest {
 
 	@Inject
-	private ClubDao clubDao;
+	private ManagerDao managerDao;
 
 	@Inject
 	private TeamDao teamDao;
@@ -52,7 +51,6 @@ public class PlayerInfoTest {
 	private Player testPlayer1;
 	private Team testTeam1;
 	private Manager testManager1;
-	private Club testClub1;
 
 	@Before
 	public void beforeTest() {
@@ -61,9 +59,7 @@ public class PlayerInfoTest {
 		testManager1.setFirstName("mana");
 		testManager1.setLastName("man");
 		testManager1.setPassword("12345678");
-
-		testClub1 = new Club();
-		testClub1.setName("sebranka");
+		testManager1.setClubName("sebranka");
 
 		testPlayer1 = new Player();
 		testPlayer1.setDateOfBirth(LocalDate.of(1994, 5, 30));
@@ -77,11 +73,8 @@ public class PlayerInfoTest {
 		testTeam1 = new Team();
 		testTeam1.setCategory(Category.MEN);
 
-		testClub1.setManager(testManager1);
-		testManager1.setClub(testClub1);
-
-		testTeam1.setClub(testClub1);
-		testPlayer1.setClub(testClub1);
+		testTeam1.setManager(testManager1);
+		testPlayer1.setManager(testManager1);
 
 		testPlayerInfo1 = new PlayerInfo();
 		testPlayerInfo1.setJerseyNumber(10);
@@ -92,27 +85,27 @@ public class PlayerInfoTest {
 
 	@After
 	public void afterTest() {
-		if(testPlayerInfo1 != null)
+		if (testPlayerInfo1 != null)
 			playerInfoDao.deletePlayerInfo(testPlayerInfo1);
 		playerDao.deletePlayer(testPlayer1);
 		teamDao.deleteTeam(testTeam1);
-		clubDao.deleteClub(testClub1);
+		managerDao.deleteManager(testManager1);
 	}
 
 	@Test
 	public void testCreatePlayerInfoTest() {
-		clubDao.createClub(testClub1);
+		managerDao.createManager(testManager1);
 		playerDao.createPlayer(testPlayer1);
 		teamDao.createTeam(testTeam1);
 		playerInfoDao.createPlayerInfo(testPlayerInfo1);
 
 		Team testTeam2 = new Team();
 		testTeam2.setCategory(Category.U19);
-		testTeam2.setClub(testClub1);
+		testTeam2.setManager(testManager1);
 		teamDao.createTeam(testTeam2);
 
-		testTeam2.setClub(testClub1);
-		testClub1.addTeam(testTeam2);
+		testTeam2.setManager(testManager1);
+		testManager1.addTeam(testTeam2);
 		testPlayerInfo2 = new PlayerInfo();
 		testPlayerInfo2.setPlayer(testPlayer1);
 		testPlayerInfo2.setTeam(testTeam2);
@@ -129,7 +122,7 @@ public class PlayerInfoTest {
 
 	@Test
 	public void updatePlayerInfoTest() {
-		clubDao.createClub(testClub1);
+		managerDao.createManager(testManager1);
 		playerDao.createPlayer(testPlayer1);
 		teamDao.createTeam(testTeam1);
 		playerInfoDao.createPlayerInfo(testPlayerInfo1);
@@ -142,7 +135,7 @@ public class PlayerInfoTest {
 
 	@Test
 	public void deletePlayerInfoTest() {
-		clubDao.createClub(testClub1);
+		managerDao.createManager(testManager1);
 		teamDao.createTeam(testTeam1);
 		playerDao.createPlayer(testPlayer1);
 		playerInfoDao.createPlayerInfo(testPlayerInfo1);
@@ -159,7 +152,7 @@ public class PlayerInfoTest {
 
 	@Test
 	public void getPlayerInfoByIdTest() {
-		clubDao.createClub(testClub1);
+		managerDao.createManager(testManager1);
 		playerDao.createPlayer(testPlayer1);
 		teamDao.createTeam(testTeam1);
 		playerInfoDao.createPlayerInfo(testPlayerInfo1);
@@ -171,26 +164,26 @@ public class PlayerInfoTest {
 	}
 
 	@Test
-	public void deletePlayerInfoByTeamAndPlayerTest(){
-		clubDao.createClub(testClub1);
+	public void deletePlayerInfoByTeamAndPlayerTest() {
+		managerDao.createManager(testManager1);
 		playerDao.createPlayer(testPlayer1);
 		teamDao.createTeam(testTeam1);
 		playerInfoDao.createPlayerInfo(testPlayerInfo1);
 
-		playerInfoDao.deletePlayerInfoByTeamAndPlayer(testTeam1,testPlayer1);
+		playerInfoDao.deletePlayerInfoByTeamAndPlayer(testTeam1, testPlayer1);
 		PlayerInfo pi = playerInfoDao.getPlayerInfoById(testPlayerInfo1.getId());
 		assertNull(pi);
 		testPlayerInfo1 = null;
 	}
 
 	@Test
-	public void changeJerseyNumberTest(){
-		clubDao.createClub(testClub1);
+	public void changeJerseyNumberTest() {
+		managerDao.createManager(testManager1);
 		playerDao.createPlayer(testPlayer1);
 		teamDao.createTeam(testTeam1);
 		playerInfoDao.createPlayerInfo(testPlayerInfo1);
 
-		playerInfoDao.changeJerseyNumber(testTeam1,testPlayer1, 30);
+		playerInfoDao.changeJerseyNumber(testTeam1, testPlayer1, 30);
 		PlayerInfo pi = playerInfoDao.getPlayerInfoById(testPlayerInfo1.getId());
 		assertEquals(30, pi.getJerseyNumber());
 

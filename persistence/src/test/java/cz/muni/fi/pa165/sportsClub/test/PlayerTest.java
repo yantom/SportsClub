@@ -13,9 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cz.muni.fi.pa165.sportsClub.PersistenceApplicationContext;
-import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
+import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 
@@ -31,26 +30,21 @@ public class PlayerTest {
     @Inject
     private PlayerDao playerDao;
 	@Inject
-	private ClubDao clubDao;
+	private ManagerDao managerDao;
     
 	private Player player1;
-	private Club club;
 	private Manager manager;
     
     @Before
     public void createPlayers(){
-		club = new Club();
-		club.setName("club");
-
 		manager = new Manager();
+		manager.setClubName("manager");
 		manager.setEmail("m@gmail.com");
 		manager.setFirstName("first");
 		manager.setLastName("last");
 		manager.setMobile("002");
 		manager.setPassword("sdfsdfsdf");
-		manager.setClub(club);
-		club.setManager(manager);
-		clubDao.createClub(club);
+		managerDao.createManager(manager);
 
 		player1 = new Player();
         player1.setEmail("onassis@gmail.com");
@@ -59,13 +53,13 @@ public class PlayerTest {
         player1.setHeight(120);
         player1.setWeight(120);
 		player1.setDateOfBirth(LocalDate.parse("2000-06-15"));
-		player1.setClub(club);
-		club.addPlayer(player1);
+		player1.setManager(manager);
+		manager.addPlayer(player1);
     }
     
 	@After
 	public void tearDown() {
-		clubDao.deleteClub(club);
+		managerDao.deleteManager(manager);
 	}
 
     @Test

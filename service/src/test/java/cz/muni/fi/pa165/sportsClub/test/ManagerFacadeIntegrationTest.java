@@ -23,18 +23,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cz.muni.fi.pa165.sportsClub.ServiceApplicationContext;
-import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
-import cz.muni.fi.pa165.sportsClub.facade.ClubFacade;
 import cz.muni.fi.pa165.sportsClub.facade.ManagerFacade;
 import cz.muni.fi.pa165.sportsClub.testUtils.ScriptRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceApplicationContext.class)
-public class ClubFacadeIntegrationTest {
-
-	@Inject
-	private ClubFacade clubFacade;
+public class ManagerFacadeIntegrationTest {
 
 	@Inject
 	private ManagerFacade managerFacade;
@@ -59,51 +54,41 @@ public class ClubFacadeIntegrationTest {
 	}
 
 	@Test
-	public void createClub() {
-		ClubDto c = new ClubDto();
-		c.setName("newClubName");
-		clubFacade.createClub(c);
+	public void createManager() {
+		ManagerDto c = new ManagerDto();
+		c.setClubName("newClubName");
+		c.setEmail("some@mail.com");
+		c.setFirstName("first");
+		c.setLastName("last");
+		c.setMobile("005686");
+		c.setPassword("somepassword");
+		managerFacade.createManager(c);
 		assertNotNull(c.getId());
 	}
 
 	@Test
-	public void updateClub() {
-		ClubDto c = clubFacade.getClubById(clubFacade.getAllClubs().get(0).getId());
-		String cNameBefore = c.getName();
-		c.setName("newName");
-		clubFacade.updateClub(c);
-		String cNameAfter = clubFacade.getClubById(clubFacade.getAllClubs().get(0).getId()).getName();
+	public void updateManager() {
+		ManagerDto c = managerFacade.getManagerById(managerFacade.getAllManagers().get(0).getId());
+		String cNameBefore = c.getClubName();
+		c.setClubName("newName");
+		managerFacade.updateManager(c);
+		String cNameAfter = managerFacade.getManagerById(managerFacade.getAllManagers().get(0).getId()).getClubName();
 		assertNotEquals(cNameBefore, cNameAfter);
 	}
 
 	@Test
-	public void getClubById() {
-		ClubDto c = clubFacade.getClubById(clubFacade.getAllClubs().get(0).getId());
+	public void getManagerById() {
+		ManagerDto c = managerFacade.getManagerById(managerFacade.getAllManagers().get(0).getId());
 		assertNotNull(c);
 	}
 
 	@Test
-	public void getClubByName() {
-		assertNotNull(clubFacade.getClubByName("1clubName"));
+	public void getManagerByClubName() {
+		assertNotNull(managerFacade.getManagerByClubName("1clubName"));
 	}
 
 	@Test
-	public void assignManagerToClub() {
-		ClubDto c = new ClubDto();
-		c.setName("newClubName");
-		clubFacade.createClub(c);
-		assertNotNull(c.getId());
-		ManagerDto m = new ManagerDto();
-		m.setEmail("mana@gmail.com");
-		m.setFirstName("mana");
-		m.setLastName("man");
-		m.setPassword("12345678");
-		clubFacade.assignManagerToClub(m, c.getId());
-		assertNotNull(managerFacade.getManagerByEmail("mana@gmail.com").getClub());
-	}
-
-	@Test
-	public void getAllClubs() {
-		assertEquals(2, clubFacade.getAllClubs().size());
+	public void getAllManagers() {
+		assertEquals(2, managerFacade.getAllManagers().size());
 	}
 }

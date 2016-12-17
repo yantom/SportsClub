@@ -41,7 +41,7 @@ public class PlayerDto {
 	@Pattern(regexp = "(\\+|00)?\\d+")
 	private String mobile;
 
-	private ClubDto club;
+	private ManagerDto manager;
 
 	private List<TeamOfPlayerDto> playerInfos = new ArrayList<>();
 
@@ -126,12 +126,12 @@ public class PlayerDto {
 		playerInfos.add(t);
 	}
 
-	public ClubDto getClub() {
-		return club;
+	public ManagerDto getManager() {
+		return manager;
 	}
 
-	public void setClub(ClubDto club) {
-		this.club = club;
+	public void setManager(ManagerDto manager) {
+		this.manager = manager;
 	}
 
 	@Override

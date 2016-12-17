@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.sportsClub.service;
 
 import java.util.List;
 
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 
@@ -17,7 +17,7 @@ public interface PlayerService {
 
 	Player getPlayerByEmail(String email);
 
-	List<Player> getAllPlayersOfClub(Club c);
+	List<Player> getAllPlayersOfClub(Manager m);
 
 	List<PlayerInfo> getPlayerInfos(Player p);
 }

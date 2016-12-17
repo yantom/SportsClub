@@ -6,14 +6,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import cz.muni.fi.pa165.sportsClub.dao.ClubDao;
 import org.springframework.stereotype.Service;
 
+import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
 import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
 import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
@@ -24,12 +24,13 @@ public class TeamServiceImpl implements TeamService {
     private TeamDao teamDao;
 
     @Inject
-    private ClubDao clubDao;
+	private ManagerDao managerDao;
 
     @Inject
     private PlayerInfoDao playerInfoDao;
 
-    public void createTeam(Team t) {
+	@Override
+	public void createTeam(Team t) {
         try {
             teamDao.createTeam(t);
         } catch (Exception e) {
@@ -37,7 +38,8 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-    public void updateTeam(Team t) {
+	@Override
+	public void updateTeam(Team t) {
         try {
             teamDao.updateTeam(t);
         } catch (Exception e) {
@@ -45,7 +47,8 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-    public void deleteTeam(Team t) {
+	@Override
+	public void deleteTeam(Team t) {
         try {
             teamDao.deleteTeam(t);
         } catch (Exception e) {
@@ -53,7 +56,8 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-    public Team getTeamById(Long teamId) {
+	@Override
+	public Team getTeamById(Long teamId) {
         try {
             return teamDao.getTeamById(teamId);
         } catch (Exception e) {
@@ -61,9 +65,10 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-    public Team getTeamOfClubByCategory(Category category, Club c) {
+	@Override
+	public Team getTeamOfClubByCategory(Category category, Manager m) {
         try {
-            List<Team> teams = c.getTeams();
+			List<Team> teams = m.getTeams();
             for (Team team : teams) {
                 if (team.getCategory().equals(category)) {
                     return team;
@@ -71,21 +76,23 @@ public class TeamServiceImpl implements TeamService {
             }
             return null;
         } catch (Exception e) {
-            throw new DaoLayerException("can not find team of club by category", e);
+			throw new DaoLayerException("can not find team of manager by category", e);
         }
 
     }
 
-    public List<Team> getAllTeamsOfClub(Club c) {
+	@Override
+	public List<Team> getAllTeamsOfClub(Manager m) {
         try {
-            return c.getTeams();
+			return m.getTeams();
         } catch (Exception e) {
-            throw new DaoLayerException("can not obtain all teams of club", e);
+			throw new DaoLayerException("can not obtain all teams of manager", e);
         }
 
     }
 
-    public List<PlayerInfo> getPlayerInfos(Team t) {
+	@Override
+	public List<PlayerInfo> getPlayerInfos(Team t) {
         try {
             return t.getPlayerInfos();
         } catch (Exception e) {
@@ -102,7 +109,8 @@ public class TeamServiceImpl implements TeamService {
         return age <= team.getCategory().getAgeLimit();
     }
 
-    public void assignExistingPlayerToTeam(Player p, Team t, int jerseyNumber) {
+	@Override
+	public void assignExistingPlayerToTeam(Player p, Team t, int jerseyNumber) {
         if(!playerMeetsAgeLimit(p,t)){
             throw new IllegalArgumentException("Player does not match age criteria of team");
         }
@@ -120,7 +128,8 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-    public void assignNewPlayerToTeam(Player p, Team t, int jerseyNumber) {
+	@Override
+	public void assignNewPlayerToTeam(Player p, Team t, int jerseyNumber) {
         if(!playerMeetsAgeLimit(p,t)){
             throw new IllegalArgumentException("Player does not match age criteria of team");
         }
@@ -131,7 +140,7 @@ public class TeamServiceImpl implements TeamService {
         playerInfo.setPlayer(p);
         playerInfo.setTeam(t);
         playerInfo.setJerseyNumber(jerseyNumber);
-        p.setClub(t.getClub());
+		p.setManager(t.getManager());
         try {
             playerInfoDao.createPlayerInfo(playerInfo);
         } catch (Exception e) {
@@ -139,7 +148,8 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-    public void changeJerseyNumber(Player p, Team t, int newjerseyNumber) {
+	@Override
+	public void changeJerseyNumber(Player p, Team t, int newjerseyNumber) {
         if(!teamDao.isJerseyNumberUnique(t,newjerseyNumber)){
             throw new IllegalArgumentException("Jersey number is not unique in the team");
         }
@@ -150,7 +160,8 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-    public void removePlayerFromTeam(Player p, Team t) {
+	@Override
+	public void removePlayerFromTeam(Player p, Team t) {
         try {
             playerInfoDao.deletePlayerInfoByTeamAndPlayer(t, p);
         } catch (Exception e) {
@@ -158,13 +169,14 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-    public List<Player> findSuitablePlayersForTeam(Team team) {
+	@Override
+	public List<Player> findSuitablePlayersForTeam(Team team) {
         LocalDate today = LocalDate.now();
         int ageLimit = team.getCategory().getAgeLimit();
         LocalDate ageLimitDate = today.minusYears(ageLimit);
         System.out.println(ageLimitDate);
         try {
-            return clubDao.getPlayersWithHigherDobThan(team.getClub(),ageLimitDate);
+			return managerDao.getPlayersWithHigherDobThan(team.getManager(), ageLimitDate);
         } catch (Exception e) {
             throw new DaoLayerException("can not obtain find suitable players for team", e);
         }

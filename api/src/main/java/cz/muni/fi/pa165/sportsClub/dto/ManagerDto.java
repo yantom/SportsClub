@@ -1,11 +1,19 @@
 package cz.muni.fi.pa165.sportsClub.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class ManagerDto {
+
 	private Long id;
+
+	@NotNull
+	@Size(max = 32, min = 2)
+	private String clubName;
 
 	@NotNull
 	@Size(max = 32, min = 2)
@@ -27,7 +35,53 @@ public class ManagerDto {
 	private String password;
 
 	@NotNull
-	private ClubDto club;
+	private String name;
+
+	private List<TeamDto> teams = new ArrayList<>();
+
+	private List<PlayerDto> players = new ArrayList<>();
+
+	public String getClubName() {
+		return clubName;
+	}
+
+	public void setClubName(String clubName) {
+		this.clubName = clubName;
+	}
+
+	public List<TeamDto> getTeams() {
+		return teams;
+	}
+
+	public void addTeam(TeamDto team) {
+		teams.add(team);
+	}
+
+	public void removeTeam(TeamDto team) {
+		teams.remove(team);
+	}
+
+	public void updateTeam(TeamDto team) {
+		teams.remove(team);
+		teams.add(team);
+	}
+
+	public List<PlayerDto> getPlayers() {
+		return players;
+	}
+
+	public void addPlayer(PlayerDto player) {
+		players.add(player);
+	}
+
+	public void removePlayer(PlayerDto player) {
+		players.remove(player);
+	}
+
+	public void updatePlayer(PlayerDto player) {
+		players.remove(player);
+		players.add(player);
+	}
 
 	public Long getId() {
 		return this.id;
@@ -69,14 +123,6 @@ public class ManagerDto {
 		this.mobile = mobile;
 	}
 
-	public ClubDto getClub() {
-		return this.club;
-	}
-
-	public void setClub(ClubDto club) {
-		this.club = club;
-	}
-
 	public String getPassword() {
 		return this.password;
 	}
@@ -113,7 +159,7 @@ public class ManagerDto {
 	@Override
 	public String toString() {
 		return "Manager [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", mobile=" + mobile + ", club=" + club + "]";
+				+ ", mobile=" + mobile + ", clubName=" + clubName + "]";
 	}
 
 }

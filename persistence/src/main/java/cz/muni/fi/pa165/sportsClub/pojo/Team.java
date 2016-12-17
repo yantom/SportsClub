@@ -35,7 +35,7 @@ public class Team {
 
     @ManyToOne
     @NotNull
-	private Club club;
+	private Manager manager;
 
 	public Team() {
 	}
@@ -44,12 +44,12 @@ public class Team {
 		this.id = id;
 	}
 
-	public Club getClub() {
-		return club;
+	public Manager getManager() {
+		return manager;
     }
 
-	public void setClub(Club club) {
-		this.club = club;
+	public void setManager(Manager manager) {
+		this.manager = manager;
     }
 
     /**
@@ -122,12 +122,12 @@ public class Team {
 
     @Override
     public String toString() {
-		return getClub().getName() + " - " + getCategory().toString() + ", id=" + getId();
+		return getManager().getClubName() + " - " + getCategory().toString() + ", id=" + getId();
     }
 
 	public String toInsertStatement() {
-		return "INSERT INTO Team (id,category,club_id) VALUES (" + getId() + "," + getCategory().ordinal() + ","
-				+ getClub().getId() + ");" + System.lineSeparator();
+		return "INSERT INTO Team (id,category,manager_id) VALUES (" + getId() + "," + getCategory().ordinal() + ","
+				+ getManager().getId() + ");" + System.lineSeparator();
 	}
 
     @Override
@@ -143,15 +143,15 @@ public class Team {
         if (!getCategory().equals(team.getCategory())) {
             return false;
         }
-		if (getClub() == null || team.getClub() == null) {
+		if (getManager() == null || team.getManager() == null) {
             return true;
         }
-		return getClub().getName().equals(team.getClub().getName());
+		return getManager().getEmail().equals(team.getManager().getEmail());
 
     }
 
     @Override
     public int hashCode() {
-		return 31 * getCategory().hashCode() + ((getClub() == null) ? 0 : getClub().getName().hashCode());
+		return 31 * getCategory().hashCode() + ((getManager() == null) ? 0 : getManager().getEmail().hashCode());
     }
 }

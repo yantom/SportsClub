@@ -25,7 +25,6 @@ import cz.muni.fi.pa165.sportsClub.ServiceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
 import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
@@ -48,9 +47,6 @@ public class TeamServiceTest {
 
     @Mock
     Manager mockManager;
-
-    @Mock
-    Club mockClub;
 
     @Mock
     Player mockPlayer;
@@ -112,10 +108,9 @@ public class TeamServiceTest {
         teams.add(team1);
         teams.add(team2);
 
-        when(mockClub.getManager()).thenReturn(mockManager);
-		when(mockClub.getTeams()).thenReturn(teams);
+		when(mockManager.getTeams()).thenReturn(teams);
 
-        Team returnedTeam = teamService.getTeamOfClubByCategory(Category.U13, mockClub);
+		Team returnedTeam = teamService.getTeamOfClubByCategory(Category.U13, mockManager);
         assertNotNull(returnedTeam.getCategory());
         assertEquals(returnedTeam.getCategory(),Category.U13);
     }
@@ -126,10 +121,9 @@ public class TeamServiceTest {
         teams.add(team1);
         teams.add(team2);
 
-        when(mockClub.getManager()).thenReturn(mockManager);
-		when(mockClub.getTeams()).thenReturn(teams);
+		when(mockManager.getTeams()).thenReturn(teams);
 
-        List<Team> returnedTeams = teamService.getAllTeamsOfClub( mockClub);
+		List<Team> returnedTeams = teamService.getAllTeamsOfClub(mockManager);
         assertNotNull(returnedTeams);
         assertEquals(returnedTeams, teams);
     }

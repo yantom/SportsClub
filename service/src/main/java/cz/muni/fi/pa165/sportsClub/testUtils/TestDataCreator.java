@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import cz.muni.fi.pa165.sportsClub.enums.Category;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
@@ -28,53 +27,48 @@ public class TestDataCreator {
 
 	private static Long nextId = 10000L;
 
-	public static void createTestDataScript(int countOfClubs, int countOfPlayers) throws IOException {
+	public static void createTestDataScript(int countOfManagers, int countOfPlayers) throws IOException {
 		StringBuilder script = new StringBuilder();
 		script.append(
 				"--This script will be overriden each time TestDataUtils createTestDataScript() is called. Serves for testing purposes."
 						+ System.lineSeparator());
-		List<Club> clubs = createTestClubs(script, countOfClubs);
-		List<Team> teams = createTestTeams(script, clubs);
-		List<Player> players = createTestPlayers(script, countOfPlayers, clubs);
-		createPlayerInfos(script, clubs, teams, players);
+		List<Manager> managers = createTestManagers(script, countOfManagers);
+		List<Team> teams = createTestTeams(script, managers);
+		List<Player> players = createTestPlayers(script, countOfPlayers, managers);
+		createPlayerInfos(script, managers, teams, players);
 		File file = new File("src/test/resources/testInit.sql");
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
 			writer.write(script.toString());
 		}
 	}
 
-	public static List<Club> createTestClubs(StringBuilder script, int countOfClubs) {
-		Club c;
+	public static List<Manager> createTestManagers(StringBuilder script, int countOfManagers) {
 		Manager m;
-		List<Club> clubs = new ArrayList<Club>();
-		for (int i = 0; i < countOfClubs; i++) {
-			c = new Club();
-			c.setName(i + "clubName");
-			c.setId(nextId);
-			nextId++;
+		List<Manager> managers = new ArrayList<Manager>();
+		for (int i = 0; i < countOfManagers; i++) {
 			m = new Manager();
+			m.setClubName(i + "clubName");
+			m.setId(nextId);
+			nextId++;
 			m.setEmail(i + "man@mail.com");
 			m.setFirstName(i + "fname");
 			m.setLastName(i + "lname");
 			m.setMobile("+" + i + "");
 			m.setPassword(i + "password");
-			m.setId(c.getId());
-			m.setClub(c);
-			c.setManager(m);
-			clubs.add(c);
-			script.append(c.toInsertStatement()).append(m.toInsertStatement());
+			managers.add(m);
+			script.append(m.toInsertStatement());
 		}
-		return clubs;
+		return managers;
 	}
 
-	public static List<Team> createTestTeams(StringBuilder script, List<Club> clubs) {
+	public static List<Team> createTestTeams(StringBuilder script, List<Manager> managers) {
 		Team t;
 		List<Team> teams = new ArrayList<Team>();
-		for (Club club : clubs) {
+		for (Manager manager : managers) {
 			for (int i = 0; i < Category.values().length; i++) {
 				t = new Team();
 				t.setCategory(Category.values()[i]);
-				t.setClub(club);
+				t.setManager(manager);
 				t.setId(nextId);
 				nextId++;
 				script.append(t.toInsertStatement());
@@ -84,10 +78,10 @@ public class TestDataCreator {
 		return teams;
 	}
 
-	public static List<Player> createTestPlayers(StringBuilder script, int countOfPlayers, List<Club> clubs) {
-		int countOfClubs = clubs.size();
+	public static List<Player> createTestPlayers(StringBuilder script, int countOfPlayers, List<Manager> managers) {
+		int countOfManagers = managers.size();
 		Player p;
-		Club c;
+		Manager c;
 		List<Player> players = new ArrayList<Player>();
 		for (int i = 0; i < countOfPlayers; i++) {
 			p = new Player();
@@ -99,34 +93,34 @@ public class TestDataCreator {
 			p.setWeight(120);
 			p.setId(nextId);
 			nextId++;
-			c = clubs.get(i % countOfClubs);
-			p.setClub(c);
+			c = managers.get(i % countOfManagers);
+			p.setManager(c);
 			p.setDateOfBirth(categoryToLocalDate(Category.values()[i % Category.values().length]));
-			p.setClub(c);
+			p.setManager(c);
 			script.append(p.toInsertStatement());
 			players.add(p);
 		}
 		return players;
 	}
 
-	public static List<PlayerInfo> createPlayerInfos(StringBuilder script, List<Club> clubs, List<Team> allTeams,
+	public static List<PlayerInfo> createPlayerInfos(StringBuilder script, List<Manager> managers, List<Team> allTeams,
 			List<Player> allPlayers) {
 		List<PlayerInfo> pis = new ArrayList<>();
-		int countOfClubs = clubs.size();
+		int countOfManagers = managers.size();
 		Player p;
 		PlayerInfo pi;
 		Team t;
-		List<Player> playersOfClub;
-		List<Team> teamsOfClub;
-		for (int i = 0; i < countOfClubs; i++) {
-			Long clubId = clubs.get(i).getId();
-			playersOfClub = allPlayers.stream().filter(player -> player.getClub().getId() == clubId)
+		List<Player> playersOfManager;
+		List<Team> teamsOfManager;
+		for (int i = 0; i < countOfManagers; i++) {
+			Long managerId = managers.get(i).getId();
+			playersOfManager = allPlayers.stream().filter(player -> player.getManager().getId() == managerId)
 					.collect(Collectors.toList());
-			teamsOfClub = allTeams.stream().filter(team -> team.getClub().getId() == clubId)
+			teamsOfManager = allTeams.stream().filter(team -> team.getManager().getId() == managerId)
 					.collect(Collectors.toList());
-			for (int j = 0; j < playersOfClub.size(); j++) {
-				p = playersOfClub.get(j);
-				t = findSuitableTeamBasedOnDOB(p, teamsOfClub);
+			for (int j = 0; j < playersOfManager.size(); j++) {
+				p = playersOfManager.get(j);
+				t = findSuitableTeamBasedOnDOB(p, teamsOfManager);
 				pi = new PlayerInfo();
 				pi.setJerseyNumber(j);
 				pi.setPlayer(p);

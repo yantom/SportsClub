@@ -1,6 +1,10 @@
 package cz.muni.fi.pa165.sportsClub.dao;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
+import cz.muni.fi.pa165.sportsClub.pojo.Player;
 
 /**
  * @author Jan Tomasek
@@ -15,6 +19,20 @@ public interface ManagerDao {
 	 * @param manager
 	 */
 	void createManager(Manager manager);
+
+	/**
+	 * Updates manager entity in database.
+	 * 
+	 * @param manager
+	 */
+	void updateManager(Manager manager);
+
+	/**
+	 * Removes manager entity from database.
+	 * 
+	 * @param manager
+	 */
+	void deleteManager(Manager manager);
 
 	/**
 	 * Retrieves manager object by its unique id. Uses lazy loading so "team"
@@ -34,17 +52,29 @@ public interface ManagerDao {
 	 */
 	Manager getManagerByEmail(String email);
 
-	/**
-	 * Updates manager entity in database.
-	 * 
-	 * @param manager
-	 */
-	void updateManager(Manager manager);
+	Manager getManagerByClubName(String clubName);
+
+	List<Manager> getAllManagers();
 
 	/**
-	 * Removes manager entity from database.
 	 * 
-	 * @param manager
+	 * @param managerId
+	 * @return completely initialized manager with all data
+	 *         (players,teams,associations)
 	 */
-	void deleteManager(Manager manager);
+	Manager getManagerWithAllData(Long managerId);
+
+	/**
+	 *
+	 * @param manager
+	 * @return all the free players of the manager
+	 */
+	List<Player> getFreePlayers(Manager manager);
+
+	/**
+	 *
+	 * @param manager,ageLimitDate
+	 * @return list of players with higher date of birth than certain date
+	 */
+	List<Player> getPlayersWithHigherDobThan(Manager manager, LocalDate ageLimitDate);
 }

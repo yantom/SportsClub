@@ -8,10 +8,7 @@ angular.module("sportsClub").controller('managerModalCtrl',function($scope, $uib
 				"email":null,
 				"password":null,
 				"mobile":null,
-				"club":{
-					"id":null,
-					"name":null
-				}
+				"clubName":null
 		}
 	}
 	else{
@@ -25,46 +22,42 @@ angular.module("sportsClub").controller('managerModalCtrl',function($scope, $uib
 	}
 	
 	$scope.save = function(){
-		console.log("saving fn");
-		if(!validClub(managerData)){
-			console.log("not valid");
+		if(!validManager(managerData)){
 			return;
 		}
 		if($scope.manager.id == null){
-			console.log("creating");
-			createNewClub($scope.data);
+			createNewManager($scope.data);
 		}
 		else{
-			console.log("updating");
-			updateClub($scope.data);
+			updateManager($scope.data);
 		}
 	}
 	
-	var createNewClub = function(managerData){
-		$http.post(restInterface + '/club',managerData).then(
+	var createNewManager = function(managerData){
+		$http.post(restInterface + '/manager',managerData).then(
 				function(response){
-					alert("Club created");
+					alert("Manager created");
 					$scope.close(managerData);
 				},
 				function(){
-					alert("error occured while creating club");
+					alert("error occured while creating manager");
 				}
 			);
 	}
 	
-	var updateClub = function(managerData){
-		$http.put(restInterface + '/club',managerData).then(
+	var updateManager = function(managerData){
+		$http.put(restInterface + '/manager',managerData).then(
 				function(response){
-					alert("Club updated");
+					alert("Manager updated");
 					$scope.close(managerData);
 				},
 				function(){
-					alert("error occured while updating club");
+					alert("error occured while updating manager");
 				}
 			);
 	}
 	
-	var validClub = function(managerData){
+	var validManager = function(managerData){
 		if(managerData.password.length < 6){
 			alert("password must contain at least 6 characters");
 			return false;

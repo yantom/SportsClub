@@ -13,7 +13,7 @@ import cz.muni.fi.pa165.sportsClub.dto.PlayerOfTeamDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
 import cz.muni.fi.pa165.sportsClub.facade.TeamFacade;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
+import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
@@ -32,7 +32,9 @@ public class TeamFacadeImpl implements TeamFacade {
 
 	@Override
 	public void createTeam(TeamDto t) {
-		teamService.createTeam(beanMappingService.mapTo(t, Team.class));
+		Team teamEntity = beanMappingService.mapTo(t, Team.class);
+		teamService.createTeam(teamEntity);
+		t.setId(teamEntity.getId());
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class TeamFacadeImpl implements TeamFacade {
 
 	@Override
 	public TeamDto getTeamOfClubByCategory(Category category, Long clubId) {
-		Team t = teamService.getTeamOfClubByCategory(category, new Club(clubId));
+		Team t = teamService.getTeamOfClubByCategory(category, new Manager(clubId));
 		if (t == null)
 			return null;
 		return beanMappingService.mapTo(t, TeamDto.class);
@@ -63,7 +65,7 @@ public class TeamFacadeImpl implements TeamFacade {
 
 	@Override
 	public List<TeamDto> getAllTeamsOfClub(Long clubId) {
-		return beanMappingService.mapTo(teamService.getAllTeamsOfClub(new Club(clubId)),
+		return beanMappingService.mapTo(teamService.getAllTeamsOfClub(new Manager(clubId)),
 				TeamDto.class);
 	}
 

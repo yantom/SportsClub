@@ -5,6 +5,10 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.junit.Before;
@@ -19,9 +23,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cz.muni.fi.pa165.sportsClub.ServiceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
+import cz.muni.fi.pa165.sportsClub.enums.Category;
 import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
-import cz.muni.fi.pa165.sportsClub.pojo.Club;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
+import cz.muni.fi.pa165.sportsClub.pojo.Player;
+import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
+import cz.muni.fi.pa165.sportsClub.pojo.Team;
 import cz.muni.fi.pa165.sportsClub.service.ManagerService;
 
 /**
@@ -41,39 +48,133 @@ public class ManagerServiceTest {
     private ManagerDao managerDao;
 
     @Mock
-    private Manager manager;
+	private Manager mockManager;
+
+	@Mock
+	private Player mockPlayer1;
+
+	@Mock
+	private Player mockPlayer2;
 
     @Mock
-    private Club club;
+	private Player mockPlayer3;
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
+	private PlayerInfo playerInfo;
+	private Team team;
 
-        manager = new Manager() {
-            {
-                setId(1L);
-                setFirstName("Andrej");
-                setLastName("Bonis");
-                setEmail("andrej@gmail.com");
-                setPassword("123456789");
-                setClub(club);
-            }
-        };
+	@Before
+	public void setup() {
+		MockitoAnnotations.initMocks(this);
 
-        club = new Club() {
-            {
-                setName("FC Nitra");
-                setManager(manager);
-            }
-        };
-    }
+		mockManager.setEmail("david@koncak.com");
+		mockManager.setPassword("TheBest99");
+		mockManager.setFirstName("David");
+		mockManager.setLastName("Koncak");
+		mockManager.setClubName("FC Slavia Praha");
 
-    @Test(expected = RuntimeException.class)
-    public void updateManagerTest() {
-        doThrow(new RuntimeException()).when(managerDao).updateManager(manager);
-        managerService.updateManager(manager);
-    }
+		team = new Team();
+		team.setManager(mockManager);
+		team.setCategory(Category.MEN);
+
+		mockPlayer1.setFirstName("Simon");
+		mockPlayer1.setLastName("Sudora");
+		mockPlayer1.setEmail("simon@sudora.com");
+		mockPlayer1.setHeight(180);
+		mockPlayer1.setWeight(120);
+		mockPlayer1.setDateOfBirth(LocalDate.parse("2000-06-15"));
+		mockPlayer1.setManager(mockManager);
+
+		mockPlayer2.setFirstName("Jan");
+		mockPlayer2.setLastName("Tomasek");
+		mockPlayer2.setEmail("jan@tomasek.com");
+		mockPlayer2.setHeight(180);
+		mockPlayer2.setWeight(120);
+		mockPlayer2.setDateOfBirth(LocalDate.parse("2000-06-15"));
+		mockPlayer2.setManager(mockManager);
+
+		mockPlayer3.setFirstName("Andrej");
+		mockPlayer3.setLastName("Bonis");
+		mockPlayer3.setEmail("andrej@bonis.com");
+		mockPlayer3.setHeight(180);
+		mockPlayer3.setWeight(120);
+		mockPlayer3.setDateOfBirth(LocalDate.parse("2000-06-15"));
+		mockPlayer3.setManager(mockManager);
+
+		playerInfo = new PlayerInfo();
+		playerInfo.setJerseyNumber(15);
+		playerInfo.setPlayer(mockPlayer3);
+		playerInfo.setTeam(team);
+
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void createManagerTest() {
+		doThrow(new RuntimeException()).when(managerDao).createManager(mockManager);
+		managerService.createManager(mockManager);
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void deleteManagerTest() {
+		doThrow(new RuntimeException()).when(managerDao).deleteManager(mockManager);
+		managerService.deleteManager(mockManager);
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void updateManagerTest() {
+		doThrow(new RuntimeException()).when(managerDao).updateManager(mockManager);
+		managerService.updateManager(mockManager);
+	}
+
+	@Test
+	public void getManagerByIdTest() {
+		when(managerDao.getManagerById(1L)).thenReturn(mockManager);
+		Manager returnedManager = managerService.getManagerById(1L);
+		assertEquals(mockManager, returnedManager);
+	}
+
+	@Test
+	public void getManagerByClubNameTest() {
+		when(managerDao.getManagerByClubName("FC Slavia Praha")).thenReturn(mockManager);
+		Manager returnedManager = managerService.getManagerByClubName("FC Slavia Praha");
+		assertEquals(mockManager, returnedManager);
+	}
+
+	@Test
+	public void getAllManagersTest() {
+		List<Manager> managers = new ArrayList<Manager>();
+
+		Manager manager2 = new Manager();
+		manager2.setClubName("FC Sparta Praha");
+
+		managers.add(mockManager);
+		managers.add(manager2);
+
+		when(managerDao.getAllManagers()).thenReturn(managers);
+		List<Manager> returnedManagers = managerService.getAllManagers();
+
+		assertEquals(managers, returnedManagers);
+	}
+
+	@Test
+	public void getFreePlayersOfManagerTest() {
+		List<Player> freePlayers = new ArrayList<Player>();
+		freePlayers.add(mockPlayer1);
+		freePlayers.add(mockPlayer2);
+
+		List<Player> playersOfManager = new ArrayList<Player>();
+		playersOfManager.add(mockPlayer1);
+		playersOfManager.add(mockPlayer2);
+		playersOfManager.add(mockPlayer3);
+
+		List<PlayerInfo> playerInfos = new ArrayList<PlayerInfo>();
+		playerInfos.add(playerInfo);
+
+		when(managerDao.getFreePlayers(mockManager)).thenReturn(freePlayers);
+		managerService.createManager(mockManager);
+
+		List<Player> returnedFreePlayers = managerService.getFreePlayersOfClub(mockManager);
+		assertEquals(freePlayers, returnedFreePlayers);
+	}
     
     @Test(expected = DaoLayerException.class)
     public void updateNullManagerTest() {
@@ -81,24 +182,11 @@ public class ManagerServiceTest {
         managerService.updateManager(null);
     }
 
-    @Test(expected = RuntimeException.class)
-    public void deleteManagerTest() {
-        doThrow(new RuntimeException()).when(managerDao).deleteManager(manager);
-        managerService.deleteManager(manager);
-    }
-
     @Test(expected = DaoLayerException.class)
     public void deleteNullManagerTest() {
         doThrow(new DaoLayerException("null Manager")).when(managerDao).deleteManager(null);
         managerService.deleteManager(null);
     }
-    
-   @Test
-   public void getManagerByIdTest() {
-       when(managerDao.getManagerById(1L)).thenReturn(manager);
-       Manager found = managerService.getManagerById(1L);
-       assertEquals(manager, found);
-   }
    
    @Test 
    public void getManagerByNonExistingIdTest() {
@@ -106,10 +194,10 @@ public class ManagerServiceTest {
    }
    
    @Test
-   public void getManagerByEmaliTest() {
-       when(managerDao.getManagerByEmail("andrej@gmail.com")).thenReturn(manager);
+	public void getManagerByEmailTest() {
+		when(managerDao.getManagerByEmail("andrej@gmail.com")).thenReturn(mockManager);
        Manager found = managerService.getManagerByEmail("andrej@gmail.com");
-       assertEquals(manager, found);
+		assertEquals(mockManager, found);
    }
    
    @Test

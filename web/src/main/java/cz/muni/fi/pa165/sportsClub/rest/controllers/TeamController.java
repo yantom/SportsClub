@@ -1,9 +1,9 @@
 package cz.muni.fi.pa165.sportsClub.rest.controllers;
 
-import cz.muni.fi.pa165.sportsClub.dto.ClubDto;
-import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
-import cz.muni.fi.pa165.sportsClub.dto.PlayerOfTeamDto;
-import cz.muni.fi.pa165.sportsClub.facade.TeamFacade;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-import java.util.List;
+import cz.muni.fi.pa165.sportsClub.dto.PlayerOfTeamDto;
+import cz.muni.fi.pa165.sportsClub.facade.TeamFacade;
 
 
 @RestController

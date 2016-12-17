@@ -15,14 +15,14 @@ public class TeamDto {
 	@NotNull
 	private Category category;
 
-	private ClubDto club;
+	private ManagerDto manager;
 
-	public ClubDto getClub() {
-		return club;
+	public ManagerDto getManager() {
+		return manager;
 	}
 
-	public void setClub(ClubDto club) {
-		this.club = club;
+	public void setManager(ManagerDto manager) {
+		this.manager = manager;
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class TeamDto {
 
 	@Override
 	public String toString() {
-		return getClub().getName() + " - " + getCategory().toString();
+		return getManager().getClubName() + " - " + getCategory().toString();
 	}
 
 	@Override
@@ -114,15 +114,15 @@ public class TeamDto {
 		if (!getCategory().equals(team.getCategory())) {
 			return false;
 		}
-		if (getClub() == null || team.getClub() == null) {
+		if (getManager() == null || team.getManager() == null) {
 			return true;
 		}
-		return getClub().getName().equals(team.getClub().getName());
+		return getManager().getEmail().equals(team.getManager().getEmail());
 
 	}
 
 	@Override
 	public int hashCode() {
-		return 31 * getCategory().hashCode() + ((getClub() == null) ? 0 : getClub().getName().hashCode());
+		return 31 * getCategory().hashCode() + ((getManager() == null) ? 0 : getManager().getEmail().hashCode());
 	}
 }
