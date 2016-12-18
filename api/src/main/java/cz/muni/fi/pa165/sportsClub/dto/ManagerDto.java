@@ -30,13 +30,6 @@ public class ManagerDto {
 	@Pattern(regexp = "(\\+|00)?\\d+")
 	private String mobile;
 
-	@NotNull
-	@Size(min = 8, max = 64)
-	private String password;
-
-	@NotNull
-	private String name;
-
 	private List<TeamDto> teams = new ArrayList<>();
 
 	private List<PlayerDto> players = new ArrayList<>();
@@ -121,14 +114,6 @@ public class ManagerDto {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
-	}
-
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	@Override

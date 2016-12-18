@@ -1,12 +1,12 @@
 <h1>Clubs
-<button type="button" class="btn btn-success" ng-click="openManagerModal(null)">
-<span class="glyphicon glyphicon-plus"></span>
-</button>
+    <button type="button" class="btn btn-success" ng-click="openManagerModal(null)">
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
 </h1>
 <ul class="list-group">
-  <li class="list-group-item" ng-repeat="manager in managers"><span ng-click="openManagerModal(manager)">{{manager.lastName}} {{manager.firstName}} : <b>{{manager.clubName}}</b></span>
-  	<button type="button" class="btn btn-danger" ng-click="deleteManager(manager.id)">
-<span class="glyphicon glyphicon-remove"></span>
-</button>
-  </li>
+    <li class="list-group-item" ng-repeat="manager in managers" "><span ng-click="openManagerModal(manager)">{{manager.lastName}} {{manager.firstName}} : <b>{{manager.clubName}}</b></span>
+    <button type="button" class="btn btn-danger btn-xs pull-right" ng-click="deleteManager(manager.id)">
+        <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    </li>
 </ul>

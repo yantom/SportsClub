@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import cz.muni.fi.pa165.sportsClub.dto.ManagerCreateDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
@@ -37,15 +38,16 @@ public class ManagerController {
 		return managerFacade.getFreePlayers(managerDto.getId());
     }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ManagerDto create(@Valid @RequestBody ManagerDto manager) {
+	@RequestMapping(method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ManagerDto create(@Valid @RequestBody ManagerCreateDto manager) {
 		managerFacade.createManager(manager);
 		return manager;
     }
 
-    @RequestMapping(path = "/update", method = RequestMethod.POST)
-	public void update(@Valid @RequestBody ManagerDto manager) {
+	@RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ManagerDto update(@Valid @RequestBody ManagerDto manager) {
 		managerFacade.updateManager(manager);
+		return manager;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)

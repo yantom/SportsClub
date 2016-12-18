@@ -15,29 +15,32 @@ angular.module("sportsClub").controller('managerModalCtrl',function($scope, $uib
 		$scope.data = angular.copy(data);
 	}
 	
-	$scope.passwordCheck = null;
-	
 	$scope.close = function(updatedData){
 		$uibModalInstance.close(updatedData);
 	}
 	
 	$scope.save = function(){
-		if(!validManager(managerData)){
+		if(!$scope.managerForm.$valid){
 			return;
 		}
-		if($scope.manager.id == null){
-			createNewManager($scope.data);
+		if(!validMobile()){
+			return;
 		}
-		else{
+		if($scope.data.id != null){
 			updateManager($scope.data);
+			return;
 		}
+		if(!validPassword()){
+			return;
+		}
+		createNewManager($scope.data);
 	}
 	
 	var createNewManager = function(managerData){
 		$http.post(restInterface + '/manager',managerData).then(
 				function(response){
 					alert("Manager created");
-					$scope.close(managerData);
+					$scope.close({"new":true,"data":response.data});
 				},
 				function(){
 					alert("error occured while creating manager");
@@ -49,7 +52,7 @@ angular.module("sportsClub").controller('managerModalCtrl',function($scope, $uib
 		$http.put(restInterface + '/manager',managerData).then(
 				function(response){
 					alert("Manager updated");
-					$scope.close(managerData);
+					$scope.close({"new":false,"data":response.data});
 				},
 				function(){
 					alert("error occured while updating manager");
@@ -57,20 +60,22 @@ angular.module("sportsClub").controller('managerModalCtrl',function($scope, $uib
 			);
 	}
 	
-	var validManager = function(managerData){
-		if(managerData.password.length < 6){
+	var validPassword = function(){
+		if($scope.data.password.length < 6){
 			alert("password must contain at least 6 characters");
 			return false;
 		}
-		if(managerData.password != $scope.passwordCheck){
-			alert("passwords doesn't match");
-			return false;
-		}
-		if(!(/(\+|00)?\d+/.test(managerData.mobile))){
+		return true;
+	}
+	
+	var validMobile = function(){
+		if(!(/^(\+|00)?\d+$/.test($scope.data.mobile))){
 			alert("invalid mobile phone format");
 			return false;
 		}
 		return true;
 	}
+	
+	
 	
 });
