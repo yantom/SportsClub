@@ -2,17 +2,15 @@
 angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibModal,$http) {
 	$scope.managers;
 	
-	$scope.deleteManager = function(managerId){
-		$http.remove(restInterface + '/manager/'+managerId).then(
+	$scope.deleteManager = function(managerId){	
+		$http.delete(restInterface +'/manager/'+managerId).then(
 			function(){
-				console.log(managers.length);
-				for(i=0; i < managers.length; i++){
+				for(var i=0; i < $scope.managers.length; i++){
 					if($scope.managers[i].id == managerId){
 						$scope.managers.splice(i,1);
 						break;
 					}
 				}
-				alert("Club deleted");
 			},
 			function(){
 				alert("error occured while deleting manager");
@@ -31,7 +29,16 @@ angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibMo
 			}
 		});
 		modalInstance.result.then(function(updatedData) {
-				loadManagers();
+			if(updatedData.new==true){
+				$scope.managers.push(updatedData.data);
+			}
+			else{
+				for(var i =0;i<$scope.managers.length;i++){
+					if($scope.managers[i].id==updatedData.data.id){
+						$scope.managers[i] = updatedData.data;
+					}
+				}
+			}
 			}, function () {
 			});
 	}
@@ -47,21 +54,8 @@ angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibMo
 		);
 	}
 	
-	//
-	var someData = {
-		      "type": "dataFromCtrl",
-		      "usedOften": true
-		    }
-	$scope.sendStaticJSON = function(dataFromUI){
-		$state.go("testView",(dataFromUI));
-	}
-	$scope.sendDataStoredInController = function(){
-		$state.go("testView",(someData));
-	}
-	
 	var init = function(){
 		loadManagers();
-	}
-	
+	}	
 	init();
 });

@@ -55,6 +55,9 @@ public class ManagerDaoImpl implements ManagerDao{
 		if(m == null){
 			throw new IllegalArgumentException("Argument can not be null");
 		}
+		Manager full = em.find(Manager.class, m.getId());
+		m.setPassword(full.getPassword());
+		m.setEmail(full.getEmail());
 		em.merge(m);
 	}
 

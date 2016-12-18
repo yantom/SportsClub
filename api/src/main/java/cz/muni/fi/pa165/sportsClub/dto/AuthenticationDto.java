@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-public class ManagerAuthenticationDto {
+public class AuthenticationDto {
 
 	@NotNull
 	@Pattern(regexp = "[^@]+@[^@]+\\.[^@]+")
@@ -44,9 +44,9 @@ public class ManagerAuthenticationDto {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof ManagerAuthenticationDto))
+		if (!(obj instanceof AuthenticationDto))
 			return false;
-		ManagerAuthenticationDto other = (ManagerAuthenticationDto) obj;
+		AuthenticationDto other = (AuthenticationDto) obj;
 		if (getEmail() == null) {
 			if (other.getEmail() != null)
 				return false;

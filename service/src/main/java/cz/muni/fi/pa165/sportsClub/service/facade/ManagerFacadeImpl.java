@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.muni.fi.pa165.sportsClub.dto.ManagerAuthenticationDto;
+import cz.muni.fi.pa165.sportsClub.dto.AuthenticationDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ManagerFacade;
@@ -77,7 +77,7 @@ public class ManagerFacadeImpl implements ManagerFacade {
 				PlayerDto.class);
 	}
 
-	public boolean authenticateManager(ManagerAuthenticationDto m) {
+	public boolean authenticateManager(AuthenticationDto m) {
 		//TODO
                 return false;
 	}
