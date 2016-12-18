@@ -1,0 +1,95 @@
+
+<div class="modal-header">
+	<h3 class="modal-title" id="modal-title">New Player</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="form-group">
+        <label class="col-sm-3 control-label">First Name</label>
+        <div class="col-sm-9">
+            <input type="text"
+                   class="form-control"
+                   ng-model="data.firstName"
+                   required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Last Name</label>
+        <div class="col-sm-9">
+            <input type="text"
+                   class="form-control"
+                   ng-model="data.lastName" 
+                   required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Email</label>
+        <div class="col-sm-9">
+            <input type="email"
+                   class="form-control"
+                   ng-model="data.email"
+                   required
+                   onchange="checkEmail(this.value)">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Weigth</label>
+        <div class="col-sm-9">
+            <input type="number"
+                   class="form-control"
+                   ng-model="data.weight"
+                   ng-min="20"
+                   ng-max="150"
+                   required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Height</label>
+        <div class="col-sm-9">
+            <input type="number"
+                   class="form-control"
+                   ng-model="data.height"
+                   ng-min="75"
+                   ng-max="250"
+                   required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Mobile</label>
+        <div class="col-sm-9">
+            <input type="text"
+                   class="form-control"
+                   ng-model="data.mobile">
+        </div>
+    </div>
+    <div class="form-group">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Category</th>
+                    <th>Yersey Number</th>
+                    <th>asign</th>
+                </tr>
+                <tr ng-repeat="team in teams">
+                    <td>{{ team.name }}</td>
+                    <td><input type="number"
+                               ng-min="1"
+                               ng-max="99"
+                               class="form-control"
+                               ng-model="jersey.jersey"
+                               onchange="checkNumber(this.value)">
+                    </td>
+                    <td><input type="checkbox"
+                               ng-model="checkboxModel.asign"
+                               value="{{selectedTeam}}"
+                               ng-click="toggleSelection(selectedTeam)">
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="form-group modal-footer">
+        <button type="Submit" class="btn btn-primary" ng-click="save()">Create</button>
+        <button type="Button" class="btn btn-default" ng-click="close(null)">Cancel</button>
+    </div>
+</div>
