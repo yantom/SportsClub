@@ -1,5 +1,5 @@
 "use strict";
-angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibModal,$http) {
+angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibModal, $http, $location) {
     $scope.managers;
 
     $scope.deleteManager = function(managerId){
@@ -16,6 +16,11 @@ angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibMo
                 alert("error occured while deleting manager");
             }
         );
+    }
+    
+    $scope.redirect = function(){
+        var redirectUrl =  "/manager";
+        $location.path(redirectUrl);
     }
 
     $scope.openManagerModal = function(managerData){

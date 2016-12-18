@@ -70,7 +70,6 @@ angular.module("sportsClub").controller('playerBoardCtrl', function ($scope, $ht
     
     //checks if jersey is already used in a team
     $scope.checkNumber = function() {
-       //TO DO
     }
     
     var validFirstName = function(){
