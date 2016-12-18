@@ -62,7 +62,7 @@ public class PlayerFacadeImpl implements PlayerFacade {
 	@Override
 	public List<TeamOfPlayerDto> getTeamsOfPlayer(Long playerId) {
 		List<TeamOfPlayerDto> teams = new ArrayList<TeamOfPlayerDto>();
-		List<PlayerInfo> infos = playerService.getPlayerInfos(new Player(playerId));
+		List<PlayerInfo> infos = playerService.getPlayerInfos(playerId);
 		TeamOfPlayerDto teamOfPlayer;
 		for (PlayerInfo playerInfo : infos) {
 			teamOfPlayer = new TeamOfPlayerDto();

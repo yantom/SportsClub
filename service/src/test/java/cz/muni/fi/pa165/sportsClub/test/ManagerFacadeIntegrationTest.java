@@ -23,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cz.muni.fi.pa165.sportsClub.ServiceApplicationContext;
+import cz.muni.fi.pa165.sportsClub.dto.ManagerCreateDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ManagerFacade;
 import cz.muni.fi.pa165.sportsClub.testUtils.ScriptRunner;
@@ -55,19 +56,20 @@ public class ManagerFacadeIntegrationTest {
 
 	@Test
 	public void createManager() {
-		ManagerDto c = new ManagerDto();
+		ManagerCreateDto c = new ManagerCreateDto();
 		c.setClubName("newClubName");
 		c.setEmail("some@mail.com");
 		c.setFirstName("first");
 		c.setLastName("last");
 		c.setMobile("005686");
+		c.setPassword("password");
 		managerFacade.createManager(c);
 		assertNotNull(c.getId());
 	}
 
 	@Test
 	public void updateManager() {
-		ManagerDto c = managerFacade.getManagerById(managerFacade.getAllManagers().get(0).getId());
+		ManagerDto c = managerFacade.getManagerById(10000L);
 		String cNameBefore = c.getClubName();
 		c.setClubName("newName");
 		managerFacade.updateManager(c);
@@ -77,7 +79,7 @@ public class ManagerFacadeIntegrationTest {
 
 	@Test
 	public void getManagerById() {
-		ManagerDto c = managerFacade.getManagerById(managerFacade.getAllManagers().get(0).getId());
+		ManagerDto c = managerFacade.getManagerById(10000L);
 		assertNotNull(c);
 	}
 
