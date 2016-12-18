@@ -1,8 +1,7 @@
 'use strict';
  
 angular.module('sportsClub').controller('homeCtrl',
-    ['$scope', '$rootScope', '$location', 'AuthenticationService',
-    function ($scope, $rootScope, $location, AuthenticationService) {
+    function ($scope, $rootScope, $location) {
         // reset login status
         AuthenticationService.ClearCredentials();
  
@@ -18,4 +17,4 @@ angular.module('sportsClub').controller('homeCtrl',
                 }
             });
         };
-    }]);
+    });

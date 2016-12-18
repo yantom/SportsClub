@@ -29,27 +29,13 @@ public class TeamController {
         return teamFacade.getPlayersOfTeam(teamId);
     }
 
-    @RequestMapping(value = "/{teamId}", method = RequestMethod.DELETE)
-    public final ResponseEntity deleteTeam(@PathVariable("teamId") long teamId){
+	@RequestMapping(value = "/{teamId}", method = RequestMethod.DELETE, produces = MediaType.TEXT_PLAIN_VALUE)
+	public final ResponseEntity<String> deleteTeam(@PathVariable("teamId") long teamId) {
         try {
             teamFacade.deleteTeam(teamId);
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("Team was successfully deleted");
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
-    }
-
-    @RequestMapping(value = "/{teamId}/{playerId}", method = RequestMethod.DELETE)
-    public final ResponseEntity removePlayerFromRoster(@PathVariable("teamId") long teamId,@PathVariable("playerId") long playerId){
-        try {
-            teamFacade.removePlayerFromTeam(teamId, playerId);
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Player was successfully removed from team roster");
         } catch (Exception e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)

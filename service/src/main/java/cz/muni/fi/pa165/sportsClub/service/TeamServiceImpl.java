@@ -163,9 +163,9 @@ public class TeamServiceImpl implements TeamService {
     }
 
 	@Override
-	public void removePlayerFromTeam(Player p, Team t) {
+	public void removePlayerFromTeam(PlayerInfo pi) {
         try {
-            playerInfoDao.deletePlayerInfoByTeamAndPlayer(t, p);
+			playerInfoDao.deletePlayerInfo(pi);
         } catch (Exception e) {
             throw new DaoLayerException("can not remove player from team", e);
         }

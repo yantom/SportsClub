@@ -5,8 +5,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,7 +57,7 @@ public class ManagerController {
 		return managerFacade.getManagerById(id);
     }
 
-    @RequestMapping(path = "/findall", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public List<ManagerDto> findAll() {
         return managerFacade.getAllManagers();
     }

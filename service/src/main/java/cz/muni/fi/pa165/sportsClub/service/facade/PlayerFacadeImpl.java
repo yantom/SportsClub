@@ -68,6 +68,7 @@ public class PlayerFacadeImpl implements PlayerFacade {
 			teamOfPlayer = new TeamOfPlayerDto();
 			teamOfPlayer.setJerseyNumber(playerInfo.getJerseyNumber());
 			teamOfPlayer.setPlayerOlderThanTeamLimit(playerInfo.isPlayerOlderThanTeamLimit());
+			teamOfPlayer.setPlayerInfoId(playerInfo.getId());
 			teamOfPlayer.setTeam(beanMappingService.mapTo(playerInfo.getTeam(), TeamDto.class));
 			teams.add(teamOfPlayer);
 		}

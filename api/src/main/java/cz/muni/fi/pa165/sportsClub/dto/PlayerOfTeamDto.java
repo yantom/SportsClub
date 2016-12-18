@@ -13,6 +13,8 @@ public class PlayerOfTeamDto {
 	@Min(0)
 	private int jerseyNumber;
 
+	private Long playerInfoId;
+
 	private boolean playerOlderThanTeamLimit;
 
 	private PlayerDto player;
@@ -60,6 +62,14 @@ public class PlayerOfTeamDto {
 
 	public void setPlayerOlderThanTeamLimit(boolean value) {
 		playerOlderThanTeamLimit = value;
+	}
+
+	public Long getPlayerInfoId() {
+		return playerInfoId;
+	}
+
+	public void setPlayerInfoId(Long playerInfoId) {
+		this.playerInfoId=playerInfoId;
 	}
 
 	@Override

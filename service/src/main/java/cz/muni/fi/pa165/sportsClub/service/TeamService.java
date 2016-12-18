@@ -29,7 +29,7 @@ public interface TeamService {
 
 	void changeJerseyNumber(Player p, Team t, int jerseyNumber);
 
-	void removePlayerFromTeam(Player p, Team t);
+	void removePlayerFromTeam(PlayerInfo p);
 
 	List<Player> findSuitablePlayersForTeam(Team team);
         

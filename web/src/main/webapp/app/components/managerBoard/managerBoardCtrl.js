@@ -1,10 +1,13 @@
 "use strict";
 angular.module("sportsClub").controller('managerBoardCtrl', function($scope,$http,$stateParams) {
     $scope.managers;
-    $scope.players;
+    $scope.playerInfos;
     $scope.teams;
 
-    $scope.loggedManagerId = $stateParams;
+    $scope.displayingFree=false;
+    //$scope.loggedManagerId = $stateParams;
+    //temporary
+  $scope.loggedManagerId =10000;
 
     var getTeams= function(managerId){
         $http.get(restInterface + "/manager/"+managerId+"/teams").then(
@@ -15,20 +18,22 @@ angular.module("sportsClub").controller('managerBoardCtrl', function($scope,$htt
                 alert("error sending http request");
             });
     }
-    $scope.getFreePlayersofClub= function(){
-        $http.get(restInterface + '/manager/' + loggedManagerId +'/freePlayers').then(
+    $scope.getFreePlayersOfClub= function(){
+        $http.get(restInterface + '/manager/' + $scope.loggedManagerId +'/freePlayers').then(
             function(response){
-                $scope.freePlayers = response.data;
+            	 $scope.displayingFree=true;
+                $scope.playerInfos = response.data;
             },
             function(err){
                 alert("error sending http request");
             });
     }
 
-    var getPlayersOfTeam= function(team){
-        $http.get(restInterface + "/team/"+ team.id +'/players').then(
+    $scope.getPlayersOfTeam= function(teamId){
+        $http.get(restInterface + "/team/"+ teamId +'/players').then(
         function(response){
-                $scope.players = response.data;
+        	 $scope.displayingFree=false;
+                $scope.playerInfos = response.data;
         },
             function(err){
                 alert("error sending http request");
@@ -37,18 +42,30 @@ angular.module("sportsClub").controller('managerBoardCtrl', function($scope,$htt
 
     $scope.deletePlayer= function(playerId){
         $http.delete(restInterface + "/player/"+ playerId ).then(
-            function(response){
-                //?
+            function(){
+            	alert("player deleted");
+                for(var i=0;i<$scope.playerInfos.length;i++){
+                	if($scope.playerInfos[i].id == playerId){
+                		$scope.playerInfos.splice(i,1);
+                		break;
+                	}
+                }
             },
-            function(err){
+            function(){
                 alert("error sending http request");
             });
     }
 
-    $scope.removePlayerFromRoster= function(teamId,playerId){
-        $http.delete(restInterface + "/team"+ teamId +"/" + playerId).then(
+    $scope.removePlayerFromRoster= function(playerInfoId){
+        $http.delete(restInterface + "/playerInfo/"+playerInfoId).then(
             function(response){
-                //?
+                alert("player removed from team");
+                for(var i=0;i<$scope.playerInfos.length;i++){
+                	if($scope.playerInfos[i].playerInfoId == playerInfoId){
+                		$scope.playerInfos.splice(i,1);
+                		break;
+                	}
+                }         
             },
             function(err){
                 alert("error sending http request");
@@ -56,17 +73,34 @@ angular.module("sportsClub").controller('managerBoardCtrl', function($scope,$htt
     }
 
     $scope.deleteTeam= function(teamId){
-        $http.delete(restInterface + "/team"+ teamId).then(
+        $http.delete(restInterface + "/team/"+ teamId).then(
             function(response){
-                //?
+                alert("team deleted");
+                for(var i=0;i<$scope.teams.length;i++){
+                	if($scope.teams[i].id == teamId){
+                		$scope.teams.splice(i,1);
+                		break;
+                	}
+                	$scope.playerInfos=[];
+                } 
             },
             function(err){
                 alert("error sending http request");
             });
     }
+    
+    $scope.addNewPlayer = function(){
+    	alert("add");
+    }
+    
+    $scope.editPlayer = function(){
+    	alert("edit");
+    }
+    
+    
 
     var init = function(){
-        getTeams(10000);
+        getTeams($scope.loggedManagerId);
     }
 
     init();

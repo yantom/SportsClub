@@ -27,7 +27,7 @@ public interface TeamFacade {
 
 	void changeJerseyNumber(Long pID, Long tID, int jerseyNumber);
 
-	void removePlayerFromTeam(Long pID, Long tID);
+	void removePlayerFromTeam(Long playerInfoId);
         
-        boolean isJerseyNumberUnique(Long tID, int jerseyNumber);
+	boolean isJerseyNumberUnique(Long tID, int jerseyNumber);
 }

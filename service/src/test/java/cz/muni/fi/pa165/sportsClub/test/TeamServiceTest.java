@@ -49,8 +49,11 @@ public class TeamServiceTest {
     @Mock
     Player mockPlayer;
 
+	@Mock
+	PlayerInfo mockPlayerInfo;
+
     @Mock
-    PlayerInfoDao playerInfoDao;
+	PlayerInfoDao playerInfoDao;
 
     @Inject
     @InjectMocks
@@ -148,24 +151,11 @@ public class TeamServiceTest {
         assertEquals(playerInfo1.getJerseyNumber(),20);
     }
 
-    @Test(expected = RuntimeException.class)
-    public void removePlayerFromTeamTest(){
-        mockTeam.setId(1L);
-
-        playerInfo1.setJerseyNumber(11);
-        playerInfo1.setTeam(mockTeam);
-        playerInfo1.setPlayer(mockPlayer);
-
-        List<PlayerInfo> playersInfos = new ArrayList<PlayerInfo>();
-        playersInfos.add(playerInfo1);
-        playersInfos.add(playerInfo2);
-
-        when(mockTeam.getId()).thenReturn(1l);
-        when(mockPlayer.getPlayerInfos()).thenReturn(playersInfos);
-        doThrow(new RuntimeException()).when(playerInfoDao).deletePlayerInfoByTeamAndPlayer(mockTeam, mockPlayer);
-
-        teamService.removePlayerFromTeam(mockPlayer, mockTeam);
-    }
+	@Test(expected = RuntimeException.class)
+	public void removePlayerFromTeamTest() {
+	        doThrow(new RuntimeException()).when(playerInfoDao).deletePlayerInfo(mockPlayerInfo);
+		teamService.removePlayerFromTeam(mockPlayerInfo);
+	    }
 
     @Test(expected = IllegalArgumentException.class)
     public void assignExistingPlayerToTeamTest(){

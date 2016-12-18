@@ -1,14 +1,22 @@
 package cz.muni.fi.pa165.sportsClub.rest.controllers;
 
-import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
-import cz.muni.fi.pa165.sportsClub.facade.PlayerFacade;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
+import cz.muni.fi.pa165.sportsClub.facade.PlayerFacade;
 
 
 @RestController
@@ -18,8 +26,8 @@ public class PlayerController {
     @Inject
     private PlayerFacade playerFacade;
 
-    @RequestMapping(value = "/{playerId}", method = RequestMethod.DELETE)
-    public final ResponseEntity deletePlayer(@PathVariable("playerId")long playerId){
+	@RequestMapping(value = "/{playerId}", method = RequestMethod.DELETE, produces = MediaType.TEXT_PLAIN_VALUE)
+	public final ResponseEntity<String> deletePlayer(@PathVariable("playerId") long playerId) {
         try {
             playerFacade.deletePlayer(playerId);
             return ResponseEntity

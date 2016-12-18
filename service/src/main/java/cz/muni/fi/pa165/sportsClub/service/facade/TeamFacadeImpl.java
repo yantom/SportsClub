@@ -77,6 +77,7 @@ public class TeamFacadeImpl implements TeamFacade {
 		for (PlayerInfo playerInfo : infos) {
 			playerOfTeam = new PlayerOfTeamDto();
 			playerOfTeam.setJerseyNumber(playerInfo.getJerseyNumber());
+			playerOfTeam.setPlayerInfoId(playerInfo.getId());
 			playerOfTeam.setPlayer(beanMappingService.mapTo(playerInfo.getPlayer(), PlayerDto.class));
 			players.add(playerOfTeam);
 		}
@@ -100,8 +101,8 @@ public class TeamFacadeImpl implements TeamFacade {
 	}
 
 	@Override
-	public void removePlayerFromTeam(Long pID, Long tID) {
-		teamService.removePlayerFromTeam(new Player(pID), new Team(tID));
+	public void removePlayerFromTeam(Long playerInfoId) {
+		teamService.removePlayerFromTeam(new PlayerInfo(playerInfoId));
 	}
 
     @Override

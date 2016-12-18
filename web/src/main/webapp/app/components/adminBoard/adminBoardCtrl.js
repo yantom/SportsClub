@@ -44,7 +44,7 @@ angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibMo
     }
 
     var loadManagers = function(){
-        $http.get(restInterface + '/manager/findall').then(
+        $http.get(restInterface + '/manager').then(
             function(response) {
                 $scope.managers = response.data;
             },
