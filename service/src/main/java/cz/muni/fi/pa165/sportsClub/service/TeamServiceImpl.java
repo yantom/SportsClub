@@ -92,9 +92,11 @@ public class TeamServiceImpl implements TeamService {
     }
 
 	@Override
-	public List<PlayerInfo> getPlayerInfos(Team t) {
+	public List<PlayerInfo> getPlayerInfos(Long teamId) {
         try {
-            return t.getPlayerInfos();
+            Team team = teamDao.getTeamById(teamId);
+            team.getPlayerInfos().size();
+            return team.getPlayerInfos();
         } catch (Exception e) {
             throw new DaoLayerException("can not obtain players infos", e);
         }
@@ -169,7 +171,7 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
-	@Override
+    @Override
 	public List<Player> findSuitablePlayersForTeam(Team team) {
         LocalDate today = LocalDate.now();
         int ageLimit = team.getCategory().getAgeLimit();

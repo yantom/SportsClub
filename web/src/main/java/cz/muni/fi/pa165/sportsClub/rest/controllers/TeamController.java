@@ -25,6 +25,7 @@ public class TeamController {
 
     @RequestMapping(path = "/{teamId}/players", method = RequestMethod.GET)
     public final List<PlayerOfTeamDto> getplayers(@PathVariable("teamId") long teamId){
+        System.out.println(teamFacade.getPlayersOfTeam(teamId).size());
         return teamFacade.getPlayersOfTeam(teamId);
     }
 

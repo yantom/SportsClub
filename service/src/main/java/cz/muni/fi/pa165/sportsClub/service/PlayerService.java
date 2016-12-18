@@ -5,6 +5,7 @@ import java.util.List;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
+import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
 public interface PlayerService {
 	void createPlayer(Player p);
@@ -19,5 +20,7 @@ public interface PlayerService {
 
 	List<Player> getAllPlayersOfClub(Manager m);
 
-	List<PlayerInfo> getPlayerInfos(Player p);
+	List<PlayerInfo> getPlayerInfos(Long playerId);
+
+
 }

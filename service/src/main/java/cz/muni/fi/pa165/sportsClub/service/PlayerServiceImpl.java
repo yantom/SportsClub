@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import cz.muni.fi.pa165.sportsClub.pojo.Team;
 import org.springframework.stereotype.Service;
 
 import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
@@ -85,10 +86,10 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
 	@Override
-	public List<PlayerInfo> getPlayerInfos(Player p) {
+	public List<PlayerInfo> getPlayerInfos(Long playerId) {
         try {
-            List<PlayerInfo> playerInfos = playerDao.getPlayerById(p.getId()).getPlayerInfos();
-            playerInfos.size();
+            Player player = playerDao.getPlayerById(playerId);
+            List<PlayerInfo> playerInfos = player.getPlayerInfos();
             return playerInfos;
         } catch (Exception e) {
             throw new DaoLayerException("can not obtain player infos", e);

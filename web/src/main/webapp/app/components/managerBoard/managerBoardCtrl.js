@@ -15,9 +15,8 @@ angular.module("sportsClub").controller('managerBoardCtrl', function($scope,$htt
                 alert("error sending http request");
             });
     }
-
-    $scope.getFreePlayersofClub= function(managerId){
-        $http.get(restInterface + '/manager/' + managerId +'/freePlayers').then(
+    $scope.getFreePlayersofClub= function(){
+        $http.get(restInterface + '/manager/' + loggedManagerId +'/freePlayers').then(
             function(response){
                 $scope.freePlayers = response.data;
             },
@@ -26,8 +25,8 @@ angular.module("sportsClub").controller('managerBoardCtrl', function($scope,$htt
             });
     }
 
-    var getPlayersOfTeam= function(teamId){
-        $http.get(restInterface + "/team/"+ teamId +'/players').then(
+    var getPlayersOfTeam= function(team){
+        $http.get(restInterface + "/team/"+ team.id +'/players').then(
         function(response){
                 $scope.players = response.data;
         },
@@ -68,7 +67,6 @@ angular.module("sportsClub").controller('managerBoardCtrl', function($scope,$htt
 
     var init = function(){
         getTeams(10000);
-        getPlayersOfTeam(10005);
     }
 
     init();

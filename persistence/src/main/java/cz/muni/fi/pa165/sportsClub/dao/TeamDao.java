@@ -1,5 +1,8 @@
 package cz.muni.fi.pa165.sportsClub.dao;
+import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
+
+import java.util.List;
 
 /**
  * CRUD operations on Team
@@ -44,4 +47,6 @@ public interface TeamDao {
      * @return if jersey number is unique
      */
     boolean isJerseyNumberUnique(Team team, int jerseyNumber);
+
+    List<Player> getPlayersOfTeam(Team team);
 }

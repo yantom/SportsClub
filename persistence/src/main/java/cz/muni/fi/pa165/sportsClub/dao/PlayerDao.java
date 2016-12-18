@@ -45,4 +45,7 @@ public interface PlayerDao {
     List<Player> getAllPlayers();
     
     Player getPlayerByEmail(String email);
+
+    public List<Team> getTeamsOfPlayer(Player player);
+
 }

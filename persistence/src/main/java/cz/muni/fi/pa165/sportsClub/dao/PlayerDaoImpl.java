@@ -5,7 +5,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
+import cz.muni.fi.pa165.sportsClub.pojo.Team;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,5 +75,14 @@ public class PlayerDaoImpl implements PlayerDao {
 	    } catch (NoResultException nrf) {
             return null;
 	    }
+    }
+
+    @Override
+    public List<Team> getTeamsOfPlayer(Player player) {
+        TypedQuery<Team> query = em.createQuery("SELECT p FROM Team p " +
+                "JOIN p.playerInfos pi " +
+                "WHERE pi.player= :player", Team.class);
+        query.setParameter("player", player);
+        return query.getResultList();
     }
 }

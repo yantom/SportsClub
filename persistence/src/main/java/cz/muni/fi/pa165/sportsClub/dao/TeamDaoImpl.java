@@ -5,6 +5,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 
+import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,5 +66,14 @@ public class TeamDaoImpl implements TeamDao {
         if(query.getResultList().isEmpty())
             return true;
         return false;
+    }
+
+    @Override
+    public List<Player> getPlayersOfTeam(Team team) {
+        TypedQuery<Player> query = em.createQuery("SELECT p FROM Player p " +
+                "JOIN p.playerInfos pi " +
+                "WHERE pi.team= :team", Player.class);
+        query.setParameter("team", team);
+        return query.getResultList();
     }
 }

@@ -4,6 +4,8 @@ import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
+import java.util.List;
+
 /**
  * CRUD operations on PlayerInfo
  * 

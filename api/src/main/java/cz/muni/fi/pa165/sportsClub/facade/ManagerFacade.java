@@ -25,12 +25,8 @@ public interface ManagerFacade {
 
 	List<ManagerDto> getAllManagers();
 
-<<<<<<< HEAD
-	boolean authenticateManager(ManagerAuthenticationDto m);
+	boolean authenticateManager(AuthenticationDto m);
 
 	List<TeamDto> getTeamsOfManager(Long managerId);
-	}
-=======
-	boolean authenticateManager(AuthenticationDto m);
 }
->>>>>>> 109fb7fc1dc4e6f615068242d56dedabfda087fa
+
