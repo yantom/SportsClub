@@ -23,13 +23,13 @@ public class TeamController {
     @Inject
     private TeamFacade teamFacade;
 
-    @RequestMapping(path = "{teamId}/players", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final List<PlayerOfTeamDto> getFreePlayers(@PathVariable long teamId){
+    @RequestMapping(path = "/{teamId}/players", method = RequestMethod.GET)
+    public final List<PlayerOfTeamDto> getplayers(@PathVariable("teamId") long teamId){
         return teamFacade.getPlayersOfTeam(teamId);
     }
 
     @RequestMapping(value = "/{teamId}", method = RequestMethod.DELETE)
-    public final ResponseEntity deleteTeam(@PathVariable long teamId){
+    public final ResponseEntity deleteTeam(@PathVariable("teamId") long teamId){
         try {
             teamFacade.deleteTeam(teamId);
             return ResponseEntity
@@ -43,7 +43,7 @@ public class TeamController {
     }
 
     @RequestMapping(value = "/{teamId}/{playerId}", method = RequestMethod.DELETE)
-    public final ResponseEntity removePlayerFromRoster(@PathVariable long teamId,@PathVariable long playerId){
+    public final ResponseEntity removePlayerFromRoster(@PathVariable("teamId") long teamId,@PathVariable("playerId") long playerId){
         try {
             teamFacade.removePlayerFromTeam(teamId, playerId);
             return ResponseEntity

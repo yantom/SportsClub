@@ -5,6 +5,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,14 +26,13 @@ public class ManagerController {
 
     @Inject
     private ManagerFacade managerFacade;
-
-    @RequestMapping(path = "{managerId}/teams", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final List<TeamDto> getTeams(@PathVariable long managerId){
-		return managerFacade.getManagerById(managerId).getTeams();
+    @RequestMapping(path = "/{managerId}/teams", method = RequestMethod.GET)
+    public final List<TeamDto> getTeamsOfManager(@PathVariable("managerId") long managerId){
+        return managerFacade.getTeamsOfManager(managerId);
     }
 
-    @RequestMapping(path = "{managerId}/freePlayers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final List<PlayerDto> getFreePlayers(@PathVariable long managerId){
+    @RequestMapping(path = "/{managerId}/freePlayers", method = RequestMethod.GET)
+    public final List<PlayerDto> getFreePlayers(@PathVariable("managerId") long managerId){
 		ManagerDto managerDto = managerFacade.getManagerById(managerId);
 		return managerFacade.getFreePlayers(managerDto.getId());
     }
@@ -59,6 +60,6 @@ public class ManagerController {
 
     @RequestMapping(path = "/findall", method = RequestMethod.GET)
 	public List<ManagerDto> findAll() {
-		return managerFacade.getAllManagers();
+        return managerFacade.getAllManagers();
     }
 }

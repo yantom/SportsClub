@@ -5,6 +5,7 @@ import java.util.List;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerAuthenticationDto;
 import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
+import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
 
 public interface ManagerFacade {
 
@@ -25,4 +26,6 @@ public interface ManagerFacade {
 	List<ManagerDto> getAllManagers();
 
 	boolean authenticateManager(ManagerAuthenticationDto m);
-}
+
+	List<TeamDto> getTeamsOfManager(Long managerId);
+	}

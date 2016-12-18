@@ -6,7 +6,7 @@ angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibMo
 		$http.remove(restInterface + '/manager/'+managerId).then(
 			function(){
 				console.log(managers.length);
-				for(i=0; i < managers.length; i++){
+				for(var i=0; i < managers.length; i++){
 					if($scope.managers[i].id == managerId){
 						$scope.managers.splice(i,1);
 						break;

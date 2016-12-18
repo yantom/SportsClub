@@ -19,7 +19,7 @@ public class PlayerController {
     private PlayerFacade playerFacade;
 
     @RequestMapping(value = "/{playerId}", method = RequestMethod.DELETE)
-    public final ResponseEntity deletePlayer(@PathVariable long playerId){
+    public final ResponseEntity deletePlayer(@PathVariable("playerId")long playerId){
         try {
             playerFacade.deletePlayer(playerId);
             return ResponseEntity
