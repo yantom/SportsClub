@@ -29,6 +29,11 @@ public class ManagerController {
         return managerFacade.getTeamsOfManager(managerId);
     }
 
+    @RequestMapping(path = "/{managerId}/freeTeams", method = RequestMethod.GET)
+    public final List<TeamDto> getNotAlreadyCreatedTeamsOfManager(@PathVariable("managerId") long managerId){
+        return managerFacade.getNotAlreadyCreatedTeamsOfManager(managerId);
+    }
+
     @RequestMapping(path = "/{managerId}/freePlayers", method = RequestMethod.GET)
     public final List<PlayerDto> getFreePlayers(@PathVariable("managerId") long managerId){
 		ManagerDto managerDto = managerFacade.getManagerById(managerId);

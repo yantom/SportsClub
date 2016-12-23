@@ -1,10 +1,14 @@
 package cz.muni.fi.pa165.sportsClub.service.facade;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
+import cz.muni.fi.pa165.sportsClub.enums.Category;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +64,27 @@ public class ManagerFacadeImpl implements ManagerFacade {
 
 		List<Team> teams = m.getTeams();
 		return beanMappingService.mapTo(teams, TeamDto.class);
+	}
+
+	@Override
+	public List<TeamDto> getNotAlreadyCreatedTeamsOfManager(Long managerId) {
+		Manager m = managerService.getManagerById(managerId);
+		if (m == null)
+			return null;
+		List<Category> categories = new ArrayList<>();
+		for(Team team : m.getTeams()){
+			categories.add(team.getCategory());
+		}
+		List<Category> allCategories = Arrays.asList(Category.values());
+		allCategories.removeAll(categories);
+
+		List<Team>notAlreadyCreatedTeams = new ArrayList<>();
+		for(Category category : allCategories){
+			Team team = new Team();
+			team.setCategory(category);
+			notAlreadyCreatedTeams.add(team);
+		}
+		return beanMappingService.mapTo(notAlreadyCreatedTeams, TeamDto.class);
 	}
 
 	@Override

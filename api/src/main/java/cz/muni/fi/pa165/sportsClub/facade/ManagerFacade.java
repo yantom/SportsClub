@@ -28,5 +28,7 @@ public interface ManagerFacade {
 	boolean authenticateManager(AuthenticationDto m);
 
 	List<TeamDto> getTeamsOfManager(Long managerId);
+
+	List<TeamDto> getNotAlreadyCreatedTeamsOfManager(Long managerId);
 }
 

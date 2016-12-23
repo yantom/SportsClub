@@ -176,7 +176,6 @@ public class TeamServiceImpl implements TeamService {
         LocalDate today = LocalDate.now();
         int ageLimit = team.getCategory().getAgeLimit();
         LocalDate ageLimitDate = today.minusYears(ageLimit);
-        System.out.println(ageLimitDate);
         try {
 			return managerDao.getPlayersWithHigherDobThan(team.getManager(), ageLimitDate);
         } catch (Exception e) {

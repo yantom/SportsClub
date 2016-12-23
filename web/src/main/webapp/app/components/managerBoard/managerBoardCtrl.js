@@ -1,5 +1,5 @@
 "use strict";
-angular.module("sportsClub").controller('managerBoardCtrl', function($scope,$http,$stateParams) {
+angular.module("sportsClub").controller('managerBoardCtrl', function($scope,$http,$uibModal,$stateParams) {
     $scope.managers;
     $scope.playerInfos;
     $scope.teams;
@@ -96,6 +96,33 @@ angular.module("sportsClub").controller('managerBoardCtrl', function($scope,$htt
     $scope.editPlayer = function(){
     	alert("edit");
     }
+
+    var getNotAlreadyCreatedTeams = function(managerId){
+        $http.get(restInterface + "/manager/"+managerId+"/freeTeams").then(
+            function(response){
+                $scope.notAlreadyCreatedTeams = response.data;
+            },
+            function(err){
+                alert("error sending http request");
+            });
+    }
+
+    $scope.openNewTeamModal = function(){
+        var notAlreadyCreatedTeams = getNotAlreadyCreatedTeams(loggedManagerId)
+        var modalInstance = $uibModal.open({
+            templateUrl : 'app/components/newTeamModal/newTeamModal.html',
+            controller : 'newTeamModalCtrl',
+            resolve : {
+                // data : function() {
+                //     return notAlreadyCreatedTeams;
+                // }
+            }
+        });
+        modalInstance.result.then(function(updatedData) {
+            $scope.teams.push(updatedData.data);
+        }, function () {
+        });
+    }
     
     
 
@@ -104,5 +131,7 @@ angular.module("sportsClub").controller('managerBoardCtrl', function($scope,$htt
     }
 
     init();
+
+
 
 });

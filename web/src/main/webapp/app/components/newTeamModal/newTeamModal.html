@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Choose for which category you want to create team</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <form class="form-horizontal" name="newTeamForm">
+        <div class="form-group" ng-repeat="team in notAlreadyCreatedTeams">
+            <div class="col-sm-9">
+                <button type="submit" class="btn btn-primary" ng-click="createNewTeam(team)">Save</button>
+            </div>
+        </div>
+        <div class="form-group modal-footer">
+            <button type="button" class="btn btn-default" ng-click="close(null)">Cancel</button>
+        </div>
+    </form>
+</div>
