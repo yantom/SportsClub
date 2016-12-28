@@ -34,7 +34,6 @@ public class TeamFacadeImpl implements TeamFacade {
 	public void createTeam(TeamDto t) {
 		Team teamEntity = beanMappingService.mapTo(t, Team.class);
 		teamService.createTeam(teamEntity);
-		t.setId(teamEntity.getId());
 	}
 
 	@Override

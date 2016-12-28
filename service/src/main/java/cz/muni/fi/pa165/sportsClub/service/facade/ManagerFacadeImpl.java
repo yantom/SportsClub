@@ -67,23 +67,12 @@ public class ManagerFacadeImpl implements ManagerFacade {
 	}
 
 	@Override
-	public List<TeamDto> getNotAlreadyCreatedTeamsOfManager(Long managerId) {
+	public List<TeamDto> notCreatedTeams(Long managerId) {
 		Manager m = managerService.getManagerById(managerId);
 		if (m == null)
 			return null;
-		List<Category> categories = new ArrayList<>();
-		for(Team team : m.getTeams()){
-			categories.add(team.getCategory());
-		}
-		List<Category> allCategories = Arrays.asList(Category.values());
-		allCategories.removeAll(categories);
 
-		List<Team>notAlreadyCreatedTeams = new ArrayList<>();
-		for(Category category : allCategories){
-			Team team = new Team();
-			team.setCategory(category);
-			notAlreadyCreatedTeams.add(team);
-		}
+		List<Team>notAlreadyCreatedTeams = managerService.getNotCreatedTeamsOfManager(m);
 		return beanMappingService.mapTo(notAlreadyCreatedTeams, TeamDto.class);
 	}
 

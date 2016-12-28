@@ -1,22 +1,21 @@
 "use strict";
-angular.module("sportsClub").controller('newTeamModalCtrl',function($scope, $uibModalInstance, $http, notAlreadyCreatedTeams) {
-    $scope.notAlreadyCreatedTeams = angular.copy(notAlreadyCreatedTeams)
+angular.module("sportsClub").controller('newTeamModalCtrl',function($scope, $uibModalInstance, $http, notCreatedTeams) {
+    $scope.notCreatedTeams = angular.copy(notCreatedTeams);
 
-    $scope.close = function(){
-        $uibModalInstance.close();
+    $scope.close = function(updatedData){
+        $uibModalInstance.close(updatedData);
     }
 
-    $scope.createNewTeam = function(teamData){
-        $http.post(restInterface + '/team',teamData).then(
+    $scope.createNewTeam = function(team){
+        console.log(team)
+        $http.post(restInterface + '/team/create',team).then(
             function(response){
                 alert("Team created");
-                $scope.close({"new":true,"data":response.data});
+                $scope.close({"new":true,"newTeam":team});
             },
             function(){
                 alert("error occured while creating team");
             }
         );
     }
-
-
 });

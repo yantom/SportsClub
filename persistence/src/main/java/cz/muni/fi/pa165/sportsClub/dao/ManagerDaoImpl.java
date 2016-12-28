@@ -9,6 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import cz.muni.fi.pa165.sportsClub.enums.Category;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -117,6 +118,15 @@ public class ManagerDaoImpl implements ManagerDao{
 				Player.class);
 		query.setParameter("manager", manager);
 		query.setParameter("ageLimitDate", ageLimitDate);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Category> getCategoriesOfTeams(Manager manager) {
+		TypedQuery<Category> query = em.createQuery(
+				"SELECT t.category FROM Team t " + "WHERE t.manager = :manager",
+				Category.class);
+		query.setParameter("manager", manager);
 		return query.getResultList();
 	}
 }

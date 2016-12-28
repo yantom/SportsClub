@@ -46,7 +46,7 @@ public class PlayerController {
         return player;
     }
 
-    @RequestMapping(path = "/update", method = RequestMethod.POST)
+    @RequestMapping(path = "/update", method = RequestMethod.PUT)
     public void update(@Valid @RequestBody PlayerDto player) {
         playerFacade.updatePlayer(player);
     }

@@ -1,9 +1,14 @@
 package cz.muni.fi.pa165.sportsClub.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
+import cz.muni.fi.pa165.sportsClub.enums.Category;
+import cz.muni.fi.pa165.sportsClub.pojo.Team;
 import org.springframework.stereotype.Service;
 
 import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
@@ -83,6 +88,25 @@ public class ManagerServiceImpl implements ManagerService {
 			return managerDao.getAllManagers();
 		} catch (Exception e) {
 			throw new DaoLayerException("can not obtain all managers", e);
+		}
+	}
+
+	@Override
+	public List<Team> getNotCreatedTeamsOfManager(Manager m) {
+		try {
+			List<Category> categoriesOfCreatedTeams =  managerDao.getCategoriesOfTeams(m);
+			List<Category> allCategories = new ArrayList(Arrays.asList(Category.values()));
+			allCategories.removeAll(categoriesOfCreatedTeams);
+			List<Team>notAlreadyCreatedTeams = new ArrayList<>();
+			for(Category category : allCategories){
+				Team team = new Team();
+				team.setCategory(category);
+				team.setManager(m);
+				notAlreadyCreatedTeams.add(team);
+			}
+			return notAlreadyCreatedTeams;
+		} catch (Exception e) {
+			throw new DaoLayerException("can not obtain already created teams of manager", e);
 		}
 	}
 }

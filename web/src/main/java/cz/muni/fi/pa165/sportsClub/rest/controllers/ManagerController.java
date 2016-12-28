@@ -24,14 +24,15 @@ public class ManagerController {
 
     @Inject
     private ManagerFacade managerFacade;
+
     @RequestMapping(path = "/{managerId}/teams", method = RequestMethod.GET)
     public final List<TeamDto> getTeamsOfManager(@PathVariable("managerId") long managerId){
         return managerFacade.getTeamsOfManager(managerId);
     }
 
     @RequestMapping(path = "/{managerId}/freeTeams", method = RequestMethod.GET)
-    public final List<TeamDto> getNotAlreadyCreatedTeamsOfManager(@PathVariable("managerId") long managerId){
-        return managerFacade.getNotAlreadyCreatedTeamsOfManager(managerId);
+    public final List<TeamDto> getNotCreatedTeamsOfManager(@PathVariable("managerId") long managerId){
+        return managerFacade.notCreatedTeams(managerId);
     }
 
     @RequestMapping(path = "/{managerId}/freePlayers", method = RequestMethod.GET)

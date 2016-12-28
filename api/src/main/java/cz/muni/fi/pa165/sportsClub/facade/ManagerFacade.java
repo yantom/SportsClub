@@ -29,6 +29,6 @@ public interface ManagerFacade {
 
 	List<TeamDto> getTeamsOfManager(Long managerId);
 
-	List<TeamDto> getNotAlreadyCreatedTeamsOfManager(Long managerId);
+	List<TeamDto> notCreatedTeams(Long managerId);
 }
 

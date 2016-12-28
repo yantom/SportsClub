@@ -31,7 +31,6 @@ import cz.muni.fi.pa165.sportsClub.pojo.Team;
 import cz.muni.fi.pa165.sportsClub.service.ManagerService;
 
 /**
- *
  * @author Andrej 410433
  */
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -46,134 +45,134 @@ public class ManagerServiceTest {
     private ManagerDao managerDao;
 
     @Mock
-	private Manager mockManager;
-
-	@Mock
-	private Player mockPlayer1;
-
-	@Mock
-	private Player mockPlayer2;
+    private Manager mockManager;
 
     @Mock
-	private Player mockPlayer3;
+    private Player mockPlayer1;
 
-	private PlayerInfo playerInfo;
-	private Team team;
+    @Mock
+    private Player mockPlayer2;
 
-	@Before
-	public void setup() {
-		MockitoAnnotations.initMocks(this);
+    @Mock
+    private Player mockPlayer3;
 
-		mockManager.setEmail("david@koncak.com");
-		mockManager.setPassword("TheBest99");
-		mockManager.setFirstName("David");
-		mockManager.setLastName("Koncak");
-		mockManager.setClubName("FC Slavia Praha");
+    private PlayerInfo playerInfo;
+    private Team team;
 
-		team = new Team();
-		team.setManager(mockManager);
-		team.setCategory(Category.MEN);
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
 
-		mockPlayer1.setFirstName("Simon");
-		mockPlayer1.setLastName("Sudora");
-		mockPlayer1.setEmail("simon@sudora.com");
-		mockPlayer1.setHeight(180);
-		mockPlayer1.setWeight(120);
-		mockPlayer1.setDateOfBirth(LocalDate.parse("2000-06-15"));
-		mockPlayer1.setManager(mockManager);
+        mockManager.setEmail("david@koncak.com");
+        mockManager.setPassword("TheBest99");
+        mockManager.setFirstName("David");
+        mockManager.setLastName("Koncak");
+        mockManager.setClubName("FC Slavia Praha");
 
-		mockPlayer2.setFirstName("Jan");
-		mockPlayer2.setLastName("Tomasek");
-		mockPlayer2.setEmail("jan@tomasek.com");
-		mockPlayer2.setHeight(180);
-		mockPlayer2.setWeight(120);
-		mockPlayer2.setDateOfBirth(LocalDate.parse("2000-06-15"));
-		mockPlayer2.setManager(mockManager);
+        team = new Team();
+        team.setManager(mockManager);
+        team.setCategory(Category.MEN);
 
-		mockPlayer3.setFirstName("Andrej");
-		mockPlayer3.setLastName("Bonis");
-		mockPlayer3.setEmail("andrej@bonis.com");
-		mockPlayer3.setHeight(180);
-		mockPlayer3.setWeight(120);
-		mockPlayer3.setDateOfBirth(LocalDate.parse("2000-06-15"));
-		mockPlayer3.setManager(mockManager);
+        mockPlayer1.setFirstName("Simon");
+        mockPlayer1.setLastName("Sudora");
+        mockPlayer1.setEmail("simon@sudora.com");
+        mockPlayer1.setHeight(180);
+        mockPlayer1.setWeight(120);
+        mockPlayer1.setDateOfBirth(LocalDate.parse("2000-06-15"));
+        mockPlayer1.setManager(mockManager);
 
-		playerInfo = new PlayerInfo();
-		playerInfo.setJerseyNumber(15);
-		playerInfo.setPlayer(mockPlayer3);
-		playerInfo.setTeam(team);
+        mockPlayer2.setFirstName("Jan");
+        mockPlayer2.setLastName("Tomasek");
+        mockPlayer2.setEmail("jan@tomasek.com");
+        mockPlayer2.setHeight(180);
+        mockPlayer2.setWeight(120);
+        mockPlayer2.setDateOfBirth(LocalDate.parse("2000-06-15"));
+        mockPlayer2.setManager(mockManager);
 
-	}
+        mockPlayer3.setFirstName("Andrej");
+        mockPlayer3.setLastName("Bonis");
+        mockPlayer3.setEmail("andrej@bonis.com");
+        mockPlayer3.setHeight(180);
+        mockPlayer3.setWeight(120);
+        mockPlayer3.setDateOfBirth(LocalDate.parse("2000-06-15"));
+        mockPlayer3.setManager(mockManager);
 
-	@Test(expected = RuntimeException.class)
-	public void createManagerTest() {
-		doThrow(new RuntimeException()).when(managerDao).createManager(mockManager);
-		managerService.createManager(mockManager);
-	}
+        playerInfo = new PlayerInfo();
+        playerInfo.setJerseyNumber(15);
+        playerInfo.setPlayer(mockPlayer3);
+        playerInfo.setTeam(team);
 
-	@Test(expected = RuntimeException.class)
-	public void deleteManagerTest() {
-		doThrow(new RuntimeException()).when(managerDao).deleteManager(mockManager);
-		managerService.deleteManager(mockManager);
-	}
+    }
 
-	@Test(expected = RuntimeException.class)
-	public void updateManagerTest() {
-		doThrow(new RuntimeException()).when(managerDao).updateManager(mockManager);
-		managerService.updateManager(mockManager);
-	}
+    @Test(expected = RuntimeException.class)
+    public void createManagerTest() {
+        doThrow(new RuntimeException()).when(managerDao).createManager(mockManager);
+        managerService.createManager(mockManager);
+    }
 
-	@Test
-	public void getManagerByIdTest() {
-		when(managerDao.getManagerById(1L)).thenReturn(mockManager);
-		Manager returnedManager = managerService.getManagerById(1L);
-		assertEquals(mockManager, returnedManager);
-	}
+    @Test(expected = RuntimeException.class)
+    public void deleteManagerTest() {
+        doThrow(new RuntimeException()).when(managerDao).deleteManager(mockManager);
+        managerService.deleteManager(mockManager);
+    }
 
-	@Test
-	public void getManagerByClubNameTest() {
-		when(managerDao.getManagerByClubName("FC Slavia Praha")).thenReturn(mockManager);
-		Manager returnedManager = managerService.getManagerByClubName("FC Slavia Praha");
-		assertEquals(mockManager, returnedManager);
-	}
+    @Test(expected = RuntimeException.class)
+    public void updateManagerTest() {
+        doThrow(new RuntimeException()).when(managerDao).updateManager(mockManager);
+        managerService.updateManager(mockManager);
+    }
 
-	@Test
-	public void getAllManagersTest() {
-		List<Manager> managers = new ArrayList<Manager>();
+    @Test
+    public void getManagerByIdTest() {
+        when(managerDao.getManagerById(1L)).thenReturn(mockManager);
+        Manager returnedManager = managerService.getManagerById(1L);
+        assertEquals(mockManager, returnedManager);
+    }
 
-		Manager manager2 = new Manager();
-		manager2.setClubName("FC Sparta Praha");
+    @Test
+    public void getManagerByClubNameTest() {
+        when(managerDao.getManagerByClubName("FC Slavia Praha")).thenReturn(mockManager);
+        Manager returnedManager = managerService.getManagerByClubName("FC Slavia Praha");
+        assertEquals(mockManager, returnedManager);
+    }
 
-		managers.add(mockManager);
-		managers.add(manager2);
+    @Test
+    public void getAllManagersTest() {
+        List<Manager> managers = new ArrayList<Manager>();
 
-		when(managerDao.getAllManagers()).thenReturn(managers);
-		List<Manager> returnedManagers = managerService.getAllManagers();
+        Manager manager2 = new Manager();
+        manager2.setClubName("FC Sparta Praha");
 
-		assertEquals(managers, returnedManagers);
-	}
+        managers.add(mockManager);
+        managers.add(manager2);
 
-	@Test
-	public void getFreePlayersOfManagerTest() {
-		List<Player> freePlayers = new ArrayList<Player>();
-		freePlayers.add(mockPlayer1);
-		freePlayers.add(mockPlayer2);
+        when(managerDao.getAllManagers()).thenReturn(managers);
+        List<Manager> returnedManagers = managerService.getAllManagers();
 
-		List<Player> playersOfManager = new ArrayList<Player>();
-		playersOfManager.add(mockPlayer1);
-		playersOfManager.add(mockPlayer2);
-		playersOfManager.add(mockPlayer3);
+        assertEquals(managers, returnedManagers);
+    }
 
-		List<PlayerInfo> playerInfos = new ArrayList<PlayerInfo>();
-		playerInfos.add(playerInfo);
+    @Test
+    public void getFreePlayersOfManagerTest() {
+        List<Player> freePlayers = new ArrayList<Player>();
+        freePlayers.add(mockPlayer1);
+        freePlayers.add(mockPlayer2);
 
-		when(managerDao.getFreePlayers(mockManager)).thenReturn(freePlayers);
-		managerService.createManager(mockManager);
+        List<Player> playersOfManager = new ArrayList<Player>();
+        playersOfManager.add(mockPlayer1);
+        playersOfManager.add(mockPlayer2);
+        playersOfManager.add(mockPlayer3);
 
-		List<Player> returnedFreePlayers = managerService.getFreePlayersOfClub(mockManager);
-		assertEquals(freePlayers, returnedFreePlayers);
-	}
-    
+        List<PlayerInfo> playerInfos = new ArrayList<PlayerInfo>();
+        playerInfos.add(playerInfo);
+
+        when(managerDao.getFreePlayers(mockManager)).thenReturn(freePlayers);
+        managerService.createManager(mockManager);
+
+        List<Player> returnedFreePlayers = managerService.getFreePlayersOfClub(mockManager);
+        assertEquals(freePlayers, returnedFreePlayers);
+    }
+
     @Test(expected = DaoLayerException.class)
     public void updateNullManagerTest() {
         doThrow(new DaoLayerException("null Manager")).when(managerDao).updateManager(null);
@@ -185,21 +184,30 @@ public class ManagerServiceTest {
         doThrow(new DaoLayerException("null Manager")).when(managerDao).deleteManager(null);
         managerService.deleteManager(null);
     }
-   
-   @Test 
-   public void getManagerByNonExistingIdTest() {
-       assertNull(managerService.getManagerById(10L));
-   }
-   
-   @Test
-	public void getManagerByEmailTest() {
-		when(managerDao.getManagerByEmail("andrej@gmail.com")).thenReturn(mockManager);
-       Manager found = managerService.getManagerByEmail("andrej@gmail.com");
-		assertEquals(mockManager, found);
-   }
-   
-   @Test
-   public void getManagerByNonExistingEmailTest() {
-       assertNull(managerService.getManagerByEmail("bonis@gmail.com"));
-   }
+
+    @Test
+    public void getManagerByNonExistingIdTest() {
+        assertNull(managerService.getManagerById(10L));
+    }
+
+    @Test
+    public void getManagerByEmailTest() {
+        when(managerDao.getManagerByEmail("andrej@gmail.com")).thenReturn(mockManager);
+        Manager found = managerService.getManagerByEmail("andrej@gmail.com");
+        assertEquals(mockManager, found);
+    }
+
+    @Test
+    public void getManagerByNonExistingEmailTest() {
+        assertNull(managerService.getManagerByEmail("bonis@gmail.com"));
+    }
+
+    @Test
+    public void getNotAlreadyCreatedTeamsOfManagerTest() {
+        List<Category> categoriesOfCreatedTeams = new ArrayList();
+        categoriesOfCreatedTeams.add(Category.MEN);
+        when(managerDao.getCategoriesOfTeams(mockManager)).thenReturn(categoriesOfCreatedTeams);
+        List<Team> returnedTeams = managerService.getNotCreatedTeamsOfManager(mockManager);
+        assertEquals(4,returnedTeams.size());
+    }
 }

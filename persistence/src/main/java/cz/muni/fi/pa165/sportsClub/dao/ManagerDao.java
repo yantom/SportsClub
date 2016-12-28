@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.sportsClub.dao;
 import java.time.LocalDate;
 import java.util.List;
 
+import cz.muni.fi.pa165.sportsClub.enums.Category;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 
@@ -77,4 +78,10 @@ public interface ManagerDao {
 	 * @return list of players with higher date of birth than certain date
 	 */
 	List<Player> getPlayersWithHigherDobThan(Manager manager, LocalDate ageLimitDate);
+
+	/**
+	 * @param manager
+	 * @return list of categories of teams fo concrete Manager
+	 */
+	List<Category> getCategoriesOfTeams(Manager manager);
 }

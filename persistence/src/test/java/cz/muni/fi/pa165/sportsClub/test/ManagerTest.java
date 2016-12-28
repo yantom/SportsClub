@@ -210,4 +210,16 @@ public class ManagerTest {
 		assertEquals(manager, foundManager);
 	}
 
+	@Test
+	public void getCategoriesOfTeamsTest(){
+		managerDao.createManager(manager);
+		Team team = new Team();
+		team.setCategory(Category.MEN);
+		team.setManager(manager);
+		teamDao.createTeam(team);
+		List<Category> categories = managerDao.getCategoriesOfTeams(manager);
+		assertEquals(1, categories.size());
+		assertEquals(Category.MEN, categories.get(0));
+	}
+
 }
