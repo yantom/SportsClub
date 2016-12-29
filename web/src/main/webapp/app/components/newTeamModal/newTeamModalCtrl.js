@@ -7,14 +7,15 @@ angular.module("sportsClub").controller('newTeamModalCtrl',function($scope, $uib
     }
 
     $scope.createNewTeam = function(team){
-        console.log(team)
         $http.post(restInterface + '/team/create',team).then(
             function(response){
                 alert("Team created");
                 $scope.close({"new":true,"newTeam":team});
             },
-            function(){
-                alert("error occured while creating team");
+            function(response){
+                //alert("error occured while creating team");
+                alert(response.status);
+                //console.log(response.status);
             }
         );
     }

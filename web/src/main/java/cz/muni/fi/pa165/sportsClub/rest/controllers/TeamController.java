@@ -30,7 +30,7 @@ public class TeamController {
     }
 
     @RequestMapping(value = "/{teamId}", method = RequestMethod.DELETE, produces = MediaType.TEXT_PLAIN_VALUE)
-    public final ResponseEntity<String> deleteTeam(@PathVariable("teamId") long teamId) {
+    public final ResponseEntity deleteTeam(@PathVariable("teamId") long teamId) {
         try {
             teamFacade.deleteTeam(teamId);
             return ResponseEntity
@@ -44,16 +44,16 @@ public class TeamController {
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public final ResponseEntity<String> create(@Valid @RequestBody TeamDto team) {
-        try {
+    public final void create(@RequestBody TeamDto team) {
+       // try {
             teamFacade.createTeam(team);
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Team was successfully created");
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
+//            return ResponseEntity
+//                    .status(HttpStatus.CREATED)
+//                    .body("Team was successfully created");
+//        } catch (Exception e) {
+//            return ResponseEntity
+//                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(e.getMessage());
+//        }
     }
 }

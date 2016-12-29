@@ -19,7 +19,7 @@ public class PlayerInfoController {
 	private TeamFacade teamFacade;
 
 	@RequestMapping(value = "/{playerInfoId}", method = RequestMethod.DELETE, produces = MediaType.TEXT_PLAIN_VALUE)
-	public final ResponseEntity<String> removePlayerFromRoster(@PathVariable("playerInfoId") long playerInfoId) {
+	public final ResponseEntity removePlayerFromRoster(@PathVariable("playerInfoId") long playerInfoId) {
 		try {
 			teamFacade.removePlayerFromTeam(playerInfoId);
 			return ResponseEntity.status(HttpStatus.OK).body("Player was successfully removed from team roster");

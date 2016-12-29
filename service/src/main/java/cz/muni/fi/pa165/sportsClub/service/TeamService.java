@@ -33,5 +33,7 @@ public interface TeamService {
 
 	List<Player> findSuitablePlayersForTeam(Team team);
         
-        boolean isJerseyNumberUnique(Team team, int jerseyNumber);
-}
+	boolean isJerseyNumberUnique(Team team, int jerseyNumber);
+
+	boolean isCategoryOfTeamUnique(Team team);
+	}

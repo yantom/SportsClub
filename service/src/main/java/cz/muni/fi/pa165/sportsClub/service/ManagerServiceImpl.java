@@ -106,7 +106,7 @@ public class ManagerServiceImpl implements ManagerService {
 			}
 			return notAlreadyCreatedTeams;
 		} catch (Exception e) {
-			throw new DaoLayerException("can not obtain already created teams of manager", e);
+			throw new DaoLayerException("can not obtain not created teams of manager", e);
 		}
 	}
 }

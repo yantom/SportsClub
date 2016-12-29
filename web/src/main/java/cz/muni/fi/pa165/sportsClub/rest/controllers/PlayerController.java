@@ -27,7 +27,7 @@ public class PlayerController {
     private PlayerFacade playerFacade;
 
 	@RequestMapping(value = "/{playerId}", method = RequestMethod.DELETE, produces = MediaType.TEXT_PLAIN_VALUE)
-	public final ResponseEntity<String> deletePlayer(@PathVariable("playerId") long playerId) {
+	public final ResponseEntity deletePlayer(@PathVariable("playerId") long playerId) {
         try {
             playerFacade.deletePlayer(playerId);
             return ResponseEntity

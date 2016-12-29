@@ -38,6 +38,16 @@ public class TeamServiceImpl implements TeamService {
         }
     }
 
+    @Override
+    public boolean isCategoryOfTeamUnique(Team team) {
+	    try {
+            List<Category> categories = managerDao.getCategoriesOfTeams(team.getManager());
+            return !categories.contains(team.getCategory());
+        } catch (Exception e) {
+            throw new DaoLayerException("can not obtain if category of team is unique", e);
+        }
+    }
+
 	@Override
 	public void updateTeam(Team t) {
         try {
@@ -78,7 +88,6 @@ public class TeamServiceImpl implements TeamService {
         } catch (Exception e) {
 			throw new DaoLayerException("can not find team of manager by category", e);
         }
-
     }
 
 	@Override
@@ -88,7 +97,6 @@ public class TeamServiceImpl implements TeamService {
         } catch (Exception e) {
 			throw new DaoLayerException("can not obtain all teams of manager", e);
         }
-
     }
 
 	@Override

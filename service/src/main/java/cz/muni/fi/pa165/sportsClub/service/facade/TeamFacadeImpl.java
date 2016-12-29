@@ -23,86 +23,91 @@ import cz.muni.fi.pa165.sportsClub.service.TeamService;
 @Transactional
 @Service
 public class TeamFacadeImpl implements TeamFacade {
-    
-	@Inject
-	private TeamService teamService;
 
-	@Inject
-	private BeanMappingService beanMappingService;
+    @Inject
+    private TeamService teamService;
 
-	@Override
-	public void createTeam(TeamDto t) {
-		Team teamEntity = beanMappingService.mapTo(t, Team.class);
-		teamService.createTeam(teamEntity);
-	}
+    @Inject
+    private BeanMappingService beanMappingService;
 
-	@Override
-	public void updateTeam(TeamDto t) {
-		teamService.updateTeam(beanMappingService.mapTo(t, Team.class));
+    @Override
+    public void createTeam(TeamDto t) {
+        Team teamEntity = beanMappingService.mapTo(t, Team.class);
+        if (!teamService.isCategoryOfTeamUnique(teamEntity)) {
+            throw new IllegalArgumentException("Category of team is not unique between teams of manager");
+        }
+        else {
+            teamService.createTeam(teamEntity);
+        }
+    }
 
-	}
+    @Override
+    public void updateTeam(TeamDto t) {
+        teamService.updateTeam(beanMappingService.mapTo(t, Team.class));
 
-	@Override
-	public void deleteTeam(Long id) {
-		teamService.deleteTeam(new Team(id));
+    }
 
-	}
+    @Override
+    public void deleteTeam(Long id) {
+        teamService.deleteTeam(new Team(id));
 
-	@Override
-	public TeamDto getTeamById(Long teamId) {
-		Team t = teamService.getTeamById(teamId);
-		return beanMappingService.mapTo(t, TeamDto.class);
-	}
+    }
 
-	@Override
-	public TeamDto getTeamOfClubByCategory(Category category, Long clubId) {
-		Team t = teamService.getTeamOfClubByCategory(category, new Manager(clubId));
-		if (t == null)
-			return null;
-		return beanMappingService.mapTo(t, TeamDto.class);
-	}
+    @Override
+    public TeamDto getTeamById(Long teamId) {
+        Team t = teamService.getTeamById(teamId);
+        return beanMappingService.mapTo(t, TeamDto.class);
+    }
 
-	@Override
-	public List<TeamDto> getAllTeamsOfClub(Long clubId) {
-		return beanMappingService.mapTo(teamService.getAllTeamsOfClub(new Manager(clubId)),
-				TeamDto.class);
-	}
+    @Override
+    public TeamDto getTeamOfClubByCategory(Category category, Long clubId) {
+        Team t = teamService.getTeamOfClubByCategory(category, new Manager(clubId));
+        if (t == null)
+            return null;
+        return beanMappingService.mapTo(t, TeamDto.class);
+    }
 
-	@Override
-	public List<PlayerOfTeamDto> getPlayersOfTeam(Long teamId) {
-		List<PlayerOfTeamDto> players = new ArrayList<PlayerOfTeamDto>();
-		List<PlayerInfo> infos = teamService.getPlayerInfos(teamId);
-		PlayerOfTeamDto playerOfTeam;
-		for (PlayerInfo playerInfo : infos) {
-			playerOfTeam = new PlayerOfTeamDto();
-			playerOfTeam.setJerseyNumber(playerInfo.getJerseyNumber());
-			playerOfTeam.setPlayerInfoId(playerInfo.getId());
-			playerOfTeam.setPlayer(beanMappingService.mapTo(playerInfo.getPlayer(), PlayerDto.class));
-			players.add(playerOfTeam);
-		}
-		return players;
-	}
+    @Override
+    public List<TeamDto> getAllTeamsOfClub(Long clubId) {
+        return beanMappingService.mapTo(teamService.getAllTeamsOfClub(new Manager(clubId)),
+                TeamDto.class);
+    }
 
-	@Override
-	public void assignExistingPlayerToTeam(Long pID, Long tID, int jerseyNumber) {
-		teamService.assignExistingPlayerToTeam(new Player(pID), new Team(tID), jerseyNumber);
-	}
+    @Override
+    public List<PlayerOfTeamDto> getPlayersOfTeam(Long teamId) {
+        List<PlayerOfTeamDto> players = new ArrayList<PlayerOfTeamDto>();
+        List<PlayerInfo> infos = teamService.getPlayerInfos(teamId);
+        PlayerOfTeamDto playerOfTeam;
+        for (PlayerInfo playerInfo : infos) {
+            playerOfTeam = new PlayerOfTeamDto();
+            playerOfTeam.setJerseyNumber(playerInfo.getJerseyNumber());
+            playerOfTeam.setPlayerInfoId(playerInfo.getId());
+            playerOfTeam.setPlayer(beanMappingService.mapTo(playerInfo.getPlayer(), PlayerDto.class));
+            players.add(playerOfTeam);
+        }
+        return players;
+    }
 
-	@Override
-	public void assignNewPlayerToTeam(Long pID, Long tID, int jerseyNumber) {
-		teamService.assignNewPlayerToTeam(new Player(pID), new Team(tID), jerseyNumber);
-	}
+    @Override
+    public void assignExistingPlayerToTeam(Long pID, Long tID, int jerseyNumber) {
+        teamService.assignExistingPlayerToTeam(new Player(pID), new Team(tID), jerseyNumber);
+    }
 
-	@Override
-	public void changeJerseyNumber(Long pID, Long tID, int jerseyNumber) {
-		teamService.changeJerseyNumber(new Player(pID), new Team(tID), jerseyNumber);
+    @Override
+    public void assignNewPlayerToTeam(Long pID, Long tID, int jerseyNumber) {
+        teamService.assignNewPlayerToTeam(new Player(pID), new Team(tID), jerseyNumber);
+    }
 
-	}
+    @Override
+    public void changeJerseyNumber(Long pID, Long tID, int jerseyNumber) {
+        teamService.changeJerseyNumber(new Player(pID), new Team(tID), jerseyNumber);
 
-	@Override
-	public void removePlayerFromTeam(Long playerInfoId) {
-		teamService.removePlayerFromTeam(new PlayerInfo(playerInfoId));
-	}
+    }
+
+    @Override
+    public void removePlayerFromTeam(Long playerInfoId) {
+        teamService.removePlayerFromTeam(new PlayerInfo(playerInfoId));
+    }
 
     @Override
     public boolean isJerseyNumberUnique(Long tID, int jerseyNumber) {

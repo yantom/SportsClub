@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +40,9 @@ import cz.muni.fi.pa165.sportsClub.service.TeamService;
 public class TeamServiceTest {
     @Mock
     TeamDao teamDao;
+
+    @Mock
+    ManagerDao managerDao;
 
     @Mock
     Team mockTeam;
@@ -169,5 +173,19 @@ public class TeamServiceTest {
         player1.setDateOfBirth(LocalDate.parse("2000-06-15"));
         team1.setCategory(Category.U13);
         teamService.assignNewPlayerToTeam(player1,team1,10);
+    }
+
+    @Test
+    public void isCategoryOfTeamUnique(){
+        List<Category> categories = new ArrayList<>();
+        categories.add(Category.U13);
+        categories.add(Category.U17);
+        team1.setManager(mockManager);
+        when(managerDao.getCategoriesOfTeams(mockManager)).thenReturn(categories);
+        boolean result = teamService.isCategoryOfTeamUnique(team1);
+        assertEquals(false, result);
+        team1.setCategory(Category.MEN);
+        result = teamService.isCategoryOfTeamUnique(team1);
+        assertEquals(true, result);
     }
 }
