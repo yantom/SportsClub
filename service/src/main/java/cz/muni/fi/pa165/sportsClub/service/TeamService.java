@@ -23,9 +23,7 @@ public interface TeamService {
 
 	List<PlayerInfo> getPlayerInfos(Long teamId);
 
-	void assignExistingPlayerToTeam(Player p, Team t, int jerseyNumber);
-
-	void assignNewPlayerToTeam(Player p, Team t, int jerseyNumber);
+	void assignPlayerToTeam(Player p, Team t, int jerseyNumber);
 
 	void changeJerseyNumber(Player p, Team t, int jerseyNumber);
 

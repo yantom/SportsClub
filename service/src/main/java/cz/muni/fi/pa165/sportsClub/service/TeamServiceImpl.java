@@ -120,37 +120,20 @@ public class TeamServiceImpl implements TeamService {
     }
 
 	@Override
-	public void assignExistingPlayerToTeam(Player p, Team t, int jerseyNumber) {
+	public void assignPlayerToTeam(Player p, Team t, int jerseyNumber) {
         if(!playerMeetsAgeLimit(p,t)){
             throw new IllegalArgumentException("Player does not match age criteria of team");
         }
         if(!teamDao.isJerseyNumberUnique(t,jerseyNumber)){
             throw new IllegalArgumentException("Jersey number is not unique in the team");
         }
-        PlayerInfo playerInfo = new PlayerInfo();
-        playerInfo.setPlayer(p);
-        playerInfo.setTeam(t);
-        playerInfo.setJerseyNumber(jerseyNumber);
-        try {
-            playerInfoDao.createPlayerInfo(playerInfo);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not assign player to team", e);
-        }
-    }
-
-	@Override
-	public void assignNewPlayerToTeam(Player p, Team t, int jerseyNumber) {
-        if(!playerMeetsAgeLimit(p,t)){
-            throw new IllegalArgumentException("Player does not match age criteria of team");
-        }
-        if(!teamDao.isJerseyNumberUnique(t, jerseyNumber)){
-            throw new IllegalArgumentException("Jersey number is not unique in the team");
+        if(p.getManager().equals(t.getManager())){
+            throw new IllegalArgumentException("You can't assign player to the team of different club");
         }
         PlayerInfo playerInfo = new PlayerInfo();
         playerInfo.setPlayer(p);
         playerInfo.setTeam(t);
         playerInfo.setJerseyNumber(jerseyNumber);
-		p.setManager(t.getManager());
         try {
             playerInfoDao.createPlayerInfo(playerInfo);
         } catch (Exception e) {

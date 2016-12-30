@@ -162,17 +162,10 @@ public class TeamServiceTest {
 	    }
 
     @Test(expected = IllegalArgumentException.class)
-    public void assignExistingPlayerToTeamTest(){
+    public void assignPlayerToTeamTest(){
         player1.setDateOfBirth(LocalDate.parse("2000-06-15"));
         team1.setCategory(Category.U13);
-        teamService.assignExistingPlayerToTeam(player1,team1,10);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void assignNewPlayerToTeamTest(){
-        player1.setDateOfBirth(LocalDate.parse("2000-06-15"));
-        team1.setCategory(Category.U13);
-        teamService.assignNewPlayerToTeam(player1,team1,10);
+        teamService.assignPlayerToTeam(player1,team1,10);
     }
 
     @Test

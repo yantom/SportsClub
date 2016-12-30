@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import cz.muni.fi.pa165.sportsClub.service.PlayerService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,9 @@ public class TeamFacadeImpl implements TeamFacade {
 
     @Inject
     private TeamService teamService;
+
+    @Inject
+    private PlayerService playerService;
 
     @Inject
     private BeanMappingService beanMappingService;
@@ -89,19 +93,26 @@ public class TeamFacadeImpl implements TeamFacade {
     }
 
     @Override
-    public void assignExistingPlayerToTeam(Long pID, Long tID, int jerseyNumber) {
-        teamService.assignExistingPlayerToTeam(new Player(pID), new Team(tID), jerseyNumber);
+    public void assignExistingPlayerToTeam(Long playerId, Long teamId, int jerseyNumber) {
+        Player player = playerService.getPlayerById(playerId);
+        Team team = teamService.getTeamById(teamId);
+        teamService.assignPlayerToTeam(player, team, jerseyNumber);
     }
 
     @Override
-    public void assignNewPlayerToTeam(Long pID, Long tID, int jerseyNumber) {
-        teamService.assignNewPlayerToTeam(new Player(pID), new Team(tID), jerseyNumber);
+    public void assignNewPlayerToTeam(PlayerDto newPlayer, Long teamId, int jerseyNumber) {
+        Team team = teamService.getTeamById(teamId);
+        Player player = beanMappingService.mapTo(newPlayer, Player.class);
+        player.setManager(team.getManager());
+        playerService.createPlayer(player);
+        teamService.assignPlayerToTeam(player, team, jerseyNumber);
     }
 
     @Override
-    public void changeJerseyNumber(Long pID, Long tID, int jerseyNumber) {
-        teamService.changeJerseyNumber(new Player(pID), new Team(tID), jerseyNumber);
-
+    public void changeJerseyNumber(Long playerId, Long teamId, int jerseyNumber) {
+        Player player = playerService.getPlayerById(playerId);
+        Team team = teamService.getTeamById(teamId);
+        teamService.changeJerseyNumber(player, team, jerseyNumber);
     }
 
     @Override
