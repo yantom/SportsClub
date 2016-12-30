@@ -59,6 +59,10 @@ public class Manager {
 	@Column(nullable = false)
 	private String password;
 
+	@NotNull
+	@Column(nullable = false)
+	private String role;
+
 	public Manager() {
 	}
 
@@ -120,6 +124,14 @@ public class Manager {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getRole() {
+		return this.role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public List<Team> getTeams() {
@@ -186,10 +198,12 @@ public class Manager {
 	}
 
 	public String toInsertStatement() {
-		return "INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName) VALUES (" + getId() + ","
+		return "INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName,role) VALUES (" + getId()
+				+ ","
 				+ DBEntityUtils.quote(getFirstName()) + "," + DBEntityUtils.quote(getLastName()) + ","
 				+ DBEntityUtils.quote(getEmail()) + "," + DBEntityUtils.quote(getMobile()) + ","
-				+ DBEntityUtils.quote(getPassword()) + "," + DBEntityUtils.quote(getClubName()) + ");"
+				+ DBEntityUtils.quote(getPassword()) + "," + DBEntityUtils.quote(getClubName()) + ","
+				+ DBEntityUtils.quote(getRole()) + ");"
 				+ System.lineSeparator();
 	}
 }

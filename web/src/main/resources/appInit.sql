@@ -1,7 +1,7 @@
---This script will not be overridden. Should be used in web application to load test data.
---Author: Jan Tomasek
-INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName) VALUES (10000,'0fname','0lname','0man@mail.com','+0','0password','0clubName');
-INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName) VALUES (10001,'1fname','1lname','1man@mail.com','+1','1password','1clubName');
+--This script has been created by createTestDataScript() method in TestDataUtils class.
+INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName,role) VALUES (666666,'adminfname','adminlname','admin@mail.com','+666666','adminpassword','all','admin');
+INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName,role) VALUES (10000,'0fname','0lname','0man@mail.com','+0','0password','0clubName','manager');
+INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName,role) VALUES (10001,'1fname','1lname','1man@mail.com','+1','1password','1clubName','manager');
 INSERT INTO Team (id,category,manager_id) VALUES (10002,0,10000);
 INSERT INTO Team (id,category,manager_id) VALUES (10003,1,10000);
 INSERT INTO Team (id,category,manager_id) VALUES (10004,2,10000);
@@ -50,3 +50,5 @@ INSERT INTO PlayerInfo (id,jerseyNumber,playerId,teamId) VALUES (10046,4,10021,1
 INSERT INTO PlayerInfo (id,jerseyNumber,playerId,teamId) VALUES (10047,5,10023,10008);
 INSERT INTO PlayerInfo (id,jerseyNumber,playerId,teamId) VALUES (10048,6,10025,10010);
 INSERT INTO PlayerInfo (id,jerseyNumber,playerId,teamId) VALUES (10049,7,10027,10007);
+INSERT INTO PlayerInfo (id,jerseyNumber,playerId,teamId) VALUES (10050,8,10029,10009);
+INSERT INTO PlayerInfo (id,jerseyNumber,playerId,teamId) VALUES (10051,9,10031,10011);

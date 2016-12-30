@@ -54,6 +54,13 @@
                 <configuration>
                     <path>/pa165</path>
                 </configuration>
+                <dependencies>
+      <dependency>
+        <groupId>org.apache.derby</groupId>
+        <artifactId>derby</artifactId>
+        <version>10.10.1.1</version>
+      </dependency>
+   </dependencies>
             </plugin>
         </plugins>
         <finalName>web</finalName>
