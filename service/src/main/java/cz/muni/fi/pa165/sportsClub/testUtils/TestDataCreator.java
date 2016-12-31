@@ -27,11 +27,19 @@ public class TestDataCreator {
 
 	private static Long nextId = 10000L;
 
+	/**
+	 * Creates .sql script with test data in src/test/resources folder.
+	 * 
+	 * @param countOfManagers
+	 * @param countOfPlayers
+	 * @throws IOException
+	 */
 	public static void createTestDataScript(int countOfManagers, int countOfPlayers) throws IOException {
 		StringBuilder script = new StringBuilder();
 		script.append(
-				"--This script will be overriden each time TestDataUtils createTestDataScript() is called. Serves for testing purposes."
+				"--This script has been created by createTestDataScript() method in TestDataUtils class."
 						+ System.lineSeparator());
+		createTestAdmin(script);
 		List<Manager> managers = createTestManagers(script, countOfManagers);
 		List<Team> teams = createTestTeams(script, managers);
 		List<Player> players = createTestPlayers(script, countOfPlayers, managers);
@@ -40,6 +48,20 @@ public class TestDataCreator {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
 			writer.write(script.toString());
 		}
+	}
+
+	public static Manager createTestAdmin(StringBuilder script) {
+		Manager admin = new Manager();
+		admin.setClubName("all");
+		admin.setId(666666L);
+		admin.setEmail("admin@mail.com");
+		admin.setFirstName("adminfname");
+		admin.setLastName("adminlname");
+		admin.setMobile("+666666");
+		admin.setPassword("adminpassword");
+		admin.setRole("admin");
+		script.append(admin.toInsertStatement());
+		return admin;
 	}
 
 	public static List<Manager> createTestManagers(StringBuilder script, int countOfManagers) {
@@ -55,6 +77,7 @@ public class TestDataCreator {
 			m.setLastName(i + "lname");
 			m.setMobile("+" + i + "");
 			m.setPassword(i + "password");
+			m.setRole("manager");
 			managers.add(m);
 			script.append(m.toInsertStatement());
 		}

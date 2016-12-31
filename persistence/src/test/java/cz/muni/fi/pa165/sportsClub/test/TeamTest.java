@@ -67,6 +67,7 @@ public class TeamTest {
 		testManager1.setLastName("man");
 		testManager1.setPassword("12345678");
 		testManager1.setClubName("sebranka");
+		testManager1.setRole("manager");
 		testTeam1 = new Team();
 		testTeam1.setCategory(Category.MEN);
 		testTeam1.setManager(testManager1);

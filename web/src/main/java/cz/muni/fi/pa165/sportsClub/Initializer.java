@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.sportsClub;
 
 import javax.servlet.Filter;
 
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -27,4 +28,13 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 		CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter("utf-8", true);
 		return new Filter[] { encodingFilter };
 	}
+	
+	@Override
+	public void onStartup(javax.servlet.ServletContext servletContext) throws javax.servlet.ServletException {
+		super.onStartup(servletContext);
+		servletContext.addListener(RequestContextListener.class);
+		servletContext.addListener(AppDataLoader.class);
+	}
+
+
 }

@@ -7,22 +7,30 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import javax.sql.DataSource;
 
-import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import cz.muni.fi.pa165.sportsClub.testUtils.ScriptRunner;
 
-@Component
-public class AppDataLoader {
+public class AppDataLoader implements ServletContextListener {
 
 	@Inject
 	DataSource ds;
 
-	@PostConstruct
-	public void contextDestroyed() {
+	@Override
+	public void contextDestroyed(ServletContextEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void contextInitialized(ServletContextEvent arg0) {
+		WebApplicationContextUtils.getRequiredWebApplicationContext(arg0.getServletContext())
+				.getAutowireCapableBeanFactory().autowireBean(this);
 		String baseMessage = "Problem to start the app: ";
 		String pathToSQLScript = "src/main/resources/appInit.sql";
 		try (Connection conn = ds.getConnection()) {

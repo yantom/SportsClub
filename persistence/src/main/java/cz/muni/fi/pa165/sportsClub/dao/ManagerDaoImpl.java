@@ -32,12 +32,12 @@ public class ManagerDaoImpl implements ManagerDao{
 		if(m == null){
 			throw new IllegalArgumentException("Argument can not be null");
 		}
+		m.setRole("manager");
 		em.persist(m);
 	}
 
 	@Override
 	public Manager getManagerById(Long id) {
-
 		return em.find(Manager.class, id);
 	}
 
@@ -59,6 +59,7 @@ public class ManagerDaoImpl implements ManagerDao{
 		Manager full = em.find(Manager.class, m.getId());
 		m.setPassword(full.getPassword());
 		m.setEmail(full.getEmail());
+		m.setRole(full.getRole());
 		em.merge(m);
 	}
 
@@ -86,7 +87,8 @@ public class ManagerDaoImpl implements ManagerDao{
 
 	@Override
 	public List<Manager> getAllManagers() {
-		return Collections.unmodifiableList(em.createQuery("SELECT m FROM Manager m", Manager.class).getResultList());
+		return Collections.unmodifiableList(
+				em.createQuery("SELECT m FROM Manager m where role='manager'", Manager.class).getResultList());
 	}
 
 	@Override
