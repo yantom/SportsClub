@@ -6,7 +6,7 @@ package cz.muni.fi.pa165.sportsClub.enums;
  * @author Andrej 410433
  */
 public enum Category {
-	MEN(Integer.MAX_VALUE), U19(19), U17(17), U15(15), U13(13);
+	MEN(200), U19(19), U17(17), U15(15), U13(13);
 
 	private int ageLimit;
 

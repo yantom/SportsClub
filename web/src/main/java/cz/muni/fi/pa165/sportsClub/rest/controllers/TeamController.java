@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import cz.muni.fi.pa165.sportsClub.dto.PlayerBasicInfoDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
 import org.springframework.http.HttpStatus;
@@ -55,5 +56,10 @@ public class TeamController {
 //                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
 //                    .body(e.getMessage());
 //        }
+    }
+
+    @RequestMapping(path = "/{teamId}/suitablePlayers", method = RequestMethod.GET)
+    public final List<PlayerBasicInfoDto> findSuitablePlayersForTeam(@PathVariable("teamId") long teamId){
+        return teamFacade.findSuitablePlayersForTeam(teamId);
     }
 }

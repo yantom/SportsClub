@@ -1,10 +1,13 @@
 package cz.muni.fi.pa165.sportsClub.service.facade;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import cz.muni.fi.pa165.sportsClub.dto.PlayerBasicInfoDto;
 import cz.muni.fi.pa165.sportsClub.service.PlayerService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -118,6 +121,22 @@ public class TeamFacadeImpl implements TeamFacade {
     @Override
     public void removePlayerFromTeam(Long playerInfoId) {
         teamService.removePlayerFromTeam(new PlayerInfo(playerInfoId));
+    }
+
+    @Override
+    public List<PlayerBasicInfoDto> findSuitablePlayersForTeam(Long teamId) {
+        Team team = teamService.getTeamById(teamId);
+        List<Player> suitablePlayers = teamService.findSuitablePlayersForTeam(team);
+        List<PlayerBasicInfoDto> players = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        for(Player suitablePlayer : suitablePlayers){
+            PlayerBasicInfoDto player = beanMappingService.mapTo(suitablePlayer, PlayerBasicInfoDto.class);
+            LocalDate birthday = suitablePlayer.getDateOfBirth();
+            int age = Period.between(birthday, today).getYears();
+            player.setAge(age);
+            players.add(player);
+        }
+        return players;
     }
 
     @Override

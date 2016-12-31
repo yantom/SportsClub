@@ -6,7 +6,7 @@
     </button>
 </h1>
     <div class="row" ng-repeat="team in teams">
-        <button style="width: 100px;" type="button" ng-click="getPlayersOfTeam(team.id)" class="btn btn-default">{{team.category}}</button>
+        <button style="width: 100px;" type="button" ng-click="getPlayersOfTeam(team)" class="btn btn-default">{{team.category}}</button>
         <button ng-click="deleteTeam(team.id)" type="submit" class="btn btn-danger">Delete</button>
     </div>
     <div class="row">
@@ -14,8 +14,8 @@
     </div>
 </div>
 <div class="col-sm-6">
-<h1>Players
-    <button type="button" class="btn btn-success" ng-click="addNewPlayer()">
+<h1>{{displayingTeam.category}} Roster
+    <button type="button" class="btn btn-success" ng-click="openSuitablePlayersModal()">
         <span class="glyphicon glyphicon-plus"></span>
     </button>
 </h1>

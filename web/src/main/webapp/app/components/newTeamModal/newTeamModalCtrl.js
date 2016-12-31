@@ -13,9 +13,7 @@ angular.module("sportsClub").controller('newTeamModalCtrl',function($scope, $uib
                 $scope.close({"new":true,"newTeam":team});
             },
             function(response){
-                //alert("error occured while creating team");
                 alert(response.status);
-                //console.log(response.status);
             }
         );
     }

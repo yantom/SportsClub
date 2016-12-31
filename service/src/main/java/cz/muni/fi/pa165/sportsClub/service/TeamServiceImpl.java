@@ -170,7 +170,7 @@ public class TeamServiceImpl implements TeamService {
         try {
 			return managerDao.getPlayersWithHigherDobThan(team.getManager(), ageLimitDate);
         } catch (Exception e) {
-            throw new DaoLayerException("can not obtain find suitable players for team", e);
+            throw new DaoLayerException("can not obtain suitable players for team", e);
         }
     }
 
