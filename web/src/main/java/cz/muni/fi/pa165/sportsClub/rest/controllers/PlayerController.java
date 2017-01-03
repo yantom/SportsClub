@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.sportsClub.rest.controllers;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
+import cz.muni.fi.pa165.sportsClub.exception.TokenValidationException;
 import cz.muni.fi.pa165.sportsClub.facade.PlayerFacade;
+import cz.muni.fi.pa165.sportsClub.service.AuthUtils;
 
 
 @RestController
@@ -26,9 +29,14 @@ public class PlayerController {
     @Inject
     private PlayerFacade playerFacade;
 
+	private static final String[] AUTHORIZED_ROLES = new String[] { "admin", "manager" };
+
 	@RequestMapping(value = "/{playerId}", method = RequestMethod.DELETE, produces = MediaType.TEXT_PLAIN_VALUE)
-	public final ResponseEntity deletePlayer(@PathVariable("playerId") long playerId) {
-        try {
+	public final ResponseEntity deletePlayer(@PathVariable("playerId") long playerId, HttpServletRequest hsr)
+			throws TokenValidationException {
+		String token = (hsr.getHeader("Authorization")).split(" ")[1];
+		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
+		try {
             playerFacade.deletePlayer(playerId);
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -41,28 +49,41 @@ public class PlayerController {
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public PlayerDto create(@Valid @RequestBody PlayerDto player) {
+	public PlayerDto create(@Valid @RequestBody PlayerDto player, HttpServletRequest hsr)
+			throws TokenValidationException {
+		String token = (hsr.getHeader("Authorization")).split(" ")[1];
+		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
         playerFacade.createPlayer(player);
         return player;
     }
 
     @RequestMapping(path = "/update", method = RequestMethod.PUT)
-    public void update(@Valid @RequestBody PlayerDto player) {
+	public void update(@Valid @RequestBody PlayerDto player, HttpServletRequest hsr) throws TokenValidationException {
+		String token = (hsr.getHeader("Authorization")).split(" ")[1];
+		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
         playerFacade.updatePlayer(player);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public PlayerDto findById(@PathVariable("id") long id) {
+	public PlayerDto findById(@PathVariable("id") long id, HttpServletRequest hsr) throws TokenValidationException {
+		String token = (hsr.getHeader("Authorization")).split(" ")[1];
+		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
         return playerFacade.getPlayerById(id);
     }
 
     @RequestMapping(path = "/findall/{id}", method = RequestMethod.GET)
-    public List<PlayerDto> findAll(@PathVariable("id") long id) {
+	public List<PlayerDto> findAll(@PathVariable("id") long id, HttpServletRequest hsr)
+			throws TokenValidationException {
+		String token = (hsr.getHeader("Authorization")).split(" ")[1];
+		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
         return playerFacade.getAllPlayersOfClub(id);
     }
 
     @RequestMapping(path = "/find", method = RequestMethod.POST)
-    public PlayerDto findByEmail(@RequestParam("name") String email) {
+	public PlayerDto findByEmail(@RequestParam("name") String email, HttpServletRequest hsr)
+			throws TokenValidationException {
+		String token = (hsr.getHeader("Authorization")).split(" ")[1];
+		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
         return playerFacade.getPlayerByEmail(email);
     }
 

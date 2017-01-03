@@ -61,6 +61,7 @@ public class ManagerTest {
 		manager.setPassword("12345");
 		manager.setMobile("0907123456");
 		manager.setClubName("Sparta Praha");
+		manager.setRole("manager");
 
 		player1 = new Player();
 		player1.setEmail("onassis@gmail.com");
@@ -128,6 +129,7 @@ public class ManagerTest {
 		manager2.setPassword("212345");
 		manager2.setMobile("20907123456");
 		manager2.setClubName(manager.getClubName());
+		manager2.setRole("manager");
 		managerDao.createManager(manager2);
 	}
 

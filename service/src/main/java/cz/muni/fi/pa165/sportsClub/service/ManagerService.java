@@ -7,7 +7,7 @@ import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
 public interface ManagerService {
-	void createManager(Manager m);
+	Manager createManager(Manager m);
 
 	void updateManager(Manager m);
 
@@ -18,6 +18,8 @@ public interface ManagerService {
 	Manager getManagerByEmail(String email);
 
 	Manager getManagerByClubName(String clubName);
+
+	Manager authenticate(String email, String password);
 
 	List<Player> getFreePlayersOfClub(Manager m);
 

@@ -44,6 +44,7 @@ public class PlayerTest {
 		manager.setLastName("last");
 		manager.setMobile("002");
 		manager.setPassword("sdfsdfsdf");
+		manager.setRole("manager");
 		managerDao.createManager(manager);
 
 		player1 = new Player();

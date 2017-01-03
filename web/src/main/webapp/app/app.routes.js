@@ -16,7 +16,10 @@ angular.module('sportsClub').config(function($stateProvider, $urlRouterProvider)
         .state('manager', {
             url: '/manager',
             templateUrl: 'app/components/managerBoard/managerBoard.html',
-            controller: "managerBoardCtrl"
+            controller: "managerBoardCtrl",
+            params: {
+                managerId: null
+            }
         });
 	$urlRouterProvider.otherwise("/home");
 });

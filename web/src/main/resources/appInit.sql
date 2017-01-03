@@ -1,7 +1,10 @@
 --This script has been created by createTestDataScript() method in TestDataUtils class.
-INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName,role) VALUES (666666,'adminfname','adminlname','admin@mail.com','+666666','adminpassword','all','admin');
-INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName,role) VALUES (10000,'0fname','0lname','0man@mail.com','+0','0password','0clubName','manager');
-INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName,role) VALUES (10001,'1fname','1lname','1man@mail.com','+1','1password','1clubName','manager');
+INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName,role) VALUES (666666,'adminfname','adminlname','admin@mail.com','+666666','MOrHTbpoicizcJSny0xbOB94u8VC1BTBh6VxrKp1DXA/PzMx6GS+0lIqRFwxpNsU7YxXqInwtB/4SShJdJL/rQ==','all','admin');
+--password in open form: adminpassword
+INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName,role) VALUES (10000,'0fname','0lname','0man@mail.com','+0','Bk4jW8fpibUJVJRUaomfvF8RDj1AmQWUyOxNw3OWLWU8LmBFD8V61WEvGr8N/JNkHBzrGwBRfg/Cy/6nGo/nFQ==','0clubName','manager');
+--password in open form: 0password
+INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName,role) VALUES (10001,'1fname','1lname','1man@mail.com','+1','9Pvii35GAD41nV36dlVMnneYU1o688Y7WvHMAaOIoJ6mV1D0Bf7RLolCLOkGu2VMOsXMx1dJLhowC+lV5/qv7A==','1clubName','manager');
+--password in open form: 1password
 INSERT INTO Team (id,category,manager_id) VALUES (10002,0,10000);
 INSERT INTO Team (id,category,manager_id) VALUES (10003,1,10000);
 INSERT INTO Team (id,category,manager_id) VALUES (10004,2,10000);

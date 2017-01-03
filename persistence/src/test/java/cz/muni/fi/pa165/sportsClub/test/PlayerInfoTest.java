@@ -60,6 +60,7 @@ public class PlayerInfoTest {
 		testManager1.setLastName("man");
 		testManager1.setPassword("12345678");
 		testManager1.setClubName("sebranka");
+		testManager1.setRole("manager");
 
 		testPlayer1 = new Player();
 		testPlayer1.setDateOfBirth(LocalDate.of(1994, 5, 30));

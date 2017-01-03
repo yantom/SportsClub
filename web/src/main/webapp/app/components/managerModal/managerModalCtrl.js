@@ -8,8 +8,9 @@ angular.module("sportsClub").controller('managerModalCtrl',function($scope, $uib
             "email":null,
             "password":null,
             "mobile":null,
-            "clubName":null
-        }
+            "clubName":null,
+            "role":"manager"
+            }
     }
     else{
         $scope.data = angular.copy(data);

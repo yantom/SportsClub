@@ -19,7 +19,7 @@ public interface ManagerDao {
 	 * 
 	 * @param manager
 	 */
-	void createManager(Manager manager);
+	Manager createManager(Manager manager);
 
 	/**
 	 * Updates manager entity in database.

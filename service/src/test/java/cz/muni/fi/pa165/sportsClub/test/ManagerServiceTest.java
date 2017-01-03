@@ -167,6 +167,7 @@ public class ManagerServiceTest {
         playerInfos.add(playerInfo);
 
         when(managerDao.getFreePlayers(mockManager)).thenReturn(freePlayers);
+		when(mockManager.getPassword()).thenReturn("somepass");
         managerService.createManager(mockManager);
 
         List<Player> returnedFreePlayers = managerService.getFreePlayersOfClub(mockManager);

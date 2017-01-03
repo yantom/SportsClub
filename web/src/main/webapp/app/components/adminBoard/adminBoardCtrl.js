@@ -17,11 +17,6 @@ angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibMo
             }
         );
     }
-    
-    $scope.redirect = function(){
-        var redirectUrl =  "/manager";
-        $location.path(redirectUrl);
-    }
 
     $scope.openManagerModal = function(managerData){
         var modalInstance = $uibModal.open({

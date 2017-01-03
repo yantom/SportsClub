@@ -1,16 +1,16 @@
 "use strict";
 angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $http, $uibModal, $stateParams) {
-        $scope.managers;
         $scope.playerInfos;
         $scope.teams;
-        $scope.notCreatedTeams;
         $scope.displayingTeam;
         $scope.suitablePlayers;
 
         $scope.displayingFree = false;
-        //$scope.loggedManagerId = $stateParams;
-        //temporary
-        $scope.loggedManagerId = 10000;
+    if($stateParams.managerId !=null){
+    	$scope.managerId = $stateParams.managerId;
+    }
+    else
+    	$scope.managerId = sessionStorage.getItem('userId');
 
         var getTeams = function (managerId) {
             $http.get(restInterface + "/manager/" + managerId + "/teams").then(
@@ -22,7 +22,7 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
                 });
         }
         $scope.getFreePlayersOfClub = function () {
-            $http.get(restInterface + '/manager/' + $scope.loggedManagerId + '/freePlayers').then(
+        $http.get(restInterface + '/manager/' + $scope.managerId + '/freePlayers').then(
                 function (response) {
                     $scope.displayingFree = true;
                     $scope.displayingTeamI = null;
@@ -98,16 +98,6 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
             alert("edit");
         }
 
-        var loadNotCreatedTeams = function (managerId) {
-            $http.get(restInterface + "/manager/" + managerId + "/freeTeams").then(
-                function (response) {
-                    $scope.notCreatedTeams = response.data;
-                },
-                function (err) {
-                    alert("error sending http request");
-                });
-        }
-
         var loadSuitablePlayers = function (teamId) {
             $http.get(restInterface + "/team/" + teamId + "/suitablePlayers").then(
                 function (response) {
@@ -119,29 +109,33 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
         }
 
         $scope.openNewTeamModal = function () {
-            loadNotCreatedTeams($scope.loggedManagerId);
-            if ($scope.notCreatedTeams.length == 0) {
-                alert("You have teams for all possible categories");
-            }
-            else {
-                var modalInstance = $uibModal.open({
-                    templateUrl: 'app/components/newTeamModal/newTeamModal.html',
-                    controller: 'newTeamModalCtrl',
-                    resolve: {
-                        notCreatedTeams: function () {
-                            return $scope.notCreatedTeams;
+        $http.get(restInterface + "/manager/" + $scope.managerId + "/freeTeams").then(
+                function (response) {
+                    if (response.data.length == 0) {
+                        alert("You have teams for all possible categories");
+                        return;
+                    }
+                    var modalInstance = $uibModal.open({
+                        templateUrl: 'app/components/newTeamModal/newTeamModal.html',
+                        controller: 'newTeamModalCtrl',
+                        resolve: {
+                            notCreatedTeams: function () {
+                                return response.data;
+                            }
                         }
-                    }
+                    });
+                    modalInstance.result.then(function (updatedData) {
+                        if(updatedData.new==true){
+                            $scope.teams.push(updatedData.newTeam);
+                        }
+                    }, function (err) {
+                    	$scope.handleErrors(err);
+                    });
+                },
+                function (err) {
+                	$scope.handleErrors(err);
                 });
-                modalInstance.result.then(function (updatedData) {
-                    if (updatedData.new == true) {
-                        $scope.teams.push(updatedData.newTeam);
-                    }
-                }, function () {
-                });
-            }
         }
-
         $scope.openSuitablePlayersModal = function () {
             if ($scope.displayingTeam == null) {
                 alert("First, You have to select team")
@@ -167,7 +161,7 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
         }
 
         var init = function () {
-            getTeams($scope.loggedManagerId);
+            getTeams($scope.managerId);
         }
 
         init();

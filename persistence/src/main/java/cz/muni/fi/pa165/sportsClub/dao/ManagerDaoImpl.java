@@ -9,10 +9,10 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import cz.muni.fi.pa165.sportsClub.enums.Category;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import cz.muni.fi.pa165.sportsClub.enums.Category;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
@@ -28,12 +28,12 @@ public class ManagerDaoImpl implements ManagerDao{
 	private EntityManager em;
 
 	@Override
-	public void createManager(Manager m) {
+	public Manager createManager(Manager m) {
 		if(m == null){
 			throw new IllegalArgumentException("Argument can not be null");
 		}
-		m.setRole("manager");
 		em.persist(m);
+		return m;
 	}
 
 	@Override

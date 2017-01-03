@@ -63,6 +63,7 @@ public class ManagerFacadeIntegrationTest {
 		c.setLastName("last");
 		c.setMobile("005686");
 		c.setPassword("password");
+		c.setRole("manager");
 		managerFacade.createManager(c);
 		assertNotNull(c.getId());
 	}
