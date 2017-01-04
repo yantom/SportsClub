@@ -7,11 +7,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import cz.muni.fi.pa165.sportsClub.dto.PlayerBasicInfoDto;
-import cz.muni.fi.pa165.sportsClub.service.PlayerService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cz.muni.fi.pa165.sportsClub.dto.PlayerBasicInfoDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerOfTeamDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
@@ -22,6 +21,7 @@ import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
 import cz.muni.fi.pa165.sportsClub.service.BeanMappingService;
+import cz.muni.fi.pa165.sportsClub.service.PlayerService;
 import cz.muni.fi.pa165.sportsClub.service.TeamService;
 
 @Transactional
@@ -46,6 +46,8 @@ public class TeamFacadeImpl implements TeamFacade {
         else {
             teamService.createTeam(teamEntity);
         }
+		t.setId(teamEntity.getId());
+
     }
 
     @Override

@@ -7,10 +7,10 @@ angular.module("sportsClub").controller('newTeamModalCtrl',function($scope, $uib
     }
 
     $scope.createNewTeam = function(team){
-        $http.post(restInterface + '/team/create',team).then(
+        $http.post(restInterface + '/team',team).then(
             function(response){
                 alert("Team created");
-                $scope.close({"new":true,"newTeam":team});
+                $scope.close({"new":true,"newTeam":response.data});
             },
             function(response){
                 alert(response.status);

@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="col-sm-6">
-<h1>{{displayingTeam.category}} Roster
+<h1 style="display: inline-block;"><span ng-if="displayingTeam!=null">{{displayingTeam.category}} Roster</span><span ng-if="displayingTeam==null">Free Players</span>
     <button type="button" class="btn btn-success" ng-click="openSuitablePlayersModal()">
         <span class="glyphicon glyphicon-plus"></span>
     </button>

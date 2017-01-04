@@ -25,7 +25,7 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
         $http.get(restInterface + '/manager/' + $scope.managerId + '/freePlayers').then(
                 function (response) {
                     $scope.displayingFree = true;
-                    $scope.displayingTeamI = null;
+                    $scope.displayingTeam = null;
                     $scope.playerInfos = response.data;
                 },
                 function (err) {
@@ -136,6 +136,7 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
                 	$scope.handleErrors(err);
                 });
         }
+
         $scope.openSuitablePlayersModal = function () {
             if ($scope.displayingTeam == null) {
                 alert("First, You have to select team")
@@ -162,6 +163,7 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
 
         var init = function () {
             getTeams($scope.managerId);
+            $scope.getFreePlayersOfClub();
         }
 
         init();

@@ -3,18 +3,23 @@ package cz.muni.fi.pa165.sportsClub.rest.controllers;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 
-import cz.muni.fi.pa165.sportsClub.dto.PlayerBasicInfoDto;
-import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
-import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import cz.muni.fi.pa165.sportsClub.dto.PlayerBasicInfoDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerOfTeamDto;
+import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
+import cz.muni.fi.pa165.sportsClub.exception.TokenValidationException;
 import cz.muni.fi.pa165.sportsClub.facade.TeamFacade;
+import cz.muni.fi.pa165.sportsClub.service.AuthUtils;
 
 
 @RestController
@@ -44,18 +49,12 @@ public class TeamController {
         }
     }
 
-    @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public final void create(@RequestBody TeamDto team) {
-       // try {
-            teamFacade.createTeam(team);
-//            return ResponseEntity
-//                    .status(HttpStatus.CREATED)
-//                    .body("Team was successfully created");
-//        } catch (Exception e) {
-//            return ResponseEntity
-//                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(e.getMessage());
-//        }
+	@RequestMapping(method = RequestMethod.POST)
+	public final TeamDto create(@RequestBody TeamDto team, HttpServletRequest hsr) throws TokenValidationException {
+		String token = (hsr.getHeader("Authorization")).split(" ")[1];
+		AuthUtils.authorizeRestCall(token, "manager", "admin");
+		teamFacade.createTeam(team);
+		return team;
     }
 
     @RequestMapping(path = "/{teamId}/suitablePlayers", method = RequestMethod.GET)
