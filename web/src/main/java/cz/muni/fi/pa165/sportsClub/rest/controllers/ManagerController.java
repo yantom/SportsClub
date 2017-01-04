@@ -67,7 +67,7 @@ public class ManagerController {
 	}
 
 	/**
-	 * returns null if no manager was found
+	 * returns null if no manager with corresponding credentials is found
 	 * 
 	 * @param credentials
 	 * @return

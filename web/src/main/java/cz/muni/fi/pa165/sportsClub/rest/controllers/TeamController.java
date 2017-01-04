@@ -29,14 +29,21 @@ public class TeamController {
     @Inject
     private TeamFacade teamFacade;
 
+	private static final String[] AUTHORIZED_ROLES = new String[] { "admin", "manager" };
+
     @RequestMapping(path = "/{teamId}/players", method = RequestMethod.GET)
-    public final List<PlayerOfTeamDto> getplayers(@PathVariable("teamId") long teamId) {
-        System.out.println(teamFacade.getPlayersOfTeam(teamId).size());
+	public final List<PlayerOfTeamDto> getplayers(@PathVariable("teamId") long teamId, HttpServletRequest hsr)
+			throws TokenValidationException {
+		String token = (hsr.getHeader("Authorization")).split(" ")[1];
+		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
         return teamFacade.getPlayersOfTeam(teamId);
     }
 
     @RequestMapping(value = "/{teamId}", method = RequestMethod.DELETE, produces = MediaType.TEXT_PLAIN_VALUE)
-    public final ResponseEntity deleteTeam(@PathVariable("teamId") long teamId) {
+	public final ResponseEntity deleteTeam(@PathVariable("teamId") long teamId, HttpServletRequest hsr)
+			throws TokenValidationException {
+		String token = (hsr.getHeader("Authorization")).split(" ")[1];
+		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
         try {
             teamFacade.deleteTeam(teamId);
             return ResponseEntity
@@ -52,13 +59,16 @@ public class TeamController {
 	@RequestMapping(method = RequestMethod.POST)
 	public final TeamDto create(@RequestBody TeamDto team, HttpServletRequest hsr) throws TokenValidationException {
 		String token = (hsr.getHeader("Authorization")).split(" ")[1];
-		AuthUtils.authorizeRestCall(token, "manager", "admin");
+		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
 		teamFacade.createTeam(team);
 		return team;
     }
 
     @RequestMapping(path = "/{teamId}/suitablePlayers", method = RequestMethod.GET)
-    public final List<PlayerBasicInfoDto> findSuitablePlayersForTeam(@PathVariable("teamId") long teamId){
+	public final List<PlayerBasicInfoDto> findSuitablePlayersForTeam(@PathVariable("teamId") long teamId,
+			HttpServletRequest hsr) throws TokenValidationException {
+		String token = (hsr.getHeader("Authorization")).split(" ")[1];
+		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
         return teamFacade.findSuitablePlayersForTeam(teamId);
     }
 }
