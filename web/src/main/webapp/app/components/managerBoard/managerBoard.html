@@ -36,7 +36,7 @@
             <td>{{playerInfo.player.firstName}}</td>
             <td>{{playerInfo.player.lastName}}</td>
             <td>
-                <button ng-click="editPlayer()" type="submit" class="btn btn-primary">Edit</button>
+                <button ng-click="editPlayer(playerInfo.player)" type="submit" class="btn btn-primary">Edit</button>
             </td>
             <td>
                 <button ng-click="removePlayerFromRoster(playerInfo.playerInfoId)" type="submit" class="btn btn-primary">Remove</button>
