@@ -11,11 +11,18 @@ angular.module('sportsClub').run(function($rootScope,$state) {
 	}
 	$rootScope.handleErrors = function(response){
 		switch(response.status){
-			case 403:
+			case 401:
+				alert("Unauthorized call: you will be log out.");
 				$rootScope.logout();
 				break;
+			case 404:
+				alert("Requested resource was not found in our database.");
+				break;
+			case 409:
+				alert("Data conflict. Maybe the email/phone number you have entered is already assigned to some other person.");
+				break;
 			case 500:
-				alert("Error occured on the server side.");
+				alert("Oops. Error occured on the server side. Please try again later.");
 				break;
 			default:
 				alert("Internet connection problem.");

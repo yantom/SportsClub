@@ -12,8 +12,8 @@ angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibMo
                     }
                 }
             },
-            function(){
-                alert("error occured while deleting manager");
+            function(err){
+            	$scope.handleErrors(err);
             }
         );
     }
@@ -49,7 +49,7 @@ angular.module("sportsClub").controller('adminBoardCtrl',function($scope, $uibMo
                 $scope.managers = response.data;
             },
             function(err) {
-                alert("error occured while retrieving all managers");
+            	$scope.handleErrors(err);
             }
         );
     }

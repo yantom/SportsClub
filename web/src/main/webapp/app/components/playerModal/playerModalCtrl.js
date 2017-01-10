@@ -38,7 +38,7 @@ angular.module("sportsClub").controller('playerModalCtrl', function ($scope, $ht
                     $scope.teams = response.data;
                 },
                 function (err) {
-                    alert("error sending http request");
+                	$scope.handleErrors(err);
                 });
     }
 
@@ -116,8 +116,8 @@ angular.module("sportsClub").controller('playerModalCtrl', function ($scope, $ht
                     alert("Player created");
                     $scope.close({"new":false,"data":response.data});
                 },
-                function () {
-                    alert("error occured while creating player");
+                function (err) {
+                	$scope.handleErrors(err);
                 }
         );
     }
@@ -128,8 +128,8 @@ angular.module("sportsClub").controller('playerModalCtrl', function ($scope, $ht
                 alert("Player updated");
                 $scope.close({"new":false,"data":response.data});
             },
-            function(){
-                alert("error occured while updating player");
+            function(err){
+            	$scope.handleErrors(err);
             }
         );
     }

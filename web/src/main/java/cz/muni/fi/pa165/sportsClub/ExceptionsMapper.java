@@ -1,17 +1,18 @@
-package cz.muni.fi.pa165.sportsClub.rest.exceptionHandling;
+package cz.muni.fi.pa165.sportsClub;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import cz.muni.fi.pa165.sportsClub.exception.SportClubsRuntimeException;
 import cz.muni.fi.pa165.sportsClub.exception.TokenValidationException;
 
 @ControllerAdvice
-class SportsClubRuntimeExceptionMapper {
+class ExceptionsMapper {
 	
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(SportClubsRuntimeException.class)

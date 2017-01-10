@@ -61,7 +61,6 @@ public class ManagerDaoImpl implements ManagerDao{
 		if(full == null)
 			throw new EmptyResultDataAccessException("manager with id: " + m.getId() + " not found",1);
 		m.setPassword(full.getPassword());
-		m.setEmail(full.getEmail());
 		m.setRole(full.getRole());
 		em.merge(m);
 	}

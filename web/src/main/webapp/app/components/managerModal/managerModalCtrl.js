@@ -43,8 +43,8 @@ angular.module("sportsClub").controller('managerModalCtrl',function($scope, $uib
                 alert("Manager created");
                 $scope.close({"new":true,"data":response.data});
             },
-            function(){
-                alert("error occured while creating manager");
+            function(err){
+            	$scope.handleErrors(err);
             }
         );
     }
@@ -55,8 +55,8 @@ angular.module("sportsClub").controller('managerModalCtrl',function($scope, $uib
                 alert("Manager updated");
                 $scope.close({"new":false,"data":response.data});
             },
-            function(){
-                alert("error occured while updating manager");
+            function(err){
+            	$scope.handleErrors(err);
             }
         );
     }

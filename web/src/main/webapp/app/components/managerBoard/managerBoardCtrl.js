@@ -17,7 +17,7 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
                     $scope.teams = response.data;
                 },
                 function (err) {
-                    alert("error sending http request");
+                	$scope.handleErrors(err);
                 });
     }
     $scope.getFreePlayersOfClub = function () {
@@ -28,7 +28,7 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
                     $scope.playerInfos = response.data;
                 },
                 function (err) {
-                    alert("error sending http request");
+                	$scope.handleErrors(err);
                 });
     }
 
@@ -40,7 +40,7 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
                     $scope.playerInfos = response.data;
                 },
                 function (err) {
-                    alert("error sending http request");
+                	$scope.handleErrors(err);
                 });
     }
 
@@ -55,8 +55,8 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
                         }
                     }
                 },
-                function () {
-                    alert("error sending http request");
+                function (err) {
+                	$scope.handleErrors(err);
                 });
     }
 
@@ -72,7 +72,7 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
                     }
                 },
                 function (err) {
-                    alert("error sending http request");
+                	$scope.handleErrors(err);
                 });
     }
 
@@ -89,7 +89,7 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
                     }
                 },
                 function (err) {
-                    alert("error sending http request");
+                	$scope.handleErrors(err);
                 });
     }
 
@@ -123,7 +123,7 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
                     $scope.suitablePlayers = response.data;
                 },
                 function (err) {
-                    alert("error sending http request");
+                	$scope.handleErrors(err);
                 });
     }
 

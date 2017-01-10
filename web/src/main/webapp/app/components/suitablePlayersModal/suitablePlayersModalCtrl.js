@@ -13,8 +13,8 @@ angular.module("sportsClub").controller('suitablePlayersModalCtrl',function($sco
                 alert("Player added in the roster");
                 $scope.close({"new":true,"newPlayer":player});
             },
-            function(response){
-                alert(response.status);
+            function(err){
+            	$scope.handleErrors(err);
             }
         );
     }
