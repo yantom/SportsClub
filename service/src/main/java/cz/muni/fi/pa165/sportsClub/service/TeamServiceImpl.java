@@ -12,7 +12,6 @@ import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerInfoDao;
 import cz.muni.fi.pa165.sportsClub.dao.TeamDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
-import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
@@ -31,83 +30,51 @@ public class TeamServiceImpl implements TeamService {
 
 	@Override
 	public void createTeam(Team t) {
-        try {
-            teamDao.createTeam(t);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not create team", e);
-        }
+        teamDao.createTeam(t);
     }
 
     @Override
     public boolean isCategoryOfTeamUnique(Team team) {
-	    try {
-            List<Category> categories = managerDao.getCategoriesOfTeams(team.getManager());
-            return !categories.contains(team.getCategory());
-        } catch (Exception e) {
-            throw new DaoLayerException("can not obtain if category of team is unique", e);
-        }
+        List<Category> categories = managerDao.getCategoriesOfTeams(team.getManager());
+        return !categories.contains(team.getCategory());
     }
 
 	@Override
 	public void updateTeam(Team t) {
-        try {
-            teamDao.updateTeam(t);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not update team", e);
-        }
+        teamDao.updateTeam(t);
     }
 
 	@Override
 	public void deleteTeam(Team t) {
-        try {
-            teamDao.deleteTeam(t);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not delete team", e);
-        }
+        teamDao.deleteTeam(t);
     }
 
 	@Override
 	public Team getTeamById(Long teamId) {
-        try {
-            return teamDao.getTeamById(teamId);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not find team by id", e);
-        }
+        return teamDao.getTeamById(teamId);
     }
 
 	@Override
 	public Team getTeamOfClubByCategory(Category category, Manager m) {
-        try {
-			List<Team> teams = m.getTeams();
-            for (Team team : teams) {
-                if (team.getCategory().equals(category)) {
-                    return team;
-                }
+		List<Team> teams = m.getTeams();
+        for (Team team : teams) {
+            if (team.getCategory().equals(category)) {
+                return team;
             }
-            return null;
-        } catch (Exception e) {
-			throw new DaoLayerException("can not find team of manager by category", e);
         }
+        return null;
     }
 
 	@Override
 	public List<Team> getAllTeamsOfClub(Manager m) {
-        try {
-			return m.getTeams();
-        } catch (Exception e) {
-			throw new DaoLayerException("can not obtain all teams of manager", e);
-        }
+		return m.getTeams();
     }
 
 	@Override
 	public List<PlayerInfo> getPlayerInfos(Long teamId) {
-        try {
-            Team team = teamDao.getTeamById(teamId);
-            team.getPlayerInfos().size();
-            return team.getPlayerInfos();
-        } catch (Exception e) {
-            throw new DaoLayerException("can not obtain players infos", e);
-        }
+        Team team = teamDao.getTeamById(teamId);
+        team.getPlayerInfos().size();
+        return team.getPlayerInfos();
     }
 
     private boolean playerMeetsAgeLimit(Player player, Team team){
@@ -134,11 +101,7 @@ public class TeamServiceImpl implements TeamService {
         playerInfo.setPlayer(p);
         playerInfo.setTeam(t);
         playerInfo.setJerseyNumber(jerseyNumber);
-        try {
-            playerInfoDao.createPlayerInfo(playerInfo);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not assign player to team", e);
-        }
+        playerInfoDao.createPlayerInfo(playerInfo);
     }
 
 	@Override
@@ -146,20 +109,12 @@ public class TeamServiceImpl implements TeamService {
         if(!teamDao.isJerseyNumberUnique(t,newjerseyNumber)){
             throw new IllegalArgumentException("Jersey number is not unique in the team");
         }
-        try {
-            playerInfoDao.changeJerseyNumber(t, p, newjerseyNumber);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not change jarsey number", e);
-        }
+        playerInfoDao.changeJerseyNumber(t, p, newjerseyNumber);
     }
 
 	@Override
 	public void removePlayerFromTeam(PlayerInfo pi) {
-        try {
-			playerInfoDao.deletePlayerInfo(pi);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not remove player from team", e);
-        }
+		playerInfoDao.deletePlayerInfo(pi);
     }
 
     @Override
@@ -167,19 +122,11 @@ public class TeamServiceImpl implements TeamService {
         LocalDate today = LocalDate.now();
         int ageLimit = team.getCategory().getAgeLimit();
         LocalDate ageLimitDate = today.minusYears(ageLimit);
-        try {
-			return managerDao.getPlayersWithHigherDobThan(team.getManager(), ageLimitDate);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not obtain suitable players for team", e);
-        }
+		return managerDao.getPlayersWithHigherDobThan(team.getManager(), ageLimitDate);
     }
 
     @Override
     public boolean isJerseyNumberUnique(Team team, int jerseyNumber) {
-        try {
-            return teamDao.isJerseyNumberUnique(team, jerseyNumber);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not tell if team contains this jerseyNumber", e);
-        }
+        return teamDao.isJerseyNumberUnique(team, jerseyNumber);
     }
 }

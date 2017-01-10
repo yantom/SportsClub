@@ -13,6 +13,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -26,7 +27,9 @@ public class PersistenceApplicationContext {
 	
 	@Bean
 	public JpaTransactionManager transactionManager() {
-		return new JpaTransactionManager(entityManagerFactory().getObject());
+		JpaTransactionManager transactionManager = new JpaTransactionManager(entityManagerFactory().getObject());
+		transactionManager.setJpaDialect(new HibernateJpaDialect());
+		return transactionManager;
 	}
 	
 	/**

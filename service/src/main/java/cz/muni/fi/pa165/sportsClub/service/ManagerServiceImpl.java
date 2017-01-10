@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
-import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
@@ -24,104 +23,64 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
 	public Manager createManager(Manager m) {
 		m.setPassword(AuthUtils.computeHash(m.getPassword()));
-		try {
-			managerDao.createManager(m);
-			return m;
-		} catch (Exception e) {
-			throw new DaoLayerException("can not create manager", e);
-		}
+		managerDao.createManager(m);
+		return m;
 	}
 
 	@Override
 	public void updateManager(Manager m) {
-		try {
-			managerDao.updateManager(m);
-		} catch (Exception e) {
-			throw new DaoLayerException("can not update manager", e);
-		}
+		managerDao.updateManager(m);
 	}
 
 	@Override
 	public void deleteManager(Manager m) {
-		try {
-			managerDao.deleteManager(m);
-		} catch (Exception e) {
-			throw new DaoLayerException("can not delete manager", e);
-		}
+		managerDao.deleteManager(m);
 	}
 
 	@Override
 	public Manager getManagerById(Long managerId) {
-		try {
-			return managerDao.getManagerById(managerId);
-		} catch (Exception e) {
-			throw new DaoLayerException("can not find manager by id", e);
-		}
+		return managerDao.getManagerById(managerId);
 	}
 
 	@Override
 	public Manager getManagerByEmail(String email) {
-		try {
-			return managerDao.getManagerByEmail(email);
-		} catch (Exception e) {
-			throw new DaoLayerException("can not find manager by email", e);
-		}
+		return managerDao.getManagerByEmail(email);
 	}
 
 	@Override
 	public Manager getManagerByClubName(String clubName) {
-		try {
-			return managerDao.getManagerByClubName(clubName);
-		} catch (Exception e) {
-			throw new DaoLayerException("can not find manager by clubName", e);
-		}
+		return managerDao.getManagerByClubName(clubName);
 	}
 
 	@Override
 	public List<Player> getFreePlayersOfClub(Manager m) {
-		try {
-			return managerDao.getFreePlayers(m);
-		} catch (Exception e) {
-			throw new DaoLayerException("can not obtain free players of manager", e);
-		}
+		return managerDao.getFreePlayers(m);
 	}
 
 	@Override
 	public List<Manager> getAllManagers() {
-		try {
-			return managerDao.getAllManagers();
-		} catch (Exception e) {
-			throw new DaoLayerException("can not obtain all managers", e);
-		}
+		return managerDao.getAllManagers();
 	}
 
 	@Override
 	public List<Team> getNotCreatedTeamsOfManager(Manager m) {
-		try {
-			List<Category> categoriesOfCreatedTeams =  managerDao.getCategoriesOfTeams(m);
-			List<Category> allCategories = new ArrayList(Arrays.asList(Category.values()));
-			allCategories.removeAll(categoriesOfCreatedTeams);
-			List<Team>notAlreadyCreatedTeams = new ArrayList<>();
-			for(Category category : allCategories){
-				Team team = new Team();
-				team.setCategory(category);
-				team.setManager(m);
-				notAlreadyCreatedTeams.add(team);
-			}
-			return notAlreadyCreatedTeams;
-		} catch (Exception e) {
-			throw new DaoLayerException("can not obtain not created teams of manager", e);
+		List<Category> categoriesOfCreatedTeams =  managerDao.getCategoriesOfTeams(m);
+		List<Category> allCategories = new ArrayList<Category>(Arrays.asList(Category.values()));
+		allCategories.removeAll(categoriesOfCreatedTeams);
+		List<Team>notAlreadyCreatedTeams = new ArrayList<>();
+		for(Category category : allCategories){
+			Team team = new Team();
+			team.setCategory(category);
+			team.setManager(m);
+			notAlreadyCreatedTeams.add(team);
 		}
+		return notAlreadyCreatedTeams;
 	}
 
 	@Override
 	public Manager authenticate(String email, String password) {
 		Manager manager = null;
-		try {
-			manager = managerDao.getManagerByEmail(email);
-		} catch (Exception e) {
-			throw new DaoLayerException("can not obtain all managers", e);
-		}
+		manager = managerDao.getManagerByEmail(email);
 		if (manager == null) {
 			// authentication failed - wrong email
 			return null;

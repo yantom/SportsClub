@@ -9,6 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +58,8 @@ public class ManagerDaoImpl implements ManagerDao{
 			throw new IllegalArgumentException("Argument can not be null");
 		}
 		Manager full = em.find(Manager.class, m.getId());
+		if(full == null)
+			throw new EmptyResultDataAccessException("manager with id: " + m.getId() + " not found",1);
 		m.setPassword(full.getPassword());
 		m.setEmail(full.getEmail());
 		m.setRole(full.getRole());

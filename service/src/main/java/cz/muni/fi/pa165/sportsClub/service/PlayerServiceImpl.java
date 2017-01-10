@@ -4,12 +4,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import cz.muni.fi.pa165.sportsClub.pojo.Team;
 import org.springframework.stereotype.Service;
 
 import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
 import cz.muni.fi.pa165.sportsClub.dao.PlayerDao;
-import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
@@ -30,69 +28,40 @@ public class PlayerServiceImpl implements PlayerService {
 
 	@Override
 	public void createPlayer(Player p) {
-        try {
-            playerDao.createPlayer(p);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not create player", e);
-        }
+		playerDao.createPlayer(p);
     }
 
 	@Override
 	public void updatePlayer(Player p) {
-        try {
-            playerDao.updatePlayer(p);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not update player", e);
-        }
+		playerDao.updatePlayer(p);
     }
 
 	@Override
 	public void deletePlayer(Player p) {
-        try {
-            playerDao.deletePlayer(p);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not delete player", e);
-        }
+        playerDao.deletePlayer(p);
     }
 
 	@Override
 	public Player getPlayerById(Long playerId) {
-        try {
-            return playerDao.getPlayerById(playerId);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not find player by id", e);
-        }
+        return playerDao.getPlayerById(playerId);
     }
 
 	@Override
 	public Player getPlayerByEmail(String email) {
-        try {
-            return playerDao.getPlayerByEmail(email);
-        } catch (Exception e) {
-            throw new DaoLayerException("can not find player by email", e);
-        }
+        return playerDao.getPlayerByEmail(email);
     }
 
 	@Override
 	public List<Player> getAllPlayersOfClub(Manager m) {
-        try {
-			List<Player> players = managerDao.getManagerById(m.getId()).getPlayers();
-            players.size();
-            return players;
-        } catch (Exception e) {
-			throw new DaoLayerException("can not obtain all players of manager", e);
-        }
-
+		List<Player> players = managerDao.getManagerById(m.getId()).getPlayers();
+        players.size();
+        return players;
     }
 
 	@Override
 	public List<PlayerInfo> getPlayerInfos(Long playerId) {
-        try {
-            Player player = playerDao.getPlayerById(playerId);
-            List<PlayerInfo> playerInfos = player.getPlayerInfos();
-            return playerInfos;
-        } catch (Exception e) {
-            throw new DaoLayerException("can not obtain player infos", e);
-        }
+        Player player = playerDao.getPlayerById(playerId);
+        List<PlayerInfo> playerInfos = player.getPlayerInfos();
+        return playerInfos;
     }
 }

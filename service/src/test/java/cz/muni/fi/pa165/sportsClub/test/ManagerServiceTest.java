@@ -23,7 +23,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import cz.muni.fi.pa165.sportsClub.ServiceApplicationContext;
 import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
-import cz.muni.fi.pa165.sportsClub.exception.DaoLayerException;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
@@ -174,15 +173,15 @@ public class ManagerServiceTest {
         assertEquals(freePlayers, returnedFreePlayers);
     }
 
-    @Test(expected = DaoLayerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void updateNullManagerTest() {
-        doThrow(new DaoLayerException("null Manager")).when(managerDao).updateManager(null);
+        doThrow(new IllegalArgumentException("null Manager")).when(managerDao).updateManager(null);
         managerService.updateManager(null);
     }
 
-    @Test(expected = DaoLayerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void deleteNullManagerTest() {
-        doThrow(new DaoLayerException("null Manager")).when(managerDao).deleteManager(null);
+        doThrow(new IllegalArgumentException("null Manager")).when(managerDao).deleteManager(null);
         managerService.deleteManager(null);
     }
 
@@ -205,7 +204,7 @@ public class ManagerServiceTest {
 
     @Test
     public void getNotAlreadyCreatedTeamsOfManagerTest() {
-        List<Category> categoriesOfCreatedTeams = new ArrayList();
+        List<Category> categoriesOfCreatedTeams = new ArrayList<Category>();
         categoriesOfCreatedTeams.add(Category.MEN);
         when(managerDao.getCategoriesOfTeams(mockManager)).thenReturn(categoriesOfCreatedTeams);
         List<Team> returnedTeams = managerService.getNotCreatedTeamsOfManager(mockManager);
