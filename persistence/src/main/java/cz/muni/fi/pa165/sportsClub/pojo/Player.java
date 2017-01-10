@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -25,8 +27,9 @@ import cz.muni.fi.pa165.sportsClub.pojo.validation.Past;
  * @author Simon Sudora 461460
  */
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(name = "unique_email",columnNames = { "email" }),
+		@UniqueConstraint(name = "unique_mobile",columnNames = { "mobile" })})
 public class Player {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -57,11 +60,10 @@ public class Player {
     private LocalDate dateOfBirth;
     
     @NotNull
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @Pattern(regexp = "[^@]+@[^@]+\\.[^@]+")
     private String email;
 
-    @Column(unique = true)
     @Pattern(regexp = "(\\+|00)?\\d+")
     private String mobile;
 

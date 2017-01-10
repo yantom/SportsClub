@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -161,7 +162,7 @@ public class TeamServiceTest {
 		teamService.removePlayerFromTeam(mockPlayerInfo);
 	    }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = DataIntegrityViolationException.class)
     public void assignPlayerToTeamTest(){
         player1.setDateOfBirth(LocalDate.parse("2000-06-15"));
         team1.setCategory(Category.U13);

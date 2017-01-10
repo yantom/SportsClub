@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -20,6 +22,9 @@ import javax.validation.constraints.Size;
  * @author David Koncak (410155)
  */
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(name = "unique_email",columnNames = { "email" }),
+		@UniqueConstraint(name = "unique_club_name",columnNames = { "clubName" }),
+		@UniqueConstraint(name = "unique_mobile",columnNames = { "mobile" })})
 public class Manager {
 
 	@Id
@@ -27,7 +32,7 @@ public class Manager {
     private Long id;
 
     @NotNull
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
 	private String clubName;
 
 	@OneToMany(mappedBy = "manager", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
@@ -47,12 +52,11 @@ public class Manager {
 	private String lastName;
 
 	@NotNull
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	@Pattern(regexp = "[^@]+@[^@]+\\.[^@]+")
 	private String email;
 
 	@Pattern(regexp = "(\\+|00)?\\d+")
-	@Column(unique = true)
 	private String mobile;
 
 	@NotNull

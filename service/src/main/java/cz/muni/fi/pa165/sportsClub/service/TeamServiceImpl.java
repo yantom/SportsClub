@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import cz.muni.fi.pa165.sportsClub.dao.ManagerDao;
@@ -87,27 +88,28 @@ public class TeamServiceImpl implements TeamService {
     }
 
 	@Override
-	public void assignPlayerToTeam(Player p, Team t, int jerseyNumber) {
+	public Long assignPlayerToTeam(Player p, Team t, int jerseyNumber) {
         if(!playerMeetsAgeLimit(p,t)){
-            throw new IllegalArgumentException("Player does not match age criteria of team");
+            throw new DataIntegrityViolationException("Player does not match age criteria of team");
         }
         if(!teamDao.isJerseyNumberUnique(t,jerseyNumber)){
-            throw new IllegalArgumentException("Jersey number is not unique in the team");
+            throw new DataIntegrityViolationException("Jersey number is not unique in the team");
         }
-        if(p.getManager().equals(t.getManager())){
-            throw new IllegalArgumentException("You can't assign player to the team of different club");
+        if(p.getManager().getId() != t.getManager().getId()){
+            throw new DataIntegrityViolationException("You can't assign player to the team of different club");
         }
         PlayerInfo playerInfo = new PlayerInfo();
         playerInfo.setPlayer(p);
         playerInfo.setTeam(t);
         playerInfo.setJerseyNumber(jerseyNumber);
         playerInfoDao.createPlayerInfo(playerInfo);
+        return playerInfo.getId();
     }
 
 	@Override
 	public void changeJerseyNumber(Player p, Team t, int newjerseyNumber) {
         if(!teamDao.isJerseyNumberUnique(t,newjerseyNumber)){
-            throw new IllegalArgumentException("Jersey number is not unique in the team");
+        	throw new DataIntegrityViolationException("Jersey number is not unique in the team");
         }
         playerInfoDao.changeJerseyNumber(t, p, newjerseyNumber);
     }

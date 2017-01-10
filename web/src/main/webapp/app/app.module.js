@@ -11,6 +11,9 @@ angular.module('sportsClub').run(function($rootScope,$state) {
 	}
 	$rootScope.handleErrors = function(response){
 		switch(response.status){
+			case 400:
+				alert("Wrong data format.");
+				break;
 			case 401:
 				alert("Unauthorized call: you will be log out.");
 				$rootScope.logout();
@@ -19,7 +22,7 @@ angular.module('sportsClub').run(function($rootScope,$state) {
 				alert("Requested resource was not found in our database.");
 				break;
 			case 409:
-				alert("Data conflict. Maybe the email/phone number you have entered is already assigned to some other person.");
+				alert("Data conflict: " + response.data);
 				break;
 			case 500:
 				alert("Oops. Error occured on the server side. Please try again later.");

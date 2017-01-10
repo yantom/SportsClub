@@ -87,8 +87,8 @@ public class ManagerServiceImpl implements ManagerService {
 		}
 		String accessingUserHash = AuthUtils.computeHash(password);
 		if (!accessingUserHash.equals(manager.getPassword())) {
-			throw new IllegalArgumentException(accessingUserHash + " not equal with " + manager.getPassword());
-			// return null;
+			// authentication failed - wrong password
+			return null;
 		}
 		return manager;
 	}
