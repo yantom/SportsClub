@@ -1,17 +1,23 @@
 "use strict";
-angular.module("sportsClub").controller('suitablePlayersModalCtrl',function($scope, $uibModal, $uibModalInstance, $http, suitablePlayers) {
-    $scope.suitablePlayers = angular.copy(suitablePlayers);
-    $scope.jerseyNumber;
+angular.module("sportsClub").controller('suitablePlayersModalCtrl',function($scope, $uibModal, $uibModalInstance, $http, suitablePlayers,teamId) {
+	$scope.suitablePlayers;
 
     $scope.close = function(updatedData){
         $uibModalInstance.close(updatedData);
     }
 
-    $scope.addPlayerToRoster = function(teamId,playerId,jerseyNumber){
-        $http.post(restInterface + '/' + teamId + '/' + playerId + '/' + $scope.jerseyNumber).then(
+    $scope.addPlayerToRoster = function(playerId,jerseyNumber){
+    	if(!$scope.assignationForm.$valid){
+            return;
+        }
+    	if(jerseyNumber==null){
+    		alert("You must enter jersey number.");
+    		return;
+    	}
+        $http.post(restInterface + '/playerInfo/' + teamId + '/' + playerId + '/' + jerseyNumber).then(
             function(response){
                 alert("Player added in the roster");
-                $scope.close({"new":true,"newPlayer":player});
+                $scope.close(response.data);
             },
             function(err){
             	$scope.handleErrors(err);
@@ -42,4 +48,14 @@ angular.module("sportsClub").controller('suitablePlayersModalCtrl',function($sco
         }, function () {
         });
     }
+    
+    var init = function(){
+    	//add jeresey number fields to objects
+    	var players = angular.copy(suitablePlayers);
+    	for(var i =0; i<players.length;i++){
+    		players[i].jerseyNumber = null;
+    	}
+    	$scope.suitablePlayers = players;
+    }
+    init();
 });

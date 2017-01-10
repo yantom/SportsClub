@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
+import cz.muni.fi.pa165.sportsClub.dto.PlayerOfTeamDto;
 import cz.muni.fi.pa165.sportsClub.exception.TokenValidationException;
 import cz.muni.fi.pa165.sportsClub.facade.TeamFacade;
 import cz.muni.fi.pa165.sportsClub.service.AuthUtils;
@@ -31,39 +32,26 @@ public class PlayerInfoController {
 			HttpServletRequest hsr) throws TokenValidationException {
 		String token = (hsr.getHeader("Authorization")).split(" ")[1];
 		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
-		try {
-			teamFacade.removePlayerFromTeam(playerInfoId);
-			return ResponseEntity.status(HttpStatus.OK).body("Player was successfully removed from team roster");
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-		}
+		teamFacade.removePlayerFromTeam(playerInfoId);
+		return ResponseEntity.status(HttpStatus.OK).body("Player was successfully removed from team roster");
 	}
 
-	@RequestMapping(value = "/{teamId}/{playerId}/{jerseyNumber}", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
-	public final ResponseEntity addPlayerOnRoster(@PathVariable("teamId") long teamId,
+	@RequestMapping(value = "/{teamId}/{playerId}/{jerseyNumber}", method = RequestMethod.POST)
+	public final PlayerOfTeamDto addPlayerOnRoster(@PathVariable("teamId") long teamId,
 			@PathVariable("playerId") long playerId, @PathVariable("jerseyNumber") int jerseyNumber,
 			HttpServletRequest hsr) throws TokenValidationException {
 		String token = (hsr.getHeader("Authorization")).split(" ")[1];
 		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
-		try {
-			teamFacade.assignExistingPlayerToTeam(playerId, teamId, jerseyNumber);
-			return ResponseEntity.status(HttpStatus.CREATED).body("Player was successfully added on team roster");
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-		}
+		return teamFacade.assignExistingPlayerToTeam(playerId, teamId, jerseyNumber);
+		
 	}
 
-	@RequestMapping(value = "/{teamId}/{jerseyNumber}", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
-	public final ResponseEntity addNewPlayerOnRoster(@PathVariable("teamId") long teamId,
+	@RequestMapping(value = "/{teamId}/{jerseyNumber}", method = RequestMethod.POST)
+	public final PlayerOfTeamDto addNewPlayerOnRoster(@PathVariable("teamId") long teamId,
 			@PathVariable("jerseyNumber") int jerseyNumber, @Valid @RequestBody PlayerDto player,
 			HttpServletRequest hsr) throws TokenValidationException {
 		String token = (hsr.getHeader("Authorization")).split(" ")[1];
 		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
-		try {
-			teamFacade.assignNewPlayerToTeam(player, teamId, jerseyNumber);
-			return ResponseEntity.status(HttpStatus.CREATED).body("New player was successfully added on team roster");
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-		}
+		return teamFacade.assignNewPlayerToTeam(player, teamId, jerseyNumber);
 	}
 }

@@ -2,7 +2,7 @@
     <h3 class="modal-title" id="modal-title">Choose from existing suitable players of create new player</h3>
 </div>
 <div class="modal-body" id="modal-body">
-    <form class="form-horizontal" name="newTeamForm">
+    <form class="form-horizontal" name="assignationForm">
         <table class="table">
             <thead>
             <tr>
@@ -18,10 +18,10 @@
                 <td>{{player.lastName}}</td>
                 <td>{{player.age}}</td>
                 <td>
-                    <input required type="number" size="2" min="0" max="99" ng-model="jerseyNumber">
+                    <input type="number" size="2" min="0" max="99" ng-model="player.jerseyNumber">
                 </td>
                 <td>
-                    <button ng-click="addPlayerToRoster()" type="submit" class="btn btn-primary">Add</button>
+                    <button ng-click="addPlayerToRoster(player.id,player.jerseyNumber)" type="submit" class="btn btn-primary">Add</button>
                 </td>
             </tr>
             </tbody>

@@ -23,9 +23,9 @@ public interface TeamFacade {
 
 	List<PlayerOfTeamDto> getPlayersOfTeam(Long teamId);
 
-	void assignExistingPlayerToTeam(Long playerId, Long teamId, int jerseyNumber);
+	PlayerOfTeamDto assignExistingPlayerToTeam(Long playerId, Long teamId, int jerseyNumber);
 
-	void assignNewPlayerToTeam(PlayerDto newPlayer, Long teamId, int jerseyNumber);
+	PlayerOfTeamDto assignNewPlayerToTeam(PlayerDto newPlayer, Long teamId, int jerseyNumber);
 
 	void changeJerseyNumber(Long playerId, Long teamId, int jerseyNumber);
 

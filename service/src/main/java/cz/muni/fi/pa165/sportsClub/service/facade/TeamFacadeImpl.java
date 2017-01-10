@@ -98,19 +98,34 @@ public class TeamFacadeImpl implements TeamFacade {
     }
 
     @Override
-    public void assignExistingPlayerToTeam(Long playerId, Long teamId, int jerseyNumber) {
+    public PlayerOfTeamDto assignExistingPlayerToTeam(Long playerId, Long teamId, int jerseyNumber) {
         Player player = playerService.getPlayerById(playerId);
         Team team = teamService.getTeamById(teamId);
-        teamService.assignPlayerToTeam(player, team, jerseyNumber);
+        Long piId = teamService.assignPlayerToTeam(player, team, jerseyNumber);
+        
+        PlayerOfTeamDto pi = new PlayerOfTeamDto();
+        pi.setJerseyNumber(jerseyNumber);
+        pi.setPlayer(beanMappingService.mapTo(player, PlayerDto.class));
+        pi.setPlayerInfoId(piId);
+        pi.setPlayerOlderThanTeamLimit(false);
+        return pi;
     }
 
     @Override
-    public void assignNewPlayerToTeam(PlayerDto newPlayer, Long teamId, int jerseyNumber) {
+    public PlayerOfTeamDto assignNewPlayerToTeam(PlayerDto newPlayer, Long teamId, int jerseyNumber) {
         Team team = teamService.getTeamById(teamId);
         Player player = beanMappingService.mapTo(newPlayer, Player.class);
         player.setManager(team.getManager());
         playerService.createPlayer(player);
-        teamService.assignPlayerToTeam(player, team, jerseyNumber);
+        newPlayer.setId(player.getId());
+        Long piId = teamService.assignPlayerToTeam(player, team, jerseyNumber);
+        
+        PlayerOfTeamDto pi = new PlayerOfTeamDto();
+        pi.setJerseyNumber(jerseyNumber);
+        pi.setPlayer(newPlayer);
+        pi.setPlayerInfoId(piId);
+        pi.setPlayerOlderThanTeamLimit(false);
+        return pi;
     }
 
     @Override

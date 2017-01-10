@@ -15,14 +15,14 @@
 </div>
 <div class="col-sm-6">
 <h1 style="display: inline-block;"><span ng-if="displayingTeam!=null">{{displayingTeam.category}} Roster</span><span ng-if="displayingTeam==null">Free Players</span>
-    <button type="button" class="btn btn-success" ng-click="openSuitablePlayersModal()">
+    <button ng-hide="displayingTeam==null"type="button" class="btn btn-success" ng-click="openSuitablePlayersModal()">
         <span class="glyphicon glyphicon-plus"></span>
     </button>
 </h1>
 <button type="button" id="logout" class="btn pull-right" ng-click="logout()">Log Out
         <span class="glyphicon glyphicon-off"></span>
 </button>
-    <table class="table" ng-if="!displayingFree">
+    <table class="table" ng-if="displayingTeam!=null">
         <thead>
         <tr>
             <th>Jersey Number</th>
@@ -44,10 +44,9 @@
         </tr>
         </tbody>
     </table>
-    <table class="table" ng-if="displayingFree">
+    <table class="table" ng-if="displayingTeam==null">
         <thead>
         <tr>
-        <th>Jersey Number</th>
             <th>First name</th>
             <th>Last Name</th>
         </tr>

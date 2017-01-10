@@ -3,9 +3,7 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
     $scope.playerInfos;
     $scope.teams;
     $scope.displayingTeam;
-    $scope.suitablePlayers;
 
-    $scope.displayingFree = false;
     if ($stateParams.managerId != null) {
         $scope.managerId = $stateParams.managerId;
     } else
@@ -23,7 +21,6 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
     $scope.getFreePlayersOfClub = function () {
         $http.get(restInterface + '/manager/' + $scope.managerId + '/freePlayers').then(
                 function (response) {
-                    $scope.displayingFree = true;
                     $scope.displayingTeam = null;
                     $scope.playerInfos = response.data;
                 },
@@ -35,7 +32,6 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
     $scope.getPlayersOfTeam = function (team) {
         $http.get(restInterface + "/team/" + team.id + '/players').then(
                 function (response) {
-                    $scope.displayingFree = false;
                     $scope.displayingTeam = team;
                     $scope.playerInfos = response.data;
                 },
@@ -117,16 +113,6 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
         });
     }
 
-    var loadSuitablePlayers = function (teamId) {
-        $http.get(restInterface + "/team/" + teamId + "/suitablePlayers").then(
-                function (response) {
-                    $scope.suitablePlayers = response.data;
-                },
-                function (err) {
-                	$scope.handleErrors(err);
-                });
-    }
-
     $scope.openNewTeamModal = function () {
         $http.get(restInterface + "/manager/" + $scope.managerId + "/freeTeams").then(
                 function (response) {
@@ -157,26 +143,29 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
     }
 
     $scope.openSuitablePlayersModal = function () {
-        if ($scope.displayingTeam == null) {
-            alert("First, You have to select team")
-        } else {
-            loadSuitablePlayers($scope.displayingTeam.id);
-            var modalInstance = $uibModal.open({
-                templateUrl: 'app/components/suitablePlayersModal/suitablePlayersModal.html',
-                controller: 'suitablePlayersModalCtrl',
-                resolve: {
-                    suitablePlayers: function () {
-                        return $scope.suitablePlayers;
-                    }
-                }
-            });
-            modalInstance.result.then(function (updatedData) {
-                if (updatedData.new == true) {
-                    $scope.playerInfos.push(updatedData.newTeam);
-                }
-            }, function () {
-            });
-        }
+    	$http.get(restInterface + "/team/" + $scope.displayingTeam.id + "/suitablePlayers").then(
+	        function (response) {
+	            var modalInstance = $uibModal.open({
+	                templateUrl: 'app/components/suitablePlayersModal/suitablePlayersModal.html',
+	                controller: 'suitablePlayersModalCtrl',
+	                resolve: {
+	                    suitablePlayers: function () {
+	                        return response.data;
+	                    },
+			            teamId: function () {
+		                    return $scope.displayingTeam.id;
+		                }
+	                }
+	            });
+	            modalInstance.result.then(function (playerInfo){
+	            	if(playerInfo.playerInfoId !== 'undefined')
+	            		$scope.playerInfos.push(playerInfo);
+	            }, function () {
+	            });
+	        },
+	        function (err) {
+	        	$scope.handleErrors(err);
+        });
     }
 
     var init = function () {
@@ -185,6 +174,4 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
     }
 
     init();
-
-}
-);
+});
