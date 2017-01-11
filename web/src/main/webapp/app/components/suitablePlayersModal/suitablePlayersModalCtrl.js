@@ -25,7 +25,7 @@ angular.module("sportsClub").controller('suitablePlayersModalCtrl',function($sco
         );
     }
 
-    $scope.playerModal = function(playerData){
+    $scope.newPlayerModal = function(playerData){
         var modalInstance = $uibModal.open({
             templateUrl: 'app/components/playerModal/playerModal.html',
             controller: 'playerModalCtrl',
@@ -36,16 +36,9 @@ angular.module("sportsClub").controller('suitablePlayersModalCtrl',function($sco
             }
         });
         modalInstance.result.then(function (updatedData) {
-            if (updatedData.new == true) {
                 $scope.playerInfos.player.push(updatedData.data);
-            } else {
-                for (var i = 0; i < $scope.playerInfos.player.length; i++) {
-                    if ($scope.playerInfos.player[i].id == updatedData.data.id) {
-                        $scope.playerInfos.player[i] = updatedData.data;
-                    }
-                }
-            }
-        }, function () {
+        
+            }, function () {
         });
     }
     
