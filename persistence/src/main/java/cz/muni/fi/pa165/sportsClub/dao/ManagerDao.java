@@ -6,6 +6,7 @@ import java.util.List;
 import cz.muni.fi.pa165.sportsClub.enums.Category;
 import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
+import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
 /**
  * @author Jan Tomasek
@@ -74,10 +75,10 @@ public interface ManagerDao {
 
 	/**
 	 *
-	 * @param manager,ageLimitDate
-	 * @return list of players with higher date of birth than certain date
+	 * @param team,ageLimitDate
+	 * @return list of players with date of birth between two dates
 	 */
-	List<Player> getPlayersWithHigherDobThan(Manager manager, LocalDate ageLimitDate);
+	List<Player> getPlayersWithDobBetween(Team team, LocalDate bottomLimit, LocalDate upperLimit);
 
 	/**
 	 * @param manager

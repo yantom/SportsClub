@@ -7,39 +7,14 @@ angular.module("sportsClub").controller('playerModalCtrl', function ($scope, $ht
             "id": null,
             "firstName": null,
             "lastName": null,
+            "dateOfBirth": null,
             "email": null,
             "password": null,
             "mobile": null,
             "weight": null,
-            "heigth": null
+            "heigth": null,
+            "manager_id": null
         }
-    }
-    $scope.jersey = {
-        "jersey": null
-    }
-
-    $scope.selected = [];
-
-    $scope.teams;
-
-    $scope.toggleSelection = function toggleSelection(selectedTeam) {
-        var idx = $scope.selected.indexOf(selectedTeam);
-
-        if (idx > -1) {
-            $scope.selected.splice(idx, 1);
-        } else {
-            $scope.selected.push(selectedTeam);
-        }
-    };
-
-    var getTeams = function (managerId) {
-        $http.get(restInterface + "/manager/" + managerId + "/teams").then(
-                function (response) {
-                    $scope.teams = response.data;
-                },
-                function (err) {
-                	$scope.handleErrors(err);
-                });
     }
 
     $scope.close = function (updatedData) {
@@ -47,47 +22,36 @@ angular.module("sportsClub").controller('playerModalCtrl', function ($scope, $ht
     }
 
     $scope.save = function () {
-        if (!validEmail()) {
-            return;
-        }
-        if (!validMobile()) {
-            return;
-        }
         if (!validFirstName()) {
             return;
         }
         if (!validLastName()) {
             return;
         }
-        if($scope.data.id != null){
+        if (!validEmail()) {
+            return;
+        }
+        if (!validMobile()) {
+            return;
+        }
+        if ($scope.data.id != null) {
             updatePlayer($scope.data);
             return;
         }
-        createNewPlayer($scope.data);
-        asignPlayer();
-    }
-
-    //asings player to team
-    var asignPlayer = function () {
-        
-    }
-
-    //checks if jersey is already used in a team
-    $scope.checkNumber = function () {
-        
+        createPlayer($scope.data);
     }
 
     var validFirstName = function () {
-        if ($scope.data.firstName.lenght < 2) {
-            alert("Name must be at least 2 characters long");
+        if ($scope.data.firstName == null) {
+            alert("First name's field is empty");
             return false;
         }
         return true;
     }
 
     var validLastName = function () {
-        if ($scope.data.lastName.lenght < 2) {
-            alert("Last name must be at least 2 characters long");
+        if ($scope.data.lastName == null) {
+            alert("Last name's field is empty");
             return false;
         }
         return true;
@@ -96,7 +60,7 @@ angular.module("sportsClub").controller('playerModalCtrl', function ($scope, $ht
     var validEmail = function () {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!re.test($scope.data.email)) {
-            alert("invalid email format");
+            alert("Invalid email format");
             return false;
         }
         return true;
@@ -104,43 +68,35 @@ angular.module("sportsClub").controller('playerModalCtrl', function ($scope, $ht
 
     var validMobile = function () {
         if (!(/^(\+|00)?\d+$/.test($scope.data.mobile))) {
-            alert("invalid mobile phone format");
+            alert("Invalid mobile phone format");
             return false;
         }
         return true;
     }
 
-    var createNewPlayer = function (playerData) {
-        $http.post(restInterface + '/player/create', playerData).then(
+    var createPlayer = function (player) {
+        $http.post(restInterface + '/player/create', player).then(
                 function (response) {
                     alert("Player created");
-                    $scope.close({"new":false,"data":response.data});
+                    $scope.close({"new": true, "data": response.data});
                 },
                 function (err) {
-                	$scope.handleErrors(err);
+                    $scope.handleErrors(err);
                 }
         );
     }
-    
-        var updatePlayer = function(playerData){
-        $http.put(restInterface + '/player/update',playerData).then(
-            function(response){
-                alert("Player updated");
-                $scope.close({"new":false,"data":response.data});
-            },
-            function(err){
-            	$scope.handleErrors(err);
-            }
+
+    var updatePlayer = function (player) {
+        $http.put(restInterface + '/player/update', player).then(
+                function (response) {
+                    alert("Player updated");
+                    $scope.close({"new": false, "data": response.data});
+                },
+                function (err) {
+                    $scope.handleErrors(err);
+                }
         );
     }
-    
-    
-    
-    var init = function(){
-        getTeams(10000);
-    }
-
-    init();
 });
 
 

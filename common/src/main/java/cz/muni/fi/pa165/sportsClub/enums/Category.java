@@ -17,5 +17,22 @@ public enum Category {
 	public int getAgeLimit(){
 		return ageLimit;
 	}
+
+	public Category getCategoryBelow(){
+		Category category = this;
+		switch(category) {
+			case MEN :
+				return U19;
+			case U19 :
+				return U17;
+			case U17 :
+				return U15;
+			case U15 :
+				return U13;
+			case U13 :
+				return null;
+		}
+		return null;
+	}
 }
 

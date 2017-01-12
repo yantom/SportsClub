@@ -39,6 +39,8 @@ public class ManagerTest {
 	private Manager manager;
 	private Player player1;
 	private Player player2;
+	private Player player3;
+	private Player player4;
 
 	@Inject
 	private ManagerDao managerDao;
@@ -82,6 +84,25 @@ public class ManagerTest {
 		player2.setDateOfBirth(LocalDate.parse("1991-06-15"));
 		player2.setManager(manager);
 
+		player3 = new Player();
+		player3.setEmail("fero@hora.com");
+		player3.setFirstName("fero");
+		player3.setLastName("hora");
+		player3.setHeight(179);
+		player3.setWeight(70);
+		player3.setMobile("+42190000000");
+		player3.setDateOfBirth(LocalDate.parse("1996-06-15"));
+		player3.setManager(manager);
+
+		player4 = new Player();
+		player4.setEmail("lolo@hora.com");
+		player4.setFirstName("lolo");
+		player4.setLastName("hora");
+		player4.setHeight(179);
+		player4.setWeight(70);
+		player4.setMobile("+42190000000");
+		player4.setDateOfBirth(LocalDate.parse("1996-06-15"));
+		player4.setManager(manager);
 	}
 
 	@After
@@ -190,12 +211,37 @@ public class ManagerTest {
 		assertNotNull(manager.getId());
 		playerDao.createPlayer(player1);
 		playerDao.createPlayer(player2);
+		playerDao.createPlayer(player3);
+		playerDao.createPlayer(player4);
 
-		LocalDate ageLimitDate = LocalDate.parse("1995-06-15");
-		List<Player> freePlayers = managerDao.getPlayersWithHigherDobThan(manager, ageLimitDate);
+		Team team1 = new Team();
+		team1.setCategory(Category.MEN);
+		team1.setManager(manager);
+		teamDao.createTeam(team1);
+
+		Team team2 = new Team();
+		team2.setCategory(Category.U17);
+		team2.setManager(manager);
+		teamDao.createTeam(team2);
+
+		PlayerInfo playerInfo1 = new PlayerInfo();
+		playerInfo1.setPlayer(player4);
+		playerInfo1.setTeam(team1);
+		playerInfo1.setJerseyNumber(14);
+		playerInfoDao.createPlayerInfo(playerInfo1);
+
+		PlayerInfo playerInfo2 = new PlayerInfo();
+		playerInfo2.setPlayer(player3);
+		playerInfo2.setTeam(team2);
+		playerInfo2.setJerseyNumber(14);
+		playerInfoDao.createPlayerInfo(playerInfo2);
+
+		LocalDate bottomLimit = LocalDate.parse("1995-06-15");
+		LocalDate upperLimit = LocalDate.parse("1999-06-15");
+		List<Player> freePlayers = managerDao.getPlayersWithDobBetween(team1, bottomLimit, upperLimit);
 
 		assertEquals(1, freePlayers.size());
-		assertEquals(player1, freePlayers.get(0));
+		assertEquals(player3, freePlayers.get(0));
 	}
 
 	@Test

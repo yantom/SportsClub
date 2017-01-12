@@ -135,7 +135,6 @@ public class TeamTest {
 		assertTrue(teamDao.isJerseyNumberUnique(testTeam1, 11));
 		playerInfoDao.deletePlayerInfo(testPlayerInfo1);
 		playerDao.deletePlayer(testPlayer1);
-
 	}
 
 }

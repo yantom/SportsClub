@@ -122,9 +122,12 @@ public class TeamServiceImpl implements TeamService {
     @Override
 	public List<Player> findSuitablePlayersForTeam(Team team) {
         LocalDate today = LocalDate.now();
-        int ageLimit = team.getCategory().getAgeLimit();
-        LocalDate ageLimitDate = today.minusYears(ageLimit);
-		return managerDao.getPlayersWithHigherDobThan(team.getManager(), ageLimitDate);
+        int upAgeLimit = team.getCategory().getAgeLimit();
+        int downAgeLimit = team.getCategory().getCategoryBelow().getAgeLimit();
+        LocalDate bottomDobLimit = today.minusYears(upAgeLimit);
+        LocalDate upperDobLimit = today.minusYears(downAgeLimit);
+        List<Player> players = managerDao.getPlayersWithDobBetween(team, bottomDobLimit, upperDobLimit);
+        return players;
     }
 
     @Override
