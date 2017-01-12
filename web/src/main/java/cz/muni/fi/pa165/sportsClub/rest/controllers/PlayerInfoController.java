@@ -28,22 +28,20 @@ public class PlayerInfoController {
 	private static final String[] AUTHORIZED_ROLES = new String[] { "admin", "manager" };
 
 	@RequestMapping(value = "/{playerInfoId}", method = RequestMethod.DELETE, produces = MediaType.TEXT_PLAIN_VALUE)
-	public final ResponseEntity removePlayerFromRoster(@PathVariable("playerInfoId") long playerInfoId,
+	public final void removePlayerFromRoster(@PathVariable("playerInfoId") long playerInfoId,
 			HttpServletRequest hsr) throws TokenValidationException {
 		String token = (hsr.getHeader("Authorization")).split(" ")[1];
 		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
 		teamFacade.removePlayerFromTeam(playerInfoId);
-		return ResponseEntity.status(HttpStatus.OK).body("Player was successfully removed from team roster");
 	}
 
 	@RequestMapping(value = "/{teamId}/{playerId}/{jerseyNumber}", method = RequestMethod.POST)
-	public final PlayerOfTeamDto addPlayerOnRoster(@PathVariable("teamId") long teamId,
+	public final PlayerOfTeamDto addExistingPlayerOnRoster(@PathVariable("teamId") long teamId,
 			@PathVariable("playerId") long playerId, @PathVariable("jerseyNumber") int jerseyNumber,
 			HttpServletRequest hsr) throws TokenValidationException {
 		String token = (hsr.getHeader("Authorization")).split(" ")[1];
 		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
 		return teamFacade.assignExistingPlayerToTeam(playerId, teamId, jerseyNumber);
-		
 	}
 
 	@RequestMapping(value = "/{teamId}/{jerseyNumber}", method = RequestMethod.POST)

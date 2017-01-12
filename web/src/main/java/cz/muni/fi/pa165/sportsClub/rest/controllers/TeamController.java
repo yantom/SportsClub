@@ -32,7 +32,7 @@ public class TeamController {
 	private static final String[] AUTHORIZED_ROLES = new String[] { "admin", "manager" };
 
     @RequestMapping(path = "/{teamId}/players", method = RequestMethod.GET)
-	public final List<PlayerOfTeamDto> getplayers(@PathVariable("teamId") long teamId, HttpServletRequest hsr)
+	public final List<PlayerOfTeamDto> getPlayers(@PathVariable("teamId") long teamId, HttpServletRequest hsr)
 			throws TokenValidationException {
 		String token = (hsr.getHeader("Authorization")).split(" ")[1];
 		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
@@ -40,20 +40,10 @@ public class TeamController {
     }
 
     @RequestMapping(value = "/{teamId}", method = RequestMethod.DELETE, produces = MediaType.TEXT_PLAIN_VALUE)
-	public final ResponseEntity deleteTeam(@PathVariable("teamId") long teamId, HttpServletRequest hsr)
-			throws TokenValidationException {
+	public final void delete(@PathVariable("teamId") long teamId, HttpServletRequest hsr) throws TokenValidationException {
 		String token = (hsr.getHeader("Authorization")).split(" ")[1];
 		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
-        try {
-            teamFacade.deleteTeam(teamId);
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Team was successfully deleted");
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
+		teamFacade.deleteTeam(teamId);
     }
 
 	@RequestMapping(method = RequestMethod.POST)
