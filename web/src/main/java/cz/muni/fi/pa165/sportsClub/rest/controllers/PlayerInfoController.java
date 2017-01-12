@@ -52,4 +52,14 @@ public class PlayerInfoController {
 		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
 		return teamFacade.assignNewPlayerToTeam(player, teamId, jerseyNumber);
 	}
+
+	@RequestMapping(value = "/{playerId}/{teamId}/{jerseyNumber}", method = RequestMethod.PUT)
+	public final void changeJerseyNumber(@PathVariable("playerId") long playerId,
+										 @PathVariable("teamId") long teamId,
+										 @PathVariable("jerseyNumber") int jerseyNumber,
+										 HttpServletRequest hsr) throws TokenValidationException {
+		String token = (hsr.getHeader("Authorization")).split(" ")[1];
+		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
+		teamFacade.changeJerseyNumber(playerId, teamId, jerseyNumber);
+	}
 }

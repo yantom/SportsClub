@@ -86,15 +86,15 @@ public class ManagerController {
 		return manager;
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable("id") long id, HttpServletRequest hsr) throws TokenValidationException {
+    @RequestMapping(path = "/{managerId}", method = RequestMethod.DELETE)
+	public void delete(@PathVariable("managerId") long id, HttpServletRequest hsr) throws TokenValidationException {
 		String token = (hsr.getHeader("Authorization")).split(" ")[1];
 		AuthUtils.authorizeRestCall(token, "admin");
 		managerFacade.deleteManager(id);
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-	public ManagerDto findById(@PathVariable("id") long id, HttpServletRequest hsr) throws TokenValidationException {
+    @RequestMapping(path = "/{managerId}", method = RequestMethod.GET)
+	public ManagerDto findById(@PathVariable("managerId") long id, HttpServletRequest hsr) throws TokenValidationException {
 		String token = (hsr.getHeader("Authorization")).split(" ")[1];
 		AuthUtils.authorizeRestCall(token, "admin");
 		return managerFacade.getManagerById(id);

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import cz.muni.fi.pa165.sportsClub.dto.TeamOfPlayerDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -55,8 +56,8 @@ public class PlayerController {
         playerFacade.updatePlayer(player);
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-	public PlayerDto findById(@PathVariable("id") long id, HttpServletRequest hsr) throws TokenValidationException {
+    @RequestMapping(path = "/{playerId}", method = RequestMethod.GET)
+	public PlayerDto findById(@PathVariable("playerId") long id, HttpServletRequest hsr) throws TokenValidationException {
 		String token = (hsr.getHeader("Authorization")).split(" ")[1];
 		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
         return playerFacade.getPlayerById(id);
@@ -70,12 +71,11 @@ public class PlayerController {
         return playerFacade.getAllPlayersOfClub(id);
     }
 
-//    @RequestMapping(path = "/find", method = RequestMethod.POST)
-//	public PlayerDto findByEmail(@RequestParam("name") String email, HttpServletRequest hsr)
-//			throws TokenValidationException {
-//		String token = (hsr.getHeader("Authorization")).split(" ")[1];
-//		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
-//        return playerFacade.getPlayerByEmail(email);
-//    }
-
+	@RequestMapping(path = "/{playerId}/teams", method = RequestMethod.GET)
+	public List<TeamOfPlayerDto> getTeamsOfPlayer(@PathVariable("playerId") long id, HttpServletRequest hsr)
+			throws TokenValidationException {
+		String token = (hsr.getHeader("Authorization")).split(" ")[1];
+		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
+		return playerFacade.getTeamsOfPlayer(id);
+	}
 }

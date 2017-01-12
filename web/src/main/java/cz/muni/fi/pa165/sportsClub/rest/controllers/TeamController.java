@@ -61,4 +61,13 @@ public class TeamController {
 		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
         return teamFacade.findSuitablePlayersForTeam(teamId);
     }
+
+	@RequestMapping(path = "/{teamId}/{jerseyNumber}", method = RequestMethod.GET)
+	public final boolean findSuitablePlayersForTeam(@PathVariable("teamId") long teamId,
+																	 @PathVariable("teamId") int jerseyNumber,
+																	 HttpServletRequest hsr) throws TokenValidationException {
+		String token = (hsr.getHeader("Authorization")).split(" ")[1];
+		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
+		return teamFacade.isJerseyNumberUnique(teamId,jerseyNumber);
+	}
 }
