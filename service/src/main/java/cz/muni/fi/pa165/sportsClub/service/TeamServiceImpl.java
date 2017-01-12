@@ -83,8 +83,8 @@ public class TeamServiceImpl implements TeamService {
         LocalDate birthday = player.getDateOfBirth();
 
         int age = Period.between(birthday, today).getYears();
-        team.getCategory().getAgeLimit();
-        return age <= team.getCategory().getAgeLimit();
+        team.getCategory().getUpperAgeLimit();
+        return age <= team.getCategory().getUpperAgeLimit() && age >= team.getCategory().getBottomAgeLimit();
     }
 
 	@Override
@@ -122,9 +122,10 @@ public class TeamServiceImpl implements TeamService {
     @Override
 	public List<Player> findSuitablePlayersForTeam(Team team) {
         LocalDate today = LocalDate.now();
-        int ageLimit = team.getCategory().getAgeLimit();
-        LocalDate ageLimitDate = today.minusYears(ageLimit);
-		return managerDao.getPlayersWithHigherDobThan(team.getManager(), ageLimitDate);
+        LocalDate bottomDobLimit = today.minusYears(team.getCategory().getUpperAgeLimit());
+        LocalDate upperDobLimit = today.minusYears(team.getCategory().getBottomAgeLimit());
+        List<Player> players = managerDao.getPlayersWithDobBetween(team, bottomDobLimit, upperDobLimit);
+        return players;
     }
 
     @Override

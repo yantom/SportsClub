@@ -158,7 +158,7 @@ public class TestDataCreator {
 	}
 
 	private static LocalDate categoryToLocalDate(Category c) {
-		int ageLimit = c.getAgeLimit();
+		int ageLimit = c.getUpperAgeLimit();
 		int yearsBeforeNow;
 		if (ageLimit == Integer.MAX_VALUE)
 			yearsBeforeNow = 50;
@@ -174,7 +174,7 @@ public class TestDataCreator {
 		int ageLimit;
 
 		for (Team t : teams) {
-			ageLimit = t.getCategory().getAgeLimit();
+			ageLimit = t.getCategory().getUpperAgeLimit();
 			if (ageLimit == Integer.MAX_VALUE || now.minusYears(ageLimit).isBefore(p.getDateOfBirth())) {
 				if (ageLimit <= suitableLimit) {
 					suitableLimit = ageLimit;

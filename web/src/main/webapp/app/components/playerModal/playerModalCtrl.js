@@ -75,7 +75,7 @@ angular.module("sportsClub").controller('playerModalCtrl', function ($scope, $ht
     }
 
     var createPlayer = function (player) {
-        $http.post(restInterface + '/player/create', player).then(
+        $http.post(restInterface + '/playerInfo/{teamId}/{jerseyNumber}', player).then(
                 function (response) {
                     alert("Player created");
                     $scope.close({"new": true, "data": response.data});
@@ -87,10 +87,10 @@ angular.module("sportsClub").controller('playerModalCtrl', function ($scope, $ht
     }
 
     var updatePlayer = function (player) {
-        $http.put(restInterface + '/player/update', player).then(
+        $http.put(restInterface + '/player', player).then(
                 function (response) {
                     alert("Player updated");
-                    $scope.close({"new": false, "data": response.data});
+                    $scope.close({"edited": true});
                 },
                 function (err) {
                     $scope.handleErrors(err);

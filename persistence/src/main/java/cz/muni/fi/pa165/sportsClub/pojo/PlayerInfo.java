@@ -38,11 +38,18 @@ public class PlayerInfo {
     private int jerseyNumber;
 
     @Transient
+
+
     private boolean playerOlderThanTeamLimit;
 
     @ManyToOne
     @JoinColumn(name = "playerId")
     private Player player;
+
+    @Transient
+    private boolean playerYoungerThanTeamLimit;
+
+
 
     @ManyToOne
     @JoinColumn(name = "teamId")
@@ -57,7 +64,7 @@ public class PlayerInfo {
 
     /**
      * Gets id of player
-     * 
+     *
      * @return id of player
      */
     public Long getId() {
@@ -66,7 +73,7 @@ public class PlayerInfo {
 
     /**
      * Sets id of player
-     * 
+     *
      * @param id player id
      */
     public void setId(Long id) {
@@ -129,7 +136,7 @@ public class PlayerInfo {
 
     /**
      * Returns true if player is older than age category limit, false otherwise
-     * 
+     *
      * @return if player is older than age category limit, false otherwise
      */
     public boolean isPlayerOlderThanTeamLimit() {
@@ -138,16 +145,25 @@ public class PlayerInfo {
 
     /**
      * Sets age category limit for player
-     * 
+     *
      * @param value boolean value of age category limit
      */
     public void setPlayerOlderThanTeamLimit(boolean value) {
         playerOlderThanTeamLimit = value;
     }
 
+    /** 
+     * Checks if player is younger than team limit
+     * 
+     * @return true if player is younger, false otherwise
+     */
+    public boolean isPlayerYoungerThanTeamLimit() {
+        return playerYoungerThanTeamLimit;
+    }
+
     /**
      * Sets age limit
-     * 
+     *
      */
     @PostLoad
     public void setOlderThenLimit() {
@@ -156,11 +172,17 @@ public class PlayerInfo {
             playerOlderThanTeamLimit = false;
             return;
         }
-        if (!LocalDate.now().minusYears(c.getAgeLimit()).isBefore(getPlayer().getDateOfBirth())) {
+        if (!LocalDate.now().minusYears(c.getUpperAgeLimit()).isBefore(getPlayer().getDateOfBirth())) {
             playerOlderThanTeamLimit = true;
             return;
         }
         playerOlderThanTeamLimit = false;
+
+        if (!LocalDate.now().minusYears(c.getBottomAgeLimit()).isAfter(getPlayer().getDateOfBirth())) {
+            playerYoungerThanTeamLimit = true;
+            return;
+        }
+        playerYoungerThanTeamLimit = false;
     }
 
     @Override
@@ -170,7 +192,7 @@ public class PlayerInfo {
 
     /**
      * Returns string of INSERT statement into PlayerInfo
-     * 
+     *
      * @return string of INSERT statement
      */
     public String toInsertStatement() {

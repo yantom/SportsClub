@@ -1,6 +1,6 @@
 "use strict";
 angular.module("sportsClub").controller('suitablePlayersModalCtrl',function($scope, $uibModal, $uibModalInstance, $http, suitablePlayers,teamId) {
-	$scope.suitablePlayers;
+	$scope.suitablePlayers = angular.copy(suitablePlayers);
 
     $scope.close = function(updatedData){
         $uibModalInstance.close(updatedData);

@@ -116,12 +116,19 @@ public class ManagerDaoImpl implements ManagerDao{
 	}
 
 	@Override
-	public List<Player> getPlayersWithHigherDobThan(Manager manager, LocalDate ageLimitDate) {
+	public List<Player> getPlayersWithDobBetween(Team team,LocalDate bottomLimit, LocalDate upperLimit) {
 		TypedQuery<Player> query = em.createQuery(
-				"SELECT p FROM Player p " + "WHERE p.manager = :manager " + "AND p.dateOfBirth >= :ageLimitDate",
+				"SELECT distinct p FROM Player p " +
+						"LEFT JOIN p.playerInfos pi " +
+						"WHERE p.manager = :manager " +
+						"AND ((pi.team is null) OR (pi.team.category <> :category)) " +
+						"AND p.dateOfBirth > :bottomLimit " +
+						"AND p.dateOfBirth <= :upperLimit",
 				Player.class);
-		query.setParameter("manager", manager);
-		query.setParameter("ageLimitDate", ageLimitDate);
+		query.setParameter("manager", team.getManager());
+		query.setParameter("category", team.getCategory());
+		query.setParameter("bottomLimit", bottomLimit);
+		query.setParameter("upperLimit", upperLimit);
 		return query.getResultList();
 	}
 

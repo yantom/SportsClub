@@ -31,9 +31,7 @@ import cz.muni.fi.pa165.sportsClub.service.PlayerService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceApplicationContext.class)
 public class PlayerServiceTest {
-    
 
-    
     @Mock
     private PlayerDao playerDao;
 

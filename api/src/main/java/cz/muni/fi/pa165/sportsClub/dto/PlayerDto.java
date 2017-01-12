@@ -4,9 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -23,10 +21,12 @@ public class PlayerDto {
 	@NotNull
 	private String lastName;
 
-	@Size(min = 75, max = 250)
+	@Min(75)
+	@Max(250)
 	private double height;
 
-	@Size(min = 20, max = 150)
+	@Min(20)
+	@Max(150)
 	private double weight;
 
 	@NotNull

@@ -6,16 +6,23 @@ package cz.muni.fi.pa165.sportsClub.enums;
  * @author Andrej 410433
  */
 public enum Category {
-	MEN(200), U19(19), U17(17), U15(15), U13(13);
+	MEN(200,17), U19(19,15), U17(17,13), U15(15,11), U13(13,0);
 
-	private int ageLimit;
+	private int upperAgeLimit;
+	private int bottomAgeLimit;
 
-	private Category(int ageLimit){
-		this.ageLimit = ageLimit;
+	private Category(int upperAgeLimit, int bottomAgeLimit){
+		this.upperAgeLimit = upperAgeLimit;
+		this.bottomAgeLimit = bottomAgeLimit;
 	}
 
-	public int getAgeLimit(){
-		return ageLimit;
+	public int getUpperAgeLimit(){
+		return upperAgeLimit;
 	}
+
+	public int getBottomAgeLimit(){
+		return bottomAgeLimit;
+	}
+
 }
 
