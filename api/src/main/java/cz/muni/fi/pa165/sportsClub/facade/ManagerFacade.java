@@ -8,28 +8,94 @@ import cz.muni.fi.pa165.sportsClub.dto.ManagerWithTokenDto;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamDto;
 
+/**
+ * Interface of manager facade layer
+ *
+ * @author
+ */
 public interface ManagerFacade {
 
-	void createManager(ManagerDto m);
+    /**
+     * Creates new manager
+     *
+     * @param m created manager
+     */
+    void createManager(ManagerDto m);
 
-	void updateManager(ManagerDto m);
+    /**
+     * Updates manager
+     *
+     * @param m updated manager
+     */
+    void updateManager(ManagerDto m);
 
-	void deleteManager(Long id);
+    /**
+     * Deletes manager
+     *
+     * @param id id of deleted manager
+     */
+    void deleteManager(Long id);
 
-	ManagerDto getManagerById(Long managerId);
+    /**
+     * Gets manager by his id
+     *
+     * @param managerId manager id
+     * @return found manager
+     */
+    ManagerDto getManagerById(Long managerId);
 
-	ManagerDto getManagerByEmail(String email);
+    /**
+     * Gets manager by his email
+     *
+     * @param email email of manager
+     * @return found manager
+     */
+    ManagerDto getManagerByEmail(String email);
 
-	ManagerDto getManagerByClubName(String clubName);
+    /**
+     * Gets manager by his club name
+     *
+     * @param clubName name of club
+     * @return found manager
+     */
+    ManagerDto getManagerByClubName(String clubName);
 
-	List<PlayerDto> getFreePlayers(Long managerId);
+    /**
+     * Gets all free players of manager
+     *
+     * @param managerId manager id
+     * @return all free players
+     */
+    List<PlayerDto> getFreePlayers(Long managerId);
 
-	List<ManagerDto> getAllManagers();
+    /**
+     * Gets all managers in database
+     *
+     * @return all managers
+     */
+    List<ManagerDto> getAllManagers();
 
-	ManagerWithTokenDto login(AuthenticationDto m);
+    /**
+     * Login for manager
+     *
+     * @param m email and password of manager
+     * @return found manager
+     */
+    ManagerWithTokenDto login(AuthenticationDto m);
 
-	List<TeamDto> getTeamsOfManager(Long managerId);
+    /**
+     * Gets all teams of manager
+     *
+     * @param managerId manager id
+     * @return all teams
+     */
+    List<TeamDto> getTeamsOfManager(Long managerId);
 
-	List<TeamDto> notCreatedTeams(Long managerId);
+    /**
+     * Gets all not created teams of amnager
+     *
+     * @param managerId manager id
+     * @return all not crated teams
+     */
+    List<TeamDto> notCreatedTeams(Long managerId);
 }
-

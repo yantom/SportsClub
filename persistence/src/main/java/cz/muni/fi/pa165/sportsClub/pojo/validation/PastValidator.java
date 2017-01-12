@@ -6,6 +6,9 @@ import java.time.temporal.Temporal;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * Past validator for local date
+ */
 public class PastValidator implements ConstraintValidator<Past, Temporal> {
 
 	@Override

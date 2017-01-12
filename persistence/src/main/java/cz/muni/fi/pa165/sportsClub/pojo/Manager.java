@@ -18,165 +18,287 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
+ * Respresents manager of team
  *
  * @author David Koncak (410155)
  */
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(name = "unique_email",columnNames = { "email" }),
-		@UniqueConstraint(name = "unique_club_name",columnNames = { "clubName" }),
-		@UniqueConstraint(name = "unique_mobile",columnNames = { "mobile" })})
+@Table(uniqueConstraints = {
+    @UniqueConstraint(name = "unique_email", columnNames = {"email"}),
+    @UniqueConstraint(name = "unique_club_name", columnNames = {"clubName"}),
+    @UniqueConstraint(name = "unique_mobile", columnNames = {"mobile"})})
 public class Manager {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
     @Column(nullable = false)
-	private String clubName;
+    private String clubName;
 
-	@OneToMany(mappedBy = "manager", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
-	private List<Team> teams = new ArrayList<>();
+    @OneToMany(mappedBy = "manager", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Team> teams = new ArrayList<>();
 
-	@OneToMany(mappedBy = "manager", cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
-	private List<Player> players = new ArrayList<>();
+    @OneToMany(mappedBy = "manager", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Player> players = new ArrayList<>();
 
-	@NotNull
-	@Column(nullable = false)
-	@Size(max = 32, min = 2)
-	private String firstName;
+    @NotNull
+    @Column(nullable = false)
+    @Size(max = 32, min = 2)
+    private String firstName;
 
-	@NotNull
-	@Column(nullable = false)
-	@Size(max = 32, min = 2)
-	private String lastName;
+    @NotNull
+    @Column(nullable = false)
+    @Size(max = 32, min = 2)
+    private String lastName;
 
-	@NotNull
-	@Column(nullable = false)
-	@Pattern(regexp = "[^@]+@[^@]+\\.[^@]+")
-	private String email;
+    @NotNull
+    @Column(nullable = false)
+    @Pattern(regexp = "[^@]+@[^@]+\\.[^@]+")
+    private String email;
 
-	@Pattern(regexp = "(\\+|00)?\\d+")
-	private String mobile;
+    @Pattern(regexp = "(\\+|00)?\\d+")
+    private String mobile;
 
-	@NotNull
-	@Column(nullable = false)
-	private String password;
+    @NotNull
+    @Column(nullable = false)
+    private String password;
 
-	@NotNull
-	@Column(nullable = false)
-	private String role;
+    @NotNull
+    @Column(nullable = false)
+    private String role;
 
-	public Manager() {
-	}
+    public Manager() {
+    }
 
-	public Manager(Long id) {
-		this.id = id;
-	}
+    public Manager(Long id) {
+        this.id = id;
+    }
 
+    /**
+     * Gets id of manager
+     *
+     * @return manager id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Sets id of manager
+     *
+     * @param id manager id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
-	public String getClubName() {
-		return clubName;
+    /**
+     * Gets name of club
+     *
+     * @return name of club
+     */
+    public String getClubName() {
+        return clubName;
     }
 
-	public void setClubName(String name) {
-		this.clubName = name;
+    /**
+     * Sets name of club
+     *
+     * @param name name of club
+     */
+    public void setClubName(String name) {
+        this.clubName = name;
     }
 
-	public String getFirstName() {
-		return this.firstName;
-	}
+    /**
+     * Gets first name of manager
+     *
+     * @return first name of manager
+     */
+    public String getFirstName() {
+        return this.firstName;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    /**
+     * Sets first name of manager
+     *
+     * @param firstName first name of manager
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public String getLastName() {
-		return this.lastName;
-	}
+    /**
+     * Gets last name of manager
+     *
+     * @return last name of manager
+     */
+    public String getLastName() {
+        return this.lastName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    /**
+     * Sets last name of manager
+     *
+     * @param lastName last name of manager
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public String getEmail() {
-		return this.email;
-	}
+    /**
+     * Gets email of manager
+     *
+     * @return email of manager
+     */
+    public String getEmail() {
+        return this.email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    /**
+     * Sets email of manager
+     *
+     * @param email email of manager
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getMobile() {
-		return this.mobile;
-	}
+    /**
+     * Gets mobile of manager
+     *
+     * @return mobile of manager
+     */
+    public String getMobile() {
+        return this.mobile;
+    }
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
+    /**
+     * Sets mobile of manager
+     *
+     * @param mobile mobile of manager
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
-	public String getPassword() {
-		return this.password;
-	}
+    /**
+     * Gets password of manager
+     *
+     * @return password of manager
+     */
+    public String getPassword() {
+        return this.password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    /**
+     * Sets password of manager
+     *
+     * @param password password of manager
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getRole() {
-		return this.role;
-	}
+    /**
+     * Gets role for manager
+     *
+     * @return manager role
+     */
+    public String getRole() {
+        return this.role;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    /**
+     * Sets role for manager
+     *
+     * @param role manager role
+     */
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-	public List<Team> getTeams() {
-		return Collections.unmodifiableList(teams);
-	}
+    /**
+     * Gets list of teams
+     *
+     * @return list of teams
+     */
+    public List<Team> getTeams() {
+        return Collections.unmodifiableList(teams);
+    }
 
-	public void addTeam(Team team) {
-		teams.add(team);
-	}
+    /**
+     * Adds team to list of teams
+     *
+     * @param team added team
+     */
+    public void addTeam(Team team) {
+        teams.add(team);
+    }
 
-	public void removeTeam(Team team) {
-		teams.remove(team);
-	}
+    /**
+     * Removes team from list of teams
+     *
+     * @param team removed team
+     */
+    public void removeTeam(Team team) {
+        teams.remove(team);
+    }
 
-	public void updateTeam(Team team) {
-		teams.remove(team);
-		teams.add(team);
-	}
+    /**
+     * Updates team in list of teams
+     *
+     * @param team updated team
+     */
+    public void updateTeam(Team team) {
+        teams.remove(team);
+        teams.add(team);
+    }
 
-	public List<Player> getPlayers() {
-		return Collections.unmodifiableList(players);
-	}
+    /**
+     * Gets list of players
+     *
+     * @return list of players
+     */
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
 
-	public void addPlayer(Player player) {
-		players.add(player);
-	}
+    /**
+     * Adds player to list of players
+     *
+     * @param player added player
+     */
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
 
-	public void removePlayer(Player player) {
-		players.remove(player);
-	}
+    /**
+     * Removes player from list of players
+     *
+     * @param player removed player
+     */
+    public void removePlayer(Player player) {
+        players.remove(player);
+    }
 
-	public void updatePlayer(Player player) {
-		players.remove(player);
-		players.add(player);
-	}
+    /**
+     * Updates player in list of players
+     *
+     * @param player updated player
+     */
+    public void updatePlayer(Player player) {
+        players.remove(player);
+        players.add(player);
+    }
 
-	@Override
+    @Override
     public int hashCode() {
         final int prime = 31;
         int hash = 1;
-		hash = prime * hash + (this.getEmail() != null ? this.getEmail().hashCode() : 0);
+        hash = prime * hash + (this.getEmail() != null ? this.getEmail().hashCode() : 0);
         return hash;
     }
 
@@ -189,25 +311,30 @@ public class Manager {
             return false;
         }
         final Manager other = (Manager) obj;
-		if ((getEmail() == null) ? (other.getEmail() != null) : !getEmail().equals(other.getEmail())) {
+        if ((getEmail() == null) ? (other.getEmail() != null) : !getEmail().equals(other.getEmail())) {
             return false;
         }
         return true;
-	}
+    }
 
-	@Override
-	public String toString() {
-		return "Manager [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", mobile=" + mobile + ", password=" + password + ", clubName=" + clubName + "]";
-	}
+    @Override
+    public String toString() {
+        return "Manager [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+                + ", mobile=" + mobile + ", password=" + password + ", clubName=" + clubName + "]";
+    }
 
-	public String toInsertStatement() {
-		return "INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName,role) VALUES (" + getId()
-				+ ","
-				+ DBEntityUtils.quote(getFirstName()) + "," + DBEntityUtils.quote(getLastName()) + ","
-				+ DBEntityUtils.quote(getEmail()) + "," + DBEntityUtils.quote(getMobile()) + ","
-				+ DBEntityUtils.quote(getPassword()) + "," + DBEntityUtils.quote(getClubName()) + ","
-				+ DBEntityUtils.quote(getRole()) + ");"
-				+ System.lineSeparator();
-	}
+    /**
+     * Returns string of INSERT statement into Manager
+     *
+     * @return string of INSERT statement
+     */
+    public String toInsertStatement() {
+        return "INSERT INTO Manager (id,firstName,lastName,email,mobile,password,clubName,role) VALUES (" + getId()
+                + ","
+                + DBEntityUtils.quote(getFirstName()) + "," + DBEntityUtils.quote(getLastName()) + ","
+                + DBEntityUtils.quote(getEmail()) + "," + DBEntityUtils.quote(getMobile()) + ","
+                + DBEntityUtils.quote(getPassword()) + "," + DBEntityUtils.quote(getClubName()) + ","
+                + DBEntityUtils.quote(getRole()) + ");"
+                + System.lineSeparator();
+    }
 }

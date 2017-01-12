@@ -16,6 +16,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+/**
+ * Authorization utils
+ */
 public class AuthUtils {
 
 	private static byte[] hashKey = new byte[64];

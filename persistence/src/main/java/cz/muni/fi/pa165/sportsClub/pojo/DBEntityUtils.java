@@ -4,6 +4,9 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Database entity utils
+ */
 public class DBEntityUtils {
 	public static String quote(String input) {
 		return "'" + input + "'";

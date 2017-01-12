@@ -41,12 +41,18 @@ public interface TeamDao {
     Team getTeamById(Long id);
 
     /**
-     * check if given jersey number already exist in the team
+     * Check if given jersey number already exist in the team
      *
      * @param team,jerseyNumber
-     * @return if jersey number is unique
+     * @return true if jersey number is unique, false otherwis
      */
     boolean isJerseyNumberUnique(Team team, int jerseyNumber);
 
+    /**
+     * Finds all players of team
+     * 
+     * @param team of players
+     * @return players in team
+     */
     List<Player> getPlayersOfTeam(Team team);
 }

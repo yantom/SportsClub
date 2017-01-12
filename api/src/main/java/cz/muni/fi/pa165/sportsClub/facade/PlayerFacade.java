@@ -5,18 +5,63 @@ import java.util.List;
 import cz.muni.fi.pa165.sportsClub.dto.PlayerDto;
 import cz.muni.fi.pa165.sportsClub.dto.TeamOfPlayerDto;
 
+/**
+ * Interface of player facade layer
+ *
+ * @author
+ */
 public interface PlayerFacade {
-	void createPlayer(PlayerDto p);
 
-	void updatePlayer(PlayerDto p);
+    /**
+     * Creates new player
+     *
+     * @param p created player
+     */
+    void createPlayer(PlayerDto p);
 
-	void deletePlayer(Long id);
+    /**
+     * Updates player
+     *
+     * @param p updated player
+     */
+    void updatePlayer(PlayerDto p);
 
-	PlayerDto getPlayerById(Long playerId);
+    /**
+     * Deletes player
+     *
+     * @param id id of deleted player
+     */
+    void deletePlayer(Long id);
 
-	PlayerDto getPlayerByEmail(String email);
+    /**
+     * Retrieves player by id
+     *
+     * @param playerId of player
+     * @return found player
+     */
+    PlayerDto getPlayerById(Long playerId);
 
-	List<PlayerDto> getAllPlayersOfClub(Long clubId);
+    /**
+     * Retrieves player by email
+     *
+     * @param email of player
+     * @return found player
+     */
+    PlayerDto getPlayerByEmail(String email);
 
-	List<TeamOfPlayerDto> getTeamsOfPlayer(Long playerId);
+    /**
+     * Retrieves all players of club
+     *
+     * @param clubId id of club
+     * @return all players of club
+     */
+    List<PlayerDto> getAllPlayersOfClub(Long clubId);
+
+    /**
+     * Retrieves all teams of player
+     *
+     * @param playerId player id
+     * @return all teams of player
+     */
+    List<TeamOfPlayerDto> getTeamsOfPlayer(Long playerId);
 }

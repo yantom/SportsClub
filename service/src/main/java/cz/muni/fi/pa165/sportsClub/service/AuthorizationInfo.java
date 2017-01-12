@@ -1,5 +1,8 @@
 package cz.muni.fi.pa165.sportsClub.service;
 
+/**
+ * Authorization info 
+ */
 public class AuthorizationInfo {
 	private Long userId;
 	private String userRole;

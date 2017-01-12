@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cz.muni.fi.pa165.sportsClub.pojo.PlayerInfo;
 
 /**
- *
- * @author Andrej 410433
+ * @author David Koncak (410155)
  */
 @Repository
 @Transactional

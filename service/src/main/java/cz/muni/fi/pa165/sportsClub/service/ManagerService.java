@@ -6,24 +6,88 @@ import cz.muni.fi.pa165.sportsClub.pojo.Manager;
 import cz.muni.fi.pa165.sportsClub.pojo.Player;
 import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
+/**
+ * Interface of manager service layer
+ *
+ * @author
+ */
 public interface ManagerService {
-	Manager createManager(Manager m);
 
-	void updateManager(Manager m);
+    /**
+     * Creates new manager
+     *
+     * @param m created manager
+     * @return created amnager
+     */
+    Manager createManager(Manager m);
 
-	void deleteManager(Manager m);
+    /**
+     * Updates manager
+     *
+     * @param m updated manager
+     */
+    void updateManager(Manager m);
 
-	Manager getManagerById(Long managerId);
+    /**
+     * Deletes manager
+     *
+     * @param m deleted manager
+     */
+    void deleteManager(Manager m);
 
-	Manager getManagerByEmail(String email);
+    /**
+     * Gets manager by id
+     *
+     * @param managerId manager id
+     * @return found manager
+     */
+    Manager getManagerById(Long managerId);
 
-	Manager getManagerByClubName(String clubName);
+    /**
+     * Gets manager by his email
+     *
+     * @param email email of manager
+     * @return found manager
+     */
+    Manager getManagerByEmail(String email);
 
-	Manager authenticate(String email, String password);
+    /**
+     * Gets manager by his club name
+     *
+     * @param clubName name of club
+     * @return found manager
+     */
+    Manager getManagerByClubName(String clubName);
 
-	List<Player> getFreePlayersOfClub(Manager m);
+    /**
+     * Authenticates manager
+     *
+     * @param email email of amnager
+     * @param password password of manager
+     * @return authenticated amnager
+     */
+    Manager authenticate(String email, String password);
 
-	List<Manager> getAllManagers();
+    /**
+     * Gets all free players of club
+     *
+     * @param m manager of club
+     * @return all free players
+     */
+    List<Player> getFreePlayersOfClub(Manager m);
 
-	List<Team> getNotCreatedTeamsOfManager(Manager m);
+    /**
+     * Gets all managers in database
+     *
+     * @return all managers
+     */
+    List<Manager> getAllManagers();
+
+    /**
+     * Gets all not created teams of amnager
+     *
+     * @param managerId manager id
+     * @return all not crated teams
+     */
+    List<Team> getNotCreatedTeamsOfManager(Manager m);
 }

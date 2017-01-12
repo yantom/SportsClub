@@ -6,27 +6,28 @@ import cz.muni.fi.pa165.sportsClub.pojo.Team;
 
 /**
  * CRUD operations on PlayerInfo
- * 
- * @author Andrej 410433
+ *
+ * @author David Koncak (410155)
  */
 public interface PlayerInfoDao {
+
     /**
      * Creates a new player info and stores into database
-     * 
+     *
      * @param pi
      */
     void createPlayerInfo(PlayerInfo pi);
-    
+
     /**
      * Updates exist player info in database
-     * 
+     *
      * @param pi
      */
     void updatePlayerInfo(PlayerInfo pi);
-    
+
     /**
      * Deletes player info in database
-     * 
+     *
      * @param pi
      */
     void deletePlayerInfo(PlayerInfo pi);
@@ -41,11 +42,11 @@ public interface PlayerInfoDao {
 
     /**
      * Finds player info by its id
-     * 
+     *
      * @param pid player info id
      * @return found player info
      */
-	PlayerInfo getPlayerInfoById(Long pid);
+    PlayerInfo getPlayerInfoById(Long pid);
 
     /**
      * Change jersey number of concrete player in concrete team
@@ -56,4 +57,3 @@ public interface PlayerInfoDao {
     void changeJerseyNumber(Team team, Player player, int newJerseyNumber);
 
 }
-

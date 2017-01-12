@@ -42,10 +42,27 @@ public interface PlayerDao {
      */
     Player getPlayerById(Long id);
 
+    /**
+     * Retrieves all players objects
+     * 
+     * @return all players
+     */
     List<Player> getAllPlayers();
     
+    /**
+     * Retrieves player object by email
+     * 
+     * @param email of player
+     * @return player object by defined email
+     */
     Player getPlayerByEmail(String email);
 
+    /**
+     * Retrieves all teams of player
+     * 
+     * @param player in teams
+     * @return teams of player
+     */
     public List<Team> getTeamsOfPlayer(Player player);
 
 }

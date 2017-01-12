@@ -18,7 +18,7 @@ import cz.muni.fi.pa165.sportsClub.enums.Category;
 /**
  * Respresents team with specific age category
  *
- * @author Andrej 410433
+ * @author Jan Tomasek
  */
 @Entity
 public class Team {
@@ -27,7 +27,7 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-	@OneToMany(mappedBy = "team", cascade = { CascadeType.REMOVE })
+    @OneToMany(mappedBy = "team", cascade = {CascadeType.REMOVE})
     private List<PlayerInfo> playerInfos = new ArrayList<>();
 
     @NotNull
@@ -35,21 +35,31 @@ public class Team {
 
     @ManyToOne
     @NotNull
-	private Manager manager;
+    private Manager manager;
 
-	public Team() {
-	}
-
-	public Team(Long id) {
-		this.id = id;
-	}
-
-	public Manager getManager() {
-		return manager;
+    public Team() {
     }
 
-	public void setManager(Manager manager) {
-		this.manager = manager;
+    public Team(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * Gets manager
+     * 
+     * @return manager
+     */
+    public Manager getManager() {
+        return manager;
+    }
+
+    /**
+     * Sets manager
+     * 
+     * @param manager 
+     */
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 
     /**
@@ -70,17 +80,32 @@ public class Team {
         return Collections.unmodifiableList(playerInfos);
     }
 
-	public void addPlayerInfo(PlayerInfo pi) {
-		playerInfos.add(pi);
+    /**
+     * Adds player info to list 
+     * 
+     * @param pi added player info
+     */
+    public void addPlayerInfo(PlayerInfo pi) {
+        playerInfos.add(pi);
     }
 
-	public void removePlayerInfo(PlayerInfo pi) {
-		playerInfos.remove(pi);
+    /**
+     * Removes player info from list
+     * 
+     * @param pi removed player info
+     */
+    public void removePlayerInfo(PlayerInfo pi) {
+        playerInfos.remove(pi);
     }
 
-	public void updatePlayerInfo(PlayerInfo pi) {
-		playerInfos.remove(pi);
-		playerInfos.add(pi);
+    /**
+     * Updates player info in list
+     * 
+     * @param pi updated player info
+     */
+    public void updatePlayerInfo(PlayerInfo pi) {
+        playerInfos.remove(pi);
+        playerInfos.add(pi);
     }
 
     /**
@@ -122,13 +147,18 @@ public class Team {
 
     @Override
     public String toString() {
-		return getManager().getClubName() + " - " + getCategory().toString() + ", id=" + getId();
+        return getManager().getClubName() + " - " + getCategory().toString() + ", id=" + getId();
     }
 
-	public String toInsertStatement() {
-		return "INSERT INTO Team (id,category,manager_id) VALUES (" + getId() + "," + getCategory().ordinal() + ","
-				+ getManager().getId() + ");" + System.lineSeparator();
-	}
+    /**
+     * Returns string of INSERT statement into Team
+     * 
+     * @return string of INSERT statement
+     */
+    public String toInsertStatement() {
+        return "INSERT INTO Team (id,category,manager_id) VALUES (" + getId() + "," + getCategory().ordinal() + ","
+                + getManager().getId() + ");" + System.lineSeparator();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -143,15 +173,15 @@ public class Team {
         if (!getCategory().equals(team.getCategory())) {
             return false;
         }
-		if (getManager() == null || team.getManager() == null) {
+        if (getManager() == null || team.getManager() == null) {
             return true;
         }
-		return getManager().getEmail().equals(team.getManager().getEmail());
+        return getManager().getEmail().equals(team.getManager().getEmail());
 
     }
 
     @Override
     public int hashCode() {
-		return 31 * getCategory().hashCode() + ((getManager() == null) ? 0 : getManager().getEmail().hashCode());
+        return 31 * getCategory().hashCode() + ((getManager() == null) ? 0 : getManager().getEmail().hashCode());
     }
 }

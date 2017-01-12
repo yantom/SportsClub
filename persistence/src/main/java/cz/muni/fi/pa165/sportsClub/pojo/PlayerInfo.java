@@ -25,47 +25,57 @@ import cz.muni.fi.pa165.sportsClub.enums.Category;
  * @author Andrej 410433
  */
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "playerId", "teamId" }))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"playerId", "teamId"}))
 public class PlayerInfo {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @NotNull
     @Max(99)
     @Min(0)
     private int jerseyNumber;
 
-	@Transient
-	private boolean playerOlderThanTeamLimit;
+    @Transient
+    private boolean playerOlderThanTeamLimit;
 
-	@ManyToOne
-	@JoinColumn(name = "playerId")
-	private Player player;
+    @ManyToOne
+    @JoinColumn(name = "playerId")
+    private Player player;
 
-	@ManyToOne
-	@JoinColumn(name = "teamId")
-	private Team team;
+    @ManyToOne
+    @JoinColumn(name = "teamId")
+    private Team team;
 
-	public PlayerInfo() {
-	}
+    public PlayerInfo() {
+    }
 
-	public PlayerInfo(Long id) {
-		this.id = id;
-	}
+    public PlayerInfo(Long id) {
+        this.id = id;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    /**
+     * Gets id of player
+     * 
+     * @return id of player
+     */
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * Sets id of player
+     * 
+     * @param id player id
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     /**
      * Gets team
-     * 
+     *
      * @return team
      */
     public Team getTeam() {
@@ -74,8 +84,8 @@ public class PlayerInfo {
 
     /**
      * Sets team
-     * 
-     * @param team 
+     *
+     * @param team
      */
     public void setTeam(Team team) {
         this.team = team;
@@ -117,39 +127,58 @@ public class PlayerInfo {
         this.jerseyNumber = jerseyNumber;
     }
 
-	public boolean isPlayerOlderThanTeamLimit() {
-		return playerOlderThanTeamLimit;
-	}
+    /**
+     * Returns true if player is older than age category limit, false otherwise
+     * 
+     * @return if player is older than age category limit, false otherwise
+     */
+    public boolean isPlayerOlderThanTeamLimit() {
+        return playerOlderThanTeamLimit;
+    }
 
-	public void setPlayerOlderThanTeamLimit(boolean value) {
-		playerOlderThanTeamLimit = value;
-	}
+    /**
+     * Sets age category limit for player
+     * 
+     * @param value boolean value of age category limit
+     */
+    public void setPlayerOlderThanTeamLimit(boolean value) {
+        playerOlderThanTeamLimit = value;
+    }
 
-	@PostLoad
-	public void setOlderThenLimit() {
-		Category c = getTeam().getCategory();
-		if (c == Category.MEN) {
-			playerOlderThanTeamLimit = false;
-			return;
-		}
-		if (!LocalDate.now().minusYears(c.getAgeLimit()).isBefore(getPlayer().getDateOfBirth())) {
-			playerOlderThanTeamLimit = true;
-			return;
-		}
-		playerOlderThanTeamLimit = false;
-	}
+    /**
+     * Sets age limit
+     * 
+     */
+    @PostLoad
+    public void setOlderThenLimit() {
+        Category c = getTeam().getCategory();
+        if (c == Category.MEN) {
+            playerOlderThanTeamLimit = false;
+            return;
+        }
+        if (!LocalDate.now().minusYears(c.getAgeLimit()).isBefore(getPlayer().getDateOfBirth())) {
+            playerOlderThanTeamLimit = true;
+            return;
+        }
+        playerOlderThanTeamLimit = false;
+    }
 
     @Override
     public String toString() {
-		return "#" + jerseyNumber + ", " + player + ", " + team + "isOlder:" + isPlayerOlderThanTeamLimit();
+        return "#" + jerseyNumber + ", " + player + ", " + team + "isOlder:" + isPlayerOlderThanTeamLimit();
     }
-    
-	public String toInsertStatement() {
-		return "INSERT INTO PlayerInfo (id,jerseyNumber,playerId,teamId) VALUES (" + getId() + "," + getJerseyNumber()
-				+ "," + getPlayer().getId() + "," + getTeam().getId() + ");" + System.lineSeparator();
-	}
 
-        @Override
+    /**
+     * Returns string of INSERT statement into PlayerInfo
+     * 
+     * @return string of INSERT statement
+     */
+    public String toInsertStatement() {
+        return "INSERT INTO PlayerInfo (id,jerseyNumber,playerId,teamId) VALUES (" + getId() + "," + getJerseyNumber()
+                + "," + getPlayer().getId() + "," + getTeam().getId() + ");" + System.lineSeparator();
+    }
+
+    @Override
     public int hashCode() {
         int hash = 7;
         hash = 79 * hash + this.getJerseyNumber();

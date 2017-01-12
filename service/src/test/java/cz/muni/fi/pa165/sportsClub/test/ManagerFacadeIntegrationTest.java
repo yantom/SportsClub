@@ -28,6 +28,9 @@ import cz.muni.fi.pa165.sportsClub.dto.ManagerDto;
 import cz.muni.fi.pa165.sportsClub.facade.ManagerFacade;
 import cz.muni.fi.pa165.sportsClub.testUtils.ScriptRunner;
 
+/**
+ * @author Jan Tomasek
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceApplicationContext.class)
 public class ManagerFacadeIntegrationTest {

@@ -25,7 +25,7 @@ import cz.muni.fi.pa165.sportsClub.service.PlayerService;
 
 /**
  *
- * @author David
+ * @author David Koncak (410155)
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
