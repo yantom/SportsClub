@@ -37,8 +37,11 @@ public class PlayerInfo {
     @Min(0)
     private int jerseyNumber;
 
-	@Transient
+    @Transient
 	private boolean playerOlderThanTeamLimit;
+
+    @Transient
+    private boolean playerYoungerThanTeamLimit;
 
 	@ManyToOne
 	@JoinColumn(name = "playerId")
@@ -121,9 +124,9 @@ public class PlayerInfo {
 		return playerOlderThanTeamLimit;
 	}
 
-	public void setPlayerOlderThanTeamLimit(boolean value) {
-		playerOlderThanTeamLimit = value;
-	}
+    public boolean isPlayerYoungerThanTeamLimit() {
+        return playerYoungerThanTeamLimit;
+    }
 
 	@PostLoad
 	public void setOlderThenLimit() {
@@ -132,11 +135,17 @@ public class PlayerInfo {
 			playerOlderThanTeamLimit = false;
 			return;
 		}
-		if (!LocalDate.now().minusYears(c.getAgeLimit()).isBefore(getPlayer().getDateOfBirth())) {
+		if (!LocalDate.now().minusYears(c.getUpperAgeLimit()).isBefore(getPlayer().getDateOfBirth())) {
 			playerOlderThanTeamLimit = true;
 			return;
 		}
 		playerOlderThanTeamLimit = false;
+
+        if (!LocalDate.now().minusYears(c.getBottomAgeLimit()).isAfter(getPlayer().getDateOfBirth())) {
+            playerYoungerThanTeamLimit = true;
+            return;
+        }
+        playerYoungerThanTeamLimit = false;
 	}
 
     @Override
