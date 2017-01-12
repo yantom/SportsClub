@@ -100,11 +100,9 @@ angular.module("sportsClub").controller('managerBoardCtrl', function ($scope, $h
             }
         });
         modalInstance.result.then(function (updatedData) {
-                for (var i = 0; i < $scope.playerInfos.player.length; i++) {
-                    if ($scope.playerInfos.player[i].id == updatedData.data.id) {
-                        $scope.playerInfos.player[i] = updatedData.data;
-                    }
-                }
+            if(updatedData.edited == true) {
+             $scope.getPlayersOfTeam(displayingTeam);
+         }
         }, function () {
         });
     }
