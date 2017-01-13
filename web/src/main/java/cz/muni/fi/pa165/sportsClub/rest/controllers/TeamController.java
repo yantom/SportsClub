@@ -21,7 +21,6 @@ import cz.muni.fi.pa165.sportsClub.exception.TokenValidationException;
 import cz.muni.fi.pa165.sportsClub.facade.TeamFacade;
 import cz.muni.fi.pa165.sportsClub.service.AuthUtils;
 
-
 @RestController
 @RequestMapping("/team")
 public class TeamController {
@@ -29,45 +28,45 @@ public class TeamController {
     @Inject
     private TeamFacade teamFacade;
 
-	private static final String[] AUTHORIZED_ROLES = new String[] { "admin", "manager" };
+    private static final String[] AUTHORIZED_ROLES = new String[]{"admin", "manager"};
 
     @RequestMapping(path = "/{teamId}/players", method = RequestMethod.GET)
-	public final List<PlayerOfTeamDto> getPlayers(@PathVariable("teamId") long teamId, HttpServletRequest hsr)
-			throws TokenValidationException {
-		String token = (hsr.getHeader("Authorization")).split(" ")[1];
-		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
+    public final List<PlayerOfTeamDto> getPlayers(@PathVariable("teamId") long teamId, HttpServletRequest hsr)
+            throws TokenValidationException {
+        String token = (hsr.getHeader("Authorization")).split(" ")[1];
+        AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
         return teamFacade.getPlayersOfTeam(teamId);
     }
 
     @RequestMapping(value = "/{teamId}", method = RequestMethod.DELETE, produces = MediaType.TEXT_PLAIN_VALUE)
-	public final void delete(@PathVariable("teamId") long teamId, HttpServletRequest hsr) throws TokenValidationException {
-		String token = (hsr.getHeader("Authorization")).split(" ")[1];
-		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
-		teamFacade.deleteTeam(teamId);
+    public final void delete(@PathVariable("teamId") long teamId, HttpServletRequest hsr) throws TokenValidationException {
+        String token = (hsr.getHeader("Authorization")).split(" ")[1];
+        AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
+        teamFacade.deleteTeam(teamId);
     }
 
-	@RequestMapping(method = RequestMethod.POST)
-	public final TeamDto create(@RequestBody TeamDto team, HttpServletRequest hsr) throws TokenValidationException {
-		String token = (hsr.getHeader("Authorization")).split(" ")[1];
-		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
-		teamFacade.createTeam(team);
-		return team;
+    @RequestMapping(method = RequestMethod.POST)
+    public final TeamDto create(@RequestBody TeamDto team, HttpServletRequest hsr) throws TokenValidationException {
+        String token = (hsr.getHeader("Authorization")).split(" ")[1];
+        AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
+        teamFacade.createTeam(team);
+        return team;
     }
 
     @RequestMapping(path = "/{teamId}/suitablePlayers", method = RequestMethod.GET)
-	public final List<PlayerBasicInfoDto> findSuitablePlayersForTeam(@PathVariable("teamId") long teamId,
-			HttpServletRequest hsr) throws TokenValidationException {
-		String token = (hsr.getHeader("Authorization")).split(" ")[1];
-		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
+    public final List<PlayerBasicInfoDto> findSuitablePlayersForTeam(@PathVariable("teamId") long teamId,
+            HttpServletRequest hsr) throws TokenValidationException {
+        String token = (hsr.getHeader("Authorization")).split(" ")[1];
+        AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
         return teamFacade.findSuitablePlayersForTeam(teamId);
     }
 
-	@RequestMapping(path = "/{teamId}/{jerseyNumber}", method = RequestMethod.GET)
-	public final boolean findSuitablePlayersForTeam(@PathVariable("teamId") long teamId,
-																	 @PathVariable("teamId") int jerseyNumber,
-																	 HttpServletRequest hsr) throws TokenValidationException {
-		String token = (hsr.getHeader("Authorization")).split(" ")[1];
-		AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
-		return teamFacade.isJerseyNumberUnique(teamId,jerseyNumber);
-	}
+    @RequestMapping(path = "/{teamId}/{jerseyNumber}", method = RequestMethod.GET)
+    public final boolean findSuitablePlayersForTeam(@PathVariable("teamId") long teamId,
+            @PathVariable("teamId") int jerseyNumber,
+            HttpServletRequest hsr) throws TokenValidationException {
+        String token = (hsr.getHeader("Authorization")).split(" ")[1];
+        AuthUtils.authorizeRestCall(token, AUTHORIZED_ROLES);
+        return teamFacade.isJerseyNumberUnique(teamId, jerseyNumber);
+    }
 }
